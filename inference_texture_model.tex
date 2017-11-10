@@ -499,6 +499,8 @@
 % Here we have the typical use of a "T" for an initial drop letter and
 % "HIS" in caps to complete the first word.
 
+XXXX [TO BE FINISHED]
+
 \IEEEPARstart{T}{he} parameters of our previously proposed 3D solid
 breast texture model can be classified into two categories:
 
@@ -520,6 +522,8 @@ breast texture model can be classified into two categories:
   ellipsoids.
 
 \end{enumerate}
+
+XXXX [TO BE FINISHED]
 
 \section{Problem formulation}
 \label{sec:problem-statement}
@@ -547,7 +551,10 @@ We first start by mathematically formulating the inference problem.
 
 We formulated the medium scale texture model as a \textit{marked point
   process} (MPP)
-$\mathbf{Y} = \{ \mathbf{\Phi_{s}},\boldsymbol{\theta} \}$ defined on
+$$
+\mathbf{Y} = \{ \mathbf{\Phi_{s}},\boldsymbol{\theta} \},
+$$
+defined on
 a product space $Y \subset \mathbb{R}^{3} \times \mathbb{R}^6$
 \cite{chiu2013stochastic}.
 
@@ -995,7 +1002,7 @@ Algorithm~\ref{algo-mbds}.
 \begin{table}[!htb]
   \captionsetup{labelsep=none,labelformat=empty}
   \begin{center}
-    \begin{tabular}{ m{9cm} }
+    \begin{tabular}{ m{8.8cm} }
 
       \hrule width \hsize height 2pt \vspace{0.3em}
       \textbf{Algorithm}: Multiple births, deaths and shifts
@@ -2507,9 +2514,11 @@ Appendix~\ref{app2:addit-results-chapt}.
 \end{table}
 
 
-\subsection{Simulations using fitted medium scale texture model
-  parameters}
-\label{chap04-sec4-sub3:simulations}
+\section{Validation of inferred medium scale texture model parameters}
+\label{sec4-sub3:simulations}
+
+\subsection{Visual validation}
+\label{sec:visual-validation}
 
 As a preliminary validation of the fitted medium scale texture model
 parameters, a simulation experiment in analogy to
@@ -2609,6 +2618,11 @@ parameters proposed in the previous chapter.
   \label{fig:fit-params-sims}
 \end{figure}
 
+\subsection{Statistical validation}
+\label{sec:stat-valid}
+
+Computation of $\beta$ values.
+
 \section{Conclusion and discussion}
 \label{sec:concl-disc}
 
@@ -2674,22 +2688,13 @@ parameters.
 % numbered zero.)
 %
 
-
-\appendices
-\section{Proof of the First Zonklar Equation}
-Appendix one text goes here.
-
-% you can choose not to have a title for an appendix if you want by
-% leaving the argument blank
-\section{}
-Appendix two text goes here.
-
-
 % use section* for acknowledgment
 \section*{Acknowledgment}
 
-
-The authors would like to thank...
+This research is partially funded by the French national association
+for research and technology (ANRT) under the CIFRE grant n\textdegree
+2013/1052. The authors would like to thank Prof. John Boone for
+kindly providing the clinical bCT data sets.
 
 
 % Can use something like this to put references on a page by
@@ -2721,16 +2726,15 @@ The authors would like to thank...
 % of \begin to the number of references (used to reserve space for the
 %   reference number labels box)
 
-% \begin{thebibliography}{1}
+%   \begin{thebibliography}{1}
 
-% \bibitem{IEEEhowto:kopka} H.~Kopka and P.~W. Daly, \emph{A Guide to
-%     \LaTeX}, 3rd~ed.\hskip 1em plus 0.5em minus 0.4em\relax Harlow,
-%   England: Addison-Wesley, 1999.
+%   \bibitem{IEEEhowto:kopka} H.~Kopka and P.~W. Daly, \emph{A Guide
+%     to \LaTeX}, 3rd~ed.\hskip 1em plus 0.5em minus 0.4em\relax
+%     Harlow, England: Addison-Wesley, 1999.
 
-% \end{thebibliography}
+%   \end{thebibliography}
 
-\bibliography{biblio/biblio}
-\bibliographystyle{ieeetr}
+\bibliography{biblio/biblio} \bibliographystyle{ieeetr}
 
 % biography section
 %

@@ -14,7 +14,6 @@
 # Tex tmp or compiled files
 *.log
 *.aux
-*.pdf
 *.fmt
 *.rip
 *.bbl
