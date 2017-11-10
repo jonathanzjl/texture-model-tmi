@@ -1,0 +1,40 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Matlab scripts
+*.m
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Tex tmp or compiled files
+*.log
+*.aux
+*.pdf
+*.fmt
+*.rip
+*.bbl
+*.blg
+*.lof
+*.lot
+*.out
+*.rel
+*.toc
+*.bcf
+*.xml
+*.gz
+*~
+
+# AUCTex stuff
+*.el
+auto/
+_region_.prv/
+_region_.tex
+
+# Projectile files
+.projectile
+TAGS
