@@ -376,7 +376,7 @@
 % better formatting as desired.  Do not put math or special symbols in
 % the title.
 \title{Statistical Parameter Inference of a 3D Solid Breast Texture
-  Model from Clinical Breast Computerized Tomography Data}
+  Model} % from Clinical Breast Computerized Tomography Data
 %
 %
 % author names and IEEE memberships note positions of commas and
@@ -387,13 +387,13 @@
 % built to handle multiple paragraphs
 %
 
-\author{Zhijin~Li,~\IEEEmembership{Member,~IEEE,} Ann-Katherine
-  Carton, Serge Muller
-  and~Agnès~Desolneux,~\IEEEmembership{Member,~IEEE,}% <-this % stops a space
+\author{Zhijin~Li, Ann-Katherine Carton, Serge Muller
+  and~Agnès~Desolneux,% <-this % stops a space
   \thanks{Zhijin Li is with centre de math\'{e}matique et leurs
     applications of Ecole Normale Sup\'{e}rieure de Paris-Sacaly,
     Cachan, 94235 France and General Electric Healthcare France, Buc,
-    78530, France. E-mail: jonathan.li@ge.com.}% <-this % stops a space
+    78530, France. E-mail:
+    jonathan.li@ge.com.}% <-this % stops a space
   \thanks{Agnès Desolneux is with centre de math\'{e}matique et leurs
     applications of Ecole Normale Sup\'{e}rieure de Paris-Sacaly,
     Cachan, 94235 France.}% <-this % stops a space
@@ -499,31 +499,73 @@
 % Here we have the typical use of a "T" for an initial drop letter and
 % "HIS" in caps to complete the first word.
 
-XXXX [TO BE FINISHED]
+XXXX [CONTEXT TO BE FINISHED]
 
-\IEEEPARstart{T}{he} parameters of our previously proposed 3D solid
-breast texture model can be classified into two categories:
+% \IEEEPARstart{I}{n}
 
-\begin{enumerate}
+Priviously, we proposed a 3D solid breast texture model that is
+capable of simulating a large variability of realistic 2D and 3D
+breast images in terms of small and medium scale fibroglandular and
+inter-glandular adipose tissue in breast [REF]. The proposed model is
+inspired by the morphology and distribution of medium and small scale
+fibroglandular and inter-glandular adipose tissue observed in clinical
+breast computerized tomography (bCT) reconstructed volumes. For medium
+scale breast tissue, we used a system of stochastically distributed
+overlapping ellipsoids to depict the adipose compartments, and the
+complement of the ellipsoid system to depict the fibroglandular
+tissue. Small scale intra-glandular adipose compartment irregularities
+were introduced by replacing the smooth ellipsoid boundaries by
+Voronoi cells with average volume less than \SI{1}{\mm\cubed}. The
+texture model outputs volumes in voxelized binary
+format. Figure~\ref{fig:model} illustrates the construction of the
+proposed texture model.
 
-\item The parameters related to the \textit{small scale} breast
-  fibroglandular and inter-glandular adipose tissue. These parameters
-  include the intensity $\lambda_0$ of the Poisson point process for
-  the Voronoi cell centers and the precision parameter $\epsilon$ of
-  the voxelization process.
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{model}
+  \caption{Illustration of the construction of the proposed 3D solid
+    breast texture model. The medium intra-glandular adipose
+    compartments are modeled by a system of random overlapping
+    ellipsoids. Small scale intra-glandular adipose compartment
+    irregularities were introduced by replacing the smooth ellipsoid
+    boundaries by Voronoi cells. The texture model produces voxelized
+    binary volumes depicting fibroglandular tissue (white regions in
+    the image on the right) and intra-glandular adipose tissue (black
+    regions in the image on the right).}
+  \label{fig:model}
+\end{figure}
 
-\item The parameters related to the distribution and morphology of the
-  \textit{medium scale} breast fibroglandular and inter-glandular
-  adipose tissue. These parameters include the distribution
-  $\mathbf{P}^{\mathbf{s}}$ of the ellipsoid center point process
-  $\mathbf{\Phi_s}$ and the joint distribution
-  $\mathbf{P}^{\boldsymbol{\theta}}$ of $\boldsymbol{\theta}$, the
-  random vector related to the shape and orientation of the random
-  ellipsoids.
+In a previous study, we subjectively determined the parameters of the
+3D breast texture model by visually comparing the sampled texture
+volumes with reference bCT volumes. A preliminary two-alternative
+forced choice experiment was performed showing that the capability of
+the subjectively determined texture model to simulate realistic DBT
+reconstructed slices representing a large variety of breast density
+types. However, further observations show that the simulated DBT
+slices using the subjective model parameters have a limited
+morphological variability within each breast density type.  This might
+be due to the limitation that the subjectively determined model
+parameters might not objectively capture the variability of breast
+tissue in clinical bCT volumes.  To address this limitation, we
+propose to infer the parameters of the 3D breast texture model from
+clinical bCT volumes using objective statistical inference
+approach. The inference aims to allow the 3D solid breast texture
+model to simulate a larger variability of breast textures. A larger
+texture variability is of interest in virtual clinical trials, where
+the impact of various breast tissue types on clinical task performance
+needs to be understood.
 
-\end{enumerate}
-
-XXXX [TO BE FINISHED]
+For this study, we focus on objective inference of the
+medium scale model parameters $\mathbf{P}^{\mathbf{s}}$ and
+$\mathbf{P}^{\boldsymbol{\theta}}$ from a set of clinical breast
+computerized tomography (bCT) reconstructed volumes. The reason to
+consider only the medium scale model is mainly due to the relatively
+low spatial resolution of the clinical bCT volumes, where the voxel
+size is typically between \SI{0.2}{\mm} and \SI{0.4}{\mm}. When the
+intensity parameter $\lambda_0$ has a relatively large value, the size
+of the small Voronoi cells may be in the same order of magnitude as
+the voxel size in the bCT data. Due to this fact, the bCT data may not
+allow for an accurate estimation of the small scale model parameters.
 
 \section{Problem formulation}
 \label{sec:problem-statement}
@@ -532,74 +574,207 @@ XXXX [TO BE FINISHED]
 % IEEE journal papers produced under \LaTeX\ using IEEEtran.cls
 % version 1.8b and later.
 
-\IEEEPARstart{I}{n} this paper, we focus on objective inference of the
-medium scale model parameters $\mathbf{P}^{\mathbf{s}}$ and
-$\mathbf{P}^{\boldsymbol{\theta}}$ from segmented clinical bCT data
-sets. The reason to consider only the medium scale model is mainly due
-to the relatively low spatial resolution of the clinical bCT data,
-where the voxel size is typically between \SI{0.2}{\mm} and
-\SI{0.4}{\mm}. When the intensity parameter $\lambda_0$ has a relatively
-large value, the size of the small Voronoi cells may be in the same
-order of magnitude as the voxel size in the bCT data. Due to this
-fact, the bCT data may not allow to perform an accurate estimation of
-the small scale model parameters.
-
-We first start by mathematically formulating the inference problem.
+We first start by mathematically formulating the medium scale texture
+model and the ground truth data.
 
 \subsection{The medium scale texture model}
 \label{chap4-sec1-sub1:math-form-medi}
 
-We formulated the medium scale texture model as a \textit{marked point
-  process} (MPP)
+
+We refer to the model for the distribution and morphology of the
+system of random ellipsoids as the medium scale texture model, since
+it is responsible for modeling the distribution and morphology of the
+\textit{medium scale} breast fibroglandular and inter-glandular
+adipose tissue. The medium scale texture model is formulated as a
+\textit{marked point process} (MPP)
 $$
 \mathbf{Y} = \{ \mathbf{\Phi_{s}},\boldsymbol{\theta} \},
 $$
-defined on
-a product space $Y \subset \mathbb{R}^{3} \times \mathbb{R}^6$
+defined on a product space
+$Y \subset \mathbb{R}^{3} \times \mathbb{R}^6$
 \cite{chiu2013stochastic}.
 
 \begin{itemize}
 
-\item The ellipsoid center point process $\mathbf{\Phi_s}$ is referred
-  to as the \textit{ground point process}. It is a simple point
-  process with distribution $\mathbf{P}^{\mathbf{s}}$.
+\item $\mathbf{\Phi_s}$ is a simple point process with distribution
+  $\mathbf{P}^{\mathbf{s}}$. Its realization represents the center
+  points of the ellipsoids.
 
-\item The elements of the random vector $\boldsymbol{\theta}$ are
-  referred to as the \textit{marks}. In our case,
+\item $\boldsymbol{\theta}$ is a random vector with distribution
+  $\mathbf{P}^{\boldsymbol{\theta}}$. Its realization represents the
+  parameter vector of an ellipsoid. That is,
   $\boldsymbol{\theta} = \left( L_a, L_b, L_c, \delta_{\phi_a},
     \delta_{\phi_b}, \delta_{\phi_c} \right)$, where $L_a, L_b, L_c$
   are the half lengths of the principle axes of the ellipsoids and
   $\delta_{\phi_{x}},\delta_{\phi_{y}},\delta_{\phi_{z}}$ are random
-  tilt angles of the ellipsoid. The marks follow is assumed to follow
-  a distribution $\mathbf{P}^{\boldsymbol{\theta}}$.
+  tilt angles of the ellipsoid. In marked point process theory,
+  $\boldsymbol{\theta}$ is often referred to as the \textit{mark} of
+  the point process $\mathbf{\Phi_s}$, and
+  $\mathbf{P}^{\boldsymbol{\theta}}$ is often referred to as the
+  \textit{mark distribution}.
 \end{itemize}
 
 \subsection{The ground truth}
 \label{chap4-sec1-sub2:ground-truth}
 
-A set of sixteen clinical dedicated breast computerized tomography
-(bCT) reconstructed volumes was collected. The reconstructed volumes
-are stacks of gray-value coronal slices reconstructed with a filtered
-back-projection algorithm from projections images acquired using a
-prototype bCT machine developed at the University of California Davis
-Medical Center [ref]. The volumes were pre-processed by an automatic
-3D segmentation algorithm developed in-house to obtain binary volumes
-depicting breast fibroglandular and intra-glandular adipose
-tissue. These binary volumes were used as the input data for the
-parameter inference.
+In this study, we use clinical breast computerized tomography (bCT)
+reconstructed volumes as the input for our statistical inference. The
+reconstructed volumes are stacks of gray-value coronal slices
+reconstructed with a filtered back-projection algorithm from
+projections images acquired using a prototype bCT machine developed at
+the University of California Davis Medical Center [ref]. The volumes
+were pre-processed by an automatic 3D segmentation algorithm developed
+in-house to obtain binary volumes depicting breast fibroglandular and
+intra-glandular adipose tissue. These binary volumes were used as the
+input data for the parameter inference.
 
 To limit the inference to the medium scale breast tissue, only volumes
 of interest (VOI) with size \SI{3.5}{\cm} $\times$ \SI{3.5}{\cm}
 $\times$ \SI{3.5}{\cm} of the segmented bCT volumes were
 considered. The VOIs were extracted from the center of the segmented
 bCT volumes, leaving at least \SI{2}{\cm} distance to the breast skin
-and the chest-wall, depending on the breast size. The size of the VOIs
-was chosen small enough so that the fibroglandular tissue distribution
-does not vary drastically. An example illustrating an input segmented
-bCT VOI is shown in Figure XXX.
+and the chest-wall, depending on the actual breast size. The size of
+the VOIs was chosen small enough so that the fibroglandular tissue
+distribution does not vary drastically.
+
+A collection of 16 sets of segmented clinical bCT VOIs were selected
+for this study. The selected VOIs have BI-RADS density (4th Edition,
+REF) from category one to three and represent a subset of breasts with
+considerable variability in medium scale fibroglandular and
+inter-glandular adipose tissue. None of the VOIs contained a
+lesion. Table~\ref{tab:summary-info-extract} summarizes the density
+and the size (in voxels) of the selected bCT VOIs, as well as and the
+size of the isotropic voxels of each VOI.
+
+% An example illustrating an
+% input segmented bCT VOI is shown in Figure XXX.
+
+\begin{table}[!htb]
+  \begin{center}
+    \begin{tabular}{ m{1cm} m{1.3cm} m{2.6cm} m{1.8cm}}
+      \toprule
+
+      \centering{\textbf{VOI}}
+      % & \centering{\textbf{BI-RADS category}}
+      & \centering{\textbf{Density}}
+      & \centering{\textbf{Size in voxels}}
+      & \centering{\textbf{Voxel size}}
+        \tabularnewline%\\
+
+      \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+      \cmidrule(lr){3-3} \cmidrule(lr){4-4}
+      % \cmidrule(lr){5-5}
+
+      \centering{\#1}
+        & \centering{57.2\%}
+      & \centering{$99 \times 99 \times 99$}
+      & \centering{$\SI{0.357}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#2}
+        & \centering{40.6\%}
+      & \centering{$99 \times 99 \times 99$}
+      & \centering{$\SI{0.354}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#3}
+        & \centering{25.1\%}
+      & \centering{$94 \times 94 \times 94$}
+      & \centering{$\SI{0.376}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#4}
+        & \centering{23.5\%}
+      & \centering{$103 \times 103 \times 103$}
+      & \centering{$\SI{0.341}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#5}
+        & \centering{17.4\%}
+      & \centering{$103 \times 103 \times 103$}
+      & \centering{$\SI{0.343}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#6}
+        & \centering{37.2\%}
+      & \centering{$100 \times 100 \times 100$}
+      & \centering{$\SI{0.351}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#7}
+        & \centering{32.9\%}
+      & \centering{$112 \times 112 \times 112$}
+      & \centering{$\SI{0.314}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#8}
+        & \centering{29.0\%}
+      & \centering{$96 \times 96 \times 96$}
+      & \centering{$\SI{0.366}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#9}
+        & \centering{25.7\%}
+      & \centering{$97 \times 97 \times 97$}
+      & \centering{$\SI{0.361}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#10}
+        & \centering{13.9\%}
+      & \centering{$101 \times 101 \times 101$}
+      & \centering{$\SI{0.349}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#11}
+        & \centering{14.5\%}
+      & \centering{$128 \times 128 \times 128$}
+      & \centering{$\SI{0.275}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#12}
+        & \centering{09.8\%}
+      & \centering{$87 \times 87 \times 87$}
+      & \centering{$\SI{0.405}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#13}
+        & \centering{27.1\%}
+      & \centering{$107 \times 107 \times 107$}
+      & \centering{$\SI{0.329}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#14}
+        & \centering{25.0\%}
+      & \centering{$87 \times 87 \times 87$}
+      & \centering{$\SI{0.405}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#15}
+        & \centering{20.5\%}
+      & \centering{$124 \times 124 \times 124$}
+      & \centering{$\SI{0.283}{\mm}$}
+        \tabularnewline%\\
+
+      \centering{\#16}
+        & \centering{17.2\%}
+      & \centering{$126 \times 126 \times 126$}
+      & \centering{$\SI{0.279}{\mm}$}
+        \tabularnewline%\\
+
+      \bottomrule
+
+    \end{tabular}
+    \caption{Summary of the glandular density, the size (in voxels)
+      and the size of the isotropic voxels of the selected 16 sets of
+      segmented clinical bCT VOIs.}
+    \label{tab:summary-info-extract}
+  \end{center}
+\end{table}
+
 
 Mathematically, a segmented bCT VOI can be expressed as a binary
-volume $\mathcal{D}$, where
+volume $\mathcal{D}$, where for any
+$x \in \Omega \subset \mathbb{Z}^3$,
 \begin{equation}
   \label{eq:bct-discrete-form}
   \mathcal{D}(x) =
@@ -607,11 +782,11 @@ volume $\mathcal{D}$, where
     1 & \textnormal{ if voxel } x \textnormal{ represents
       fibroglandular tissue}, \\
     0 & \textnormal{ if voxel } x \textnormal{ represents
-      adipose tissue}, \\
+      adipose tissue}. \\
   \end{cases}
 \end{equation}
-for all $x \in \Omega \subset \mathbb{Z}^3$. Here $\Omega$ represents
-the 3D discrete spatial domain of $\mathcal{D}$.
+Here $\Omega$ represents the 3D discrete spatial domain of
+$\mathcal{D}$.
 
 Notice that, the input segmented clinical bCT VOIs depict adipose
 compartments, from which it might be difficult to discern the
@@ -631,21 +806,18 @@ Due to the data unobservability problem described in the previous
 section, direct application of common MPP parameter inference
 approaches such as the \textit{likelihood}-based approaches
 \cite{moller2003statistical} \cite{baddeley2000practical}
-\cite{besag1975statistical} \cite{jensen1991pseudolikelihood} is no
-longer possible, since they require the knowledge of the positions of
-the ellipsoid centers \cite{dereudre2014estimation}. Several classical
-inference method used in stochastic geometry can potentially mitigate
-the issue of data unobservability.
-
-The \textit{minimum contrast estimation} (MCE) method can be
-configured such that the knowledge of point positions is no longer
-necessary.
+\cite{besag1975statistical} \cite{jensen1991pseudolikelihood} is
+impossible, since they require the knowledge of the positions of the
+ellipsoid centers \cite{dereudre2014estimation}. Some classical
+inference methods in stochastic geometry have be investigated to
+mitigate the issue of data unobservability. One of such methods is
+referred to as the \textit{minimum contrast estimator} (MCE).
 
 Let $\mathbf{\Theta}$ denote the set of all parameters for
 $\mathbf{Y}$. Let $\mathcal{C}(\mathcal{D}, \mathbf{\Theta})$ denote a
 contrast function depending on the ground truth $\mathcal{D}$ and the
-parameters $\mathbf{\Theta}$. The minimum contrast estimator is
-defined as \cite{chiu2013stochastic}:
+parameters $\mathbf{\Theta}$. The MCE is defined as
+\cite{chiu2013stochastic}:
 \begin{equation}
   \label{eq:min-const}
   \hat{\mathbf{\Theta}} =
@@ -670,72 +842,45 @@ contact distribution function \cite {heinrich1993asymptotic} etc.
 The MCE method has limitations that make its application in our case
 difficult. The major limitation is the difficulty in the derivation of
 analytical summary statistics when the underlying model $\mathbf{Y}$
-deviates from the Poisson MPP model. Previous applications of the MCE
-almost always assumed $\mathbf{Y}$ to be a Poisson MPP with disc or
-spherical marks \cite{diggle1981binary} \cite
-{heinrich1993asymptotic}. These assumptions seem to be too strong in
-our inference problem. When the parametric form of $\mathbf{Y}$
-becomes complicated, the derivation of summary statistics may involve
-some numerical integration technique and the minimization can also be
-non-trivial.
-
-Another statistical estimation approach based on the
-\textit{Takacs-Fiksel estimation} method \cite{dereudre2014estimation}
-has recently been proposed for a particular class of MPP named the
-\textit{Quermass model} \cite{kendall1997some}. The Takacs-Fiksel
-estimation method consists in choosing a number of test functions that
-are analytically or computationally accessible and can be empirically
-measured from ground truth data even with unobservable point
-positions. The parameter estimations is then carried out by minimizing
-an objective function defined by the analytical test functions and
-their empirical measurements. The method has been applied to Quermass
-model of 2D discs for binary images \cite{dereudre2014estimation} and
-was proven to give more satisfactory result than previously proposed
-methods \cite{moller2010likelihood}.
-
-The Takacs-Fiksel estimation method also has limitations. The authors
-in \cite{dereudre2014estimation} pointed out that, in order to avoid
-the identifiability problem, the number of test functions should be
-much greater than the number of model parameters. Considering the
-number of parameters in our texture model, it might be challenging to
-find enough test functions to apply the TFE method. Also, when the
-number of parameters is too large, the TFE method might yield
-non-satisfactory results due to strong statistical variability
-\cite{dereudre2014estimation}.
+becomes very complex. Previous applications of the MCE almost always
+assumed $\mathbf{Y}$ to be a Poisson MPP with disc or spherical marks
+\cite{diggle1981binary} \cite {heinrich1993asymptotic}. These
+assumptions seem to be too strong in our inference problem. When the
+parametric form of $\mathbf{Y}$ becomes complicated, the derivation of
+summary statistics may involve some numerical integration technique
+and the minimization can also be non-trivial.
 
 \section{The method of inference from reconstruction }
 \label{sec:meth-infer-from-1}
 
-Recently, Thiedmann \textit{et al.}  proposed a novel inference method
-for parametric MPP models using a two-step approach that can
-effectively mitigate the challenges in our inference problem caused by
-data unobservability \cite{thiedmann2011stochastic}. Inspired by their
-work, we hereby formally present this method and refer to it as the
-\textit{inference from reconstruction} method.
+Recently, Thiedmann \textit{et al.} proposed a novel
+inference method for parametric MPP models using a two-step approach
+that can effectively mitigate the data unobservability problem
+\cite{thiedmann2011stochastic}. Inspired by their work, we hereby
+formally present this method and refer to it as the \textit{inference
+  from reconstruction} method.
 
 The inference from reconstruction method consists of two steps:
 
 \begin{enumerate}[leftmargin=*,noitemsep]
-\item \textit{The reconstruction step} aims at recovering the
+\item \textit{The reconstruction step} that aims at recovering the
   unobserved points and marks from the observed data through
-  stochastic random sampling.
+  stochastic sampling.
 \item \textit{The inference step} is a parametric inference step where
   a marked point process models is proposed and fitted to the
   reconstructed points and marks.
 \end{enumerate}
 
-This two-step mechanism provides two advantages that classical MCE
-method and the TFE method do not share. First, the recovered points
-and marks provide intuitions to determine which model should be used
-for the inference step. For example, once the points and marks are
-available, we can visualize and analyze their summary statistics to
-study statistical properties of the reconstructed points and
-marks. Second, the inference step using reconstructed points and marks
-becomes more straightforward since all point positions are
-observable. For instance, the reconstructed points can be fitted
-separately from the marks, using methods described in
-Section~\ref{chap5-sec2:materials-methods}, and the marks can be
-fitted later by separately analyzing their empirical statistics.
+This two-step mechanism provides two main advantages over classical
+MCE method. First, the recovered points and marks provide intuitions
+to determine which model should be used for the inference step. Once
+the points and marks are available, we can visualize and analyze their
+summary statistics to study statistical properties of the
+reconstructed points and marks. Second, the inference step using
+reconstructed points and marks becomes more straightforward since all
+point positions are observable. Due to these advantages, we decided to
+apply the inference from reconstruction method to fit a parametric MPP
+model to the ground truth segmented bCT data.
 
 In the literature, limited studies have investigated the inference
 from reconstruction method for parameter estimation of stochastic
@@ -747,20 +892,16 @@ recovered disc centers using the minimum contrast method with pair
 correlation function. The distribution of disc radii was analyzed
 separately. In \cite{dereudre2014estimation}, Dereudre \textit{et al.}
 has applied the reconstruction method described in
-\cite{thiedmann2011stochastic} in order to facilitate the empirical
-measurements of test functions from the input images during the TFE
-procedure for the Quermass disc model. To our knowledge, the method of
-inference from reconstruction has not yet been investigated for more
-complicated MPP models such as our case.
+\cite{thiedmann2011stochastic} to estimate parameters of a marked
+point process with disc marks from binary images. To our knowledge,
+the method of inference from reconstruction has not yet been
+investigated for more complicated MPP models such as our case.
 
-Due to the previously described advantages, we decided to apply the
-inference from reconstruction method to fit a parametric MPP model to
-the ground truth segmented bCT data. In the following section we
-describe in detail the methodology used for the reconstruction step
-and the inference step in our study.
+In the following section we describe in detail the methodology used
+for the reconstruction step and the inference step in our study.
 
-\subsection{Reconstruction step: approximating segmented bCT
-  data using ellipsoids}
+\subsection{Reconstruction step: approximating segmented bCT data
+  using ellipsoids}
 \label{sec:reconstr-step:-appr}
 
 Consider the case where the density function $f_{\mathbf{Y}}$ of the
@@ -790,14 +931,13 @@ observed dataset $\mathcal{D}$; and $\mathcal{P} (\cdot)$ is a \textit
 model $\mathbf{Y}$. Finding the best set of ellipsoids
 $\mathbf{u}^{*}$ is equivalent to solving the following optimization
 problem:
-\begin{align*}
+\begin{equation}
   \label{mpp-opt-energy}
   \mathbf{u}^{*}
-  & = \arg \max_{\mathbf{u}}{f_{\mathbf{Y}}(\mathbf{u})} \\
-  & = \arg \min_{\mathbf{u}} U(\mathbf{u}, \mathcal{D}) \\
-  & = \arg\min_ {\mathbf{u}} \left( \mathcal{L}(\mathbf{u},
-    \mathcal{D}) + \mathcal{P} (\mathbf{u}) \right). \numberthis
-\end{align*}
+  = \arg \max_{\mathbf{u}}{f_{\mathbf{Y}}(\mathbf{u})}
+  = \arg\min_ {\mathbf{u}} \left( \mathcal{L}(\mathbf{u},
+    \mathcal{D}) + \mathcal{P} (\mathbf{u}) \right).
+\end{equation}
 
 We formulated $\mathcal{L}(\mathbf{u}, \mathcal{D})$ and
 $\mathcal{P} (\mathbf{u})$ as follows:
@@ -867,23 +1007,22 @@ $\mathcal{P} (\mathbf{u})$ as follows:
       +\infty & \textnormal{otherwise}.
     \end{cases}
   \end{equation}
-  This means that the only a-priori information of the model
-  $\mathbf{Y}$ is that there are no ellipsoids that can have more than
-  95\% percent of its volume covered by other ellipsoids in the same
-  configuration.
+  This formulation indicates that the only a-priori information of the
+  model $\mathbf{Y}$ is that there are no ellipsoids that can have
+  more than 95\% percent of its volume covered by other ellipsoids in
+  the same configuration.
 
 \end{itemize}
 
 The optimization given by \eqref{mpp-opt-energy} finally becomes:
-\begin{align*}
+\begin{equation}
   \label{eq:mpp-final-opt}
   \mathbf{u}^{*}
-  & = \arg \min_{\mathbf{u}} U(\mathbf{u}, \mathcal{D}) \\
-  & = \arg \min_{\mathbf{u}} \mathcal{L}_{2}(\mathbf{u},
-    \mathcal{D}) + \sum_{\mathcal{E} \in \mathbf{u}} \left(
+  = \arg \min_{\mathbf{u}} \mathcal{L}_{2}(\mathbf{u},
+  \mathcal{D}) + \sum_{\mathcal{E} \in \mathbf{u}} \left(
     d_{\mathcal{E}} (\mathcal{D}) + q(\mathcal{E}, \mathbf{u}
-    \setminus \mathcal{E}) \right). \numberthis
-\end{align*}
+    \setminus \mathcal{E}) \right)
+\end{equation}
 
 The analytical solution of \eqref{eq:mpp-final-opt} is difficult to
 obtain and the Markov chain Monte Carlo sampling is often applied to
@@ -941,9 +1080,8 @@ kernels include:
 \item \textit{Perturbation proposal}. This proposal consists of
   changing the parametrization of a marked point $u$ in the current
   configuration $\mathbf{u}$ according to a perturbation kernel
-  $Q_{p}(\mathbf{u}, \cdot)$. There are various choices for the type
-  of perturbation. Commonly applied choices include affine
-  transformations of a mark \cite{descombes2013stochastic}, diffusion
+  $Q_{p}(\mathbf{u}, \cdot)$. Commonly applied perturbations include
+  affine transformations \cite{descombes2013stochastic}, diffusion
   based on the Langevin equations \cite{lafarge2010geometric},
   perturbation driven by observed data \cite{tu2002image}, or even
   switching to a different type of mark \cite{lafarge2010geometric}
@@ -1105,17 +1243,9 @@ Algorithm~\ref{algo-mbds}.
 
 \setcounter{table}{0}
 
-The decrease of temperature by a factor $\alpha$ in each iteration
-performs the simulated annealing \cite{kirkpatrick1983optimization}
-with geometric cooling schedule. Starting from a high temperature, the
-death probability of a marked point is relatively small. This means
-that the births and shifts are more favored than deaths in the
-beginning. This allows the Markov chain to broadly explore the
-solution space, and prevents it from getting stuck in local optima. As
-the temperature decreases, the death probability keeps increasing. The
-algorithm favors more deaths than births and shifts, since it assumes
-that the Markov chain is more concentrated on the global optimum as
-iterations advance.
+Notice that the decrease of temperature by a factor $\alpha$ in each
+iteration performs the simulated annealing
+\cite{kirkpatrick1983optimization} with geometric cooling schedule.
 
 The parameters for the MBDS algorithm are summarized in
 Table~\ref{tab:mbds-params}. Values for $T_0$, $\lambda_0$ and
@@ -1194,27 +1324,27 @@ algorithm.
 \label{sec:infer-step:-fitt-1}
 
 Once a segmented bCT VOI is represented as a system of ellipsoids with
-known spatial positions and shape parameters, we can fit a parametric
-MPP model to the reconstructed ellipsoids using methods described in
+known spatial positions and shape parameters, we fit a parametric MPP
+model to the reconstructed ellipsoids using methods described in
 Section~\ref{chap5-sec2:materials-methods}. To reduce the complexity
 of the inference step, we assume in the first instance that the marks
-of the MPP model is independent from the ground point process. This
+of the MPP model are independent from the ellipsoid centers. This
 allows us to fit the center point process of the ellipsoids and their
 shape parameters separately.
 
-% \subsubsection*{The point process for reconstructed ellipsoid
+% \subsubsection{The point process for reconstructed ellipsoid
 % centers}
 % \label{chap4-sec3-sub2sub1:ellipsoid-centers}
 
 To gain some intuition on the type of point process model
-$\mathbf{\Phi_s}$ to fit to the reconstructed ellipsoid centers, we
-first conducted statistical analysis to extract distributional
-information of the ellipsoid centers. In stochastic geometry, the
-analysis of summary statistics is the most commonly performed
-technique for this purpose \cite{chiu2013stochastic}. In this study,
-we chose to analyze the \textit{pair correlation function} (PCF), a
-second-order statistical characteristic that can help reveal
-comprehensive structural information of a point process.
+$\mathbf{\Phi_s}$ for the fit, we first conducted statistical analysis
+to extract distributional information of the ellipsoid centers. In
+stochastic geometry, the analysis of summary statistics is the most
+commonly performed technique for this purpose
+\cite{chiu2013stochastic}. In this study, we chose to analyze the
+\textit{pair correlation function} (PCF), a second-order statistical
+characteristic that can help reveal comprehensive structural
+information of a point process.
 
 \begin{define} \sidenote{Second order moment density, pair correlation
     function} \textnormal{\cite[p34]{baddeley2007spatial}}
@@ -1301,59 +1431,15 @@ $\delta = \frac{0.26}{\sqrt[3]{\hat{\lambda}}}$
 Once the empirical estimates of PCFs were obtained, we first checked
 if the Poisson property can or can not be rejected based on the PCF
 estimates. This check was performed using the envelope test described
-in~\cite{baddeley2014tests}.
-
-In spatial point process theory, the envelope test is a commonly used
-statistical test procedure to determine whether empirically estimated
-summary statistics deviate from the same theoretical summary
-statistics of a null hypothesis point process model
-\cite{ripley1977modelling} \cite{baddeley2014tests}. The test
-procedure consists in comparing the empirical summary statistics with
-the envelope of the same summary statistics obtained from several
-simulations of the null hypothesis model.
-
-Let $\mathbf{\Phi}$ be the null hypothesis model. Let $S$ denote some
-second-order summary statistics. We assume that $\mathbf{\Phi}$ is
-stationary and isotropic, hence $S$ is a function of the interpoint
-distance $r$. To construct the envelope of $S$ using $\mathbf{\Phi}$
-as the null hypothesis model, we first simulate $N$ realizations of
-$\mathbf{\Phi}$, denoted as the set $\{\Phi_n\}_{n = 1, \cdots,
-  N}$. For a given realization $\Phi_n$, an empirical estimate of $S$
-is obtained, denoted as $\widehat{S}_n$. Then we construct a
-point-wise envelope using the set of all empirical estimates
-$\{\widehat{S}_n\}_{n = 1, \cdots, N}$ as follows. At each interpoint
-distance $r$, we rank the values in
-$\{\widehat{S}_n(r)\}_{n = 1, \cdots, N}$ in ascending order. Then
-given a non-negative integer $k$, the envelope upper bound is assigned
-to the $k^{\textnormal{th}}$ highest value in
-$\{\widehat{S}_n(r)\}_{n = 1, \cdots, N}$. Similarly, the envelope
-lower bound is assigned to the $k^{\textnormal{th}}$ lowest value in
-$\{\widehat{S}_n(r)\}_{n = 1, \cdots, N}$.
-
-Let $\Phi_b$ be a spatial point pattern and let the null-hypothesis be
-that $\Phi_b$ is drawn from the null hypothesis model
-$\mathbf{\Phi}$. Let $\widehat{S}_b$ be the empirical estimate of $S$
-using $\Phi_b$. Then the envelope test is performed as follows. For a
-fixed interpoint distance value $r$, we reject the null-hypothesis at
-$r$, if $\widehat{S}_{b}(r)$ falls outside of the envelope at $r$. It
-has been proved that this procedure consists in a two-sided point-wise
-Monte Carlo test with significance level $\frac{2k}{1+N}$
-\cite{hope1968simplified} \cite{baddeley2014tests}.
-
-We conducted the envelope test for each set of reconstructed ellipsoid
-centers. For a given set of reconstructed ellipsoid centers $\Phi_s$,
-the null hypothesis model was the homogeneous Poisson point process
-with intensity parameter equal to $\hat{\lambda}$ estimated from
-$\Phi_s$ using \eqref{eq:inten-estimtor}. We chose $k = 5$ and
-$N = 199$, which yields a test significance level of 5\%.
-
-We will show in Section~\ref{chap4-sec4-sub2sub1:distr-reconstr-ellip}
-that the analysis of the PCFs revealed a clustering interaction
-between reconstructed ellipsoid centers. To model the clustering
-interaction, we proposed to fit a three-dimensional \textit{Mat\'ern
-  cluster process} \cite{baddeley2007spatial} to the reconstructed
-ellipsoid centers. The 3D Mat\'ern cluster process is a two-step
-process described as follows.
+in~\cite{baddeley2014tests}. We will show in
+Section~\ref{chap4-sec4-sub2sub1:distr-reconstr-ellip} that the
+analysis of the PCFs revealed a clustering interaction between
+reconstructed ellipsoid centers for the majority of the cases. To
+model the clustering interaction, we proposed to fit a
+three-dimensional \textit{Mat\'ern cluster process}
+\cite{baddeley2007spatial} to the reconstructed ellipsoid centers. The
+3D Mat\'ern cluster process is a two-step process described as
+follows.
 
 \begin{enumerate}
 
@@ -1393,8 +1479,9 @@ analytically accessible and is given by the following proposition
     \label{eq:matern-pcf}
     g(r; \kappa, \lambda_0, R) =
     \begin{cases}
-      1 + \frac{3}{8\pi \kappa R^6}(R - \frac{r}{2})^2
-      (2R + \frac{r}{2}) & \textnormal{if } 0 < r \leq 2R, \\
+      1 + \frac{3(R - \frac{r}{2})^2
+        (2R + \frac{r}{2})} {8\pi \kappa R^6}
+      & \textnormal{if } 0 < r \leq 2R, \\
       1 & \textnormal{if } r > 2R. \\
     \end{cases}
   \end{equation}
@@ -1402,10 +1489,9 @@ analytically accessible and is given by the following proposition
 
 To fit a Mat\'ern cluster process with parameters $\kappa, \lambda, R$
 to a set of reconstructed ellipsoid centers $\Phi_s$, we applied the
-minimum contrast estimation (MCE) method described in
-Section~\ref{chap5-sec2:materials-methods}. For a given $\Phi_s$, the
-contrast function $\mathcal{C}$ was computed based on the analytical
-and empirical PCF. That is,
+MCE method described in Section~\ref{sec:exist-param-infer}. For a
+given $\Phi_s$, the contrast function $\mathcal{C}$ was computed based
+on the analytical and empirical PCF. That is,
 \begin{equation}
   \label{eq:matern-contrast}
   \mathcal{C}(r; \kappa, \lambda_0, R, \Phi_s) =
@@ -1458,77 +1544,12 @@ As discussed earlier, the mark distribution
 $\mathbf{P}^{\boldsymbol{\theta}}$ was assumed independent from the
 ellipsoid center point process $\mathbf{\Phi_{s}}$. Based on this
 assumption, empirical statistics of each individual mark were examined
-separately from the ellipsoid centers.
-
-% The analysis of the distributions of $L_a$, $L_b$ and $L_c$ was
-% conducted using the following methodology.
-
-Histograms of the half lengths $L_a$, $L_b$ and $L_c$ of the
-reconstructed ellipsoids were obtained to visualize the empirical
-distributions of $L_a$, $L_b$ and $L_c$. For each half length of the
-reconstructed ellipsoids, the empirical mean $\hat{\mu}$ and standard
-deviation $\hat{\sigma}$ of were estimated. Next, two one-sample
-Kolmogorov-Smirnov tests \cite{massey1951kolmogorov} were performed
-for each axis.
-
-\begin{itemize}
-
-\item The first test has the objective to check if the distributions
-  of the half lengths deviate from Gaussian distributions. It has the
-  null-hypothesis that $L_a$, $L_b$ and $L_c$ follow Gaussian
-  distributions with mean and standard deviation equal to the
-  corresponding empirical estimates. The $p$-value of each test was
-  computed and denoted as $p_1$.
-
-\item The second test has the objective to check if the distributions
-  of the half lengths deviate from the proposal distributions
-  $f_{L_a}$, $f_{L_b}$, $f_{L_c}$ specified in
-  Table~\ref{tab:mbds-params} respectively. This test has the
-  null-hypothesis that $L_a$, $L_b$ and $L_c$ follow the proposal
-  distributions $f_{L_a}$, $f_{L_b}$ and $f_{L_c}$. The $p$-value of
-  each test was computed and denoted as $p_2$.
-
-\end{itemize}
-
-% The analysis of the distributions of $\delta\phi_x$, $\delta\phi_y$
-% and $\delta\phi_z$ was conducted using the following methodology.
-
-In a similar fashion, the histograms of the tilts angles
-$\delta\phi_x$, $\delta\phi_y$ and $\delta\phi_z$ of the reconstructed
-ellipsoids were also obtained. For each set of reconstructed
-ellipsoids, the empirical minimum and maximum of $\delta\phi_x$, as
-well as the empirical mean $\hat{\mu}$ and standard deviation
-$\hat{\sigma}$ of $\delta\phi_y$ and $\delta\phi_z$ were
-estimated. Similar to the axis lengths, two Kolmogorov-Smirnov tests
-were performed for each tilt angle.
-
-\begin{itemize}
-
-\item For $\delta\phi_x$, the first test has the objective to check if
-  its distribution deviates from a uniform distribution. It has the
-  null-hypothesis that $\delta\phi_x$ follows a uniform distribution
-  with minimum and maximum equal to the empirical estimates. For
-  $\delta\phi_y$ and $\delta\phi_z$, the first test has the objective
-  to check if the two distributions deviate from Gaussian
-  distributions. It has the null-hypothesis that $\delta\phi_y$ and
-  $\delta\phi_z$ follow Gaussian distributions with mean and standard
-  deviation equal to the empirical estimates. The $p$-value of each
-  test was computed and denoted as $p_1$.
-
-\item The second test has the objective to check if the distributions
-  of the tilt angles deviate from the proposal distributions
-  $f_{\delta{\phi_x}}$, $f_{\delta{\phi_y}}$ and $f_{\delta{\phi_z}}$
-  specified in Table~\ref{tab:mbds-params} respectively. It has the
-  null-hypothesis that $\delta\phi_x$, $\delta\phi_y$ and
-  $\delta\phi_z$ follow the proposal distributions
-  $f_{\delta{\phi_x}}$, $f_{\delta{\phi_y}}$ and $f_{\delta{\phi_z}}$
-  respectively. The $p$-value of each test was computed and denoted as
-  $p_2$.
-
-\end{itemize}
-
-Based on the empirical statistical analysis, independent distributions
-were proposed for each mark.
+separately from the ellipsoid centers. Histograms of the half lengths
+$L_a$, $L_b$, $L_c$ and the tilts angles $\delta\phi_x$,
+$\delta\phi_y$, $\delta\phi_z$ of the reconstructed ellipsoids were
+obtained to visualize the empirical distributions of $L_a$, $L_b$ and
+$L_c$. Based on the empirical statistical analysis, independent
+distributions were proposed for each mark.
 
 % An example of a floating figure using the graphicx package.  Note
 % that \label must occur AFTER (or within) \caption.  For
@@ -1623,150 +1644,14 @@ were proposed for each mark.
 % places footnotes above bottom floats. This can be corrected via the
 % \fnbelowfloat command of the stfloats package.
 
-
-
-
 \section{Results}
 \label{sec:results}
 
-
-A collection of 16 sets of segmented clinical bCT VOIs were selected
-for this study. The sizes of the selected bCT VOIs are \SI{3.5}{\cm}
-$\times$ \SI{3.5}{\cm} $\times$ \SI{3.5}{\cm}. The selected VOIs have
-BI-RADS density from category one to three and represent a subset of
-breasts with considerable variability in medium scale fibroglandular
-and inter-glandular adipose tissue. None of the VOIs contained a
-lesion. Table~\ref{tab:summary-info-extract} summarizes the density
-and the size (in voxels) of the selected bCT VOIs, as well as and the
-size of the isotropic voxels of each VOI.
-
-\begin{table}[!htb]
-  \begin{center}
-    \begin{tabular}{ m{1cm} m{1.3cm} m{2.6cm} m{1.8cm}}
-      \toprule
-
-      \centering{\textbf{VOI}}
-      % & \centering{\textbf{BI-RADS category}}
-      & \centering{\textbf{Density}}
-      & \centering{\textbf{Size in voxels}}
-      & \centering{\textbf{Voxel size}}
-        \tabularnewline%\\
-
-      \cmidrule(lr){1-1} \cmidrule(lr){2-2}
-      \cmidrule(lr){3-3} \cmidrule(lr){4-4}
-      % \cmidrule(lr){5-5}
-
-      \centering{\#1}
-        & \centering{57.2\%}
-      & \centering{$99 \times 99 \times 99$}
-      & \centering{$\SI{0.357}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#2}
-        & \centering{40.6\%}
-      & \centering{$99 \times 99 \times 99$}
-      & \centering{$\SI{0.354}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#3}
-        & \centering{25.1\%}
-      & \centering{$94 \times 94 \times 94$}
-      & \centering{$\SI{0.376}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#4}
-        & \centering{23.5\%}
-      & \centering{$103 \times 103 \times 103$}
-      & \centering{$\SI{0.341}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#5}
-        & \centering{17.4\%}
-      & \centering{$103 \times 103 \times 103$}
-      & \centering{$\SI{0.343}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#6}
-        & \centering{37.2\%}
-      & \centering{$100 \times 100 \times 100$}
-      & \centering{$\SI{0.351}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#7}
-        & \centering{32.9\%}
-      & \centering{$112 \times 112 \times 112$}
-      & \centering{$\SI{0.314}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#8}
-        & \centering{29.0\%}
-      & \centering{$96 \times 96 \times 96$}
-      & \centering{$\SI{0.366}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#9}
-        & \centering{25.7\%}
-      & \centering{$97 \times 97 \times 97$}
-      & \centering{$\SI{0.361}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#10}
-        & \centering{13.9\%}
-      & \centering{$101 \times 101 \times 101$}
-      & \centering{$\SI{0.349}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#11}
-        & \centering{14.5\%}
-      & \centering{$128 \times 128 \times 128$}
-      & \centering{$\SI{0.275}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#12}
-        & \centering{09.8\%}
-      & \centering{$87 \times 87 \times 87$}
-      & \centering{$\SI{0.405}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#13}
-        & \centering{27.1\%}
-      & \centering{$107 \times 107 \times 107$}
-      & \centering{$\SI{0.329}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#14}
-        & \centering{25.0\%}
-      & \centering{$87 \times 87 \times 87$}
-      & \centering{$\SI{0.405}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#15}
-        & \centering{20.5\%}
-      & \centering{$124 \times 124 \times 124$}
-      & \centering{$\SI{0.283}{\mm}$}
-        \tabularnewline%\\
-
-      \centering{\#16}
-        & \centering{17.2\%}
-      & \centering{$126 \times 126 \times 126$}
-      & \centering{$\SI{0.279}{\mm}$}
-        \tabularnewline%\\
-
-      \bottomrule
-
-    \end{tabular}
-    \caption{Summary of the glandular density, the size (in voxels)
-      and the size of the isotropic voxels of the selected 16 sets of
-      segmented clinical bCT VOIs.}
-    \label{tab:summary-info-extract}
-  \end{center}
-\end{table}
-
 In this section, we demonstrate the results of the inference from
-reconstruction method focusing on examples of four bCT VOIs (VOI \#1,
-\#3 \#7, \#11). We chose these four VOIs since their glandular
-densities cover BI-RADS breast density 1, BI-RADS breast density 2 and
-BI-RADS breast density 3 categories and they represent a fairly large
+reconstruction method focusing on examples of three bCT VOIs (VOI \#3
+\#7, \#11). We chose these three VOIs since their glandular densities
+cover BI-RADS breast density 1, BI-RADS breast density 2 and BI-RADS
+breast density 3 categories and hence they represent a fairly large
 variability of medium scale fibroglandular and inter-glandular adipose
 breast tissue. Further analyses were performed for all datasets listed
 in Table~\ref{tab:summary-info-extract} and similar results were
@@ -1803,26 +1688,6 @@ and inter-glandular tissue.
 
   \centering
   \captionsetup[subfloat]{labelformat=empty}
-
-  {\fontsize{9}{9}\selectfont VOI \#1} \vspace{1mm}
-
-  \raisebox{0.5em}{\fontsize{9}{9}\selectfont \rotatebox{90}{Ground
-      truth}}
-  \includegraphics[width=0.13\textwidth]
-  {figure/all/dataset_1/roi_coronal}
-  \includegraphics[width=0.13\textwidth]
-  {figure/all/dataset_1/roi_saggital}
-  \includegraphics[width=0.13\textwidth]
-  {figure/all/dataset_1/proj_roi}
-
-  \raisebox{0.5em}{\fontsize{9}{9}\selectfont
-    \rotatebox{90}{Reconstruction}}
-  \includegraphics[width=0.13\textwidth]
-  {figure/all/dataset_1/model_coronal}
-  \includegraphics[width=0.13\textwidth]
-  {figure/all/dataset_1/model_saggital}
-  \includegraphics[width=0.13\textwidth]
-  {figure/all/dataset_1/proj_roi_inten10}
 
   {\fontsize{9}{9}\selectfont VOI \#3} \vspace{1mm}
 
@@ -1887,12 +1752,8 @@ and inter-glandular tissue.
     Projection}{\includegraphics[width=0.13\textwidth]
     {figure/all/dataset_11/proj_roi_inten10}}
 
-  \caption{From left to right, the three columns on the left shows:
-    coronal slices through four segmented clinical bCT VOIs, saggital
-    slices through the same bCT VOIs and projections of the same bCT
-    VOIs. From left to right, the three columns on the right shows:
-    coronal slices through the reconstructed VOIs, saggital slices
-    through the reconstructed VOIs and projections of the
+  \caption{Illustration of coronal slices, saggital slices and
+    projections of the segmented clinical bCT VOIs and their
     reconstructed VOIs. The sizes of the VOIs are \SI{3.5}{\cm}
     $\times$ \SI{3.5}{\cm} $\times$ \SI{3.5}{\cm}. Reconstructed VOIs
     are binary volumes with the same size and resolution as their
@@ -1932,81 +1793,15 @@ obtained for other investigated bCT VOIs.
 \label{chap4-sec4-sub2:result-infer-step}
 
 We first demonstrate the analysis of empirical PCFs estimated from the
-reconstructed ellipsoid centers for all selected bCT VOIS using
-methodologies described in
-Section~\ref{chap5-sec3-sub2:infer-step:-fitt}.
+reconstructed ellipsoid centers for all bCT VOIs.
 
-\begin{figure}[!htb]
-  \centering
-
-  \captionsetup[subfloat]{labelformat=empty,position=top}
-
-  \subfloat[VOI \#5]{\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_5/pcf_new}}%
-  \subfloat[VOI \#12]{\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_12/pcf_new}}%
-
-  \subfloat[VOI \#15]{\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_15/pcf_new}}%
-  \subfloat[VOI \#16] {\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_16/pcf_new}}%
-
-  \caption{Comparison of the empirical PCFs estimated from the
-    reconstructed ellipsoid centers for four bCT VOIs (\#5, \#12 \#15
-    and \#16) and the theoretical Poisson PCFs. Dashed lines are the
-    empirical PCFs estimated from the reconstructed ellipsoid
-    centers. Solid lines are theoretical Poisson PCFs. Gray surfaces
-    are the envelopes of the Poisson PCFs generated using the method
-    described in Section~\ref{chap5-sec3-sub2:infer-step:-fitt}. Based
-    on the envelope test described in
-    Section~\ref{chap5-sec3-sub2:infer-step:-fitt}, the Poisson
-    null-hypothesis can not be rejected at any interpoint distance.}
-
-  % \caption{Example of the analysis of the empirically estimated PCFs
-  % for bCT VOIs \#5, \#12 \#15 and \#16. Each figure demonstrates:
-  % the estimates of the PCF of the ellipsoid centers reconstructed
-  % from the bCT VOIs (dashed line); The theoretical PCF of the
-  % Poisson point process (solid line); The envelope of the Poisson
-  % point process PCF created using method described in
-  % Section~\ref{chap5-sec3-sub2:infer-step:-fitt} (gray
-  % surfaces). For the four demonstrated cases, the Poisson
-  % null-hypothesis can not be reject at any interpoint distance,
-  % based on the envelope test described in
-  % Section~\ref{chap5-sec3-sub2:infer-step:-fitt}.}
-  \label{fig:pcf-est-non-reject}
-\end{figure}
-
-Our analysis shows that, among the 16 selected bCT VOIs, there are
-four cases where the Poisson null-hypothesis can not be
-rejected. These four case were VOI \#5, \#12 \#15 and
-\#16. Figure~\ref{fig:pcf-est-non-reject} compares the empirical PCFs
-estimated from the reconstructed ellipsoid centers for these four bCT
-VOIs and the theoretical Poisson PCFs. The envelopes of the Poisson
-PCFs generated using the method described in
-Section~\ref{chap5-sec3-sub2:infer-step:-fitt} are also shown. Based
-on the envelope test described in
-Section~\ref{chap4-sec3-sub2sub1:ellipsoid-centers}, the Poisson
-null-hypothesis can not be rejected at any interpoint distance. Due to
-this finding, the VOI \#5, \#12 \#15 and \#16 were left out for the
-follow-up study since they represented a much smaller population among
-all bCT VOIs.
-
-% Their empirically estimated PCFs are shown in
-% Figure~\ref{fig:pcf-est-non-reject}. Theoretical Poisson PCF (solid
-% line) and the Poisson envelopes (gray surfaces) generated using
-% method described in
-% Section~\ref{chap4-sec4-sub2sub1:distr-reconstr-ellip} are also
-% shown. From Figure~\ref{fig:pcf-est-non-reject} we can see that, for
-% the demonstrated four cases, the Poisson null-hypothesis can not be
-% reject at any interpoint distance, based on the two-sided Monte
-% Carlo tests described in
-% Section~\ref{chap4-sec3-sub2sub1:ellipsoid-centers}. Due to this
-% finding, the VOI \#5, \#12 \#15 and \#16 were left out for the
-% follow-up study since they represented a much smaller population
-% among all bCT VOIs.
+Our analysis shows that, among the 16 selected bCT VOIs, for 25\% of
+the cases the Poisson null-hypothesis can not be rejected. For the
+remainder of our study, these cases were excluded since they
+represented a much smaller population among all bCT VOIs.
 
 Figure~\ref{fig:pcf-est} compares the empirical PCFs estimated from
-the reconstructed ellipsoid centers for the four bCT VOIs shown in
+the reconstructed ellipsoid centers for the three bCT VOIs shown in
 Figure~\ref{fig:bct-datasets-recon} and the theoretical Poisson
 PCFs. The envelopes of the Poisson PCFs generated using the method
 described in Section~\ref{chap5-sec3-sub2:infer-step:-fitt} are also
@@ -2023,14 +1818,11 @@ same clustering effect was found for all other investigated bCT VOIs.
 
   \captionsetup[subfloat]{labelformat=empty,position=top}
 
-  \subfloat[{VOI \#1}]{\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_1/pcf_new}}%
-  \subfloat[{VOI \#3}]{\includegraphics[width=0.25\textwidth]%
+  \subfloat[{VOI \#3}]{\includegraphics[width=0.165\textwidth]%
     {figure/all/dataset_3/pcf_new}}%
-
-  \subfloat[{VOI \#7}]{\includegraphics[width=0.25\textwidth]%
+  \subfloat[{VOI \#7}]{\includegraphics[width=0.165\textwidth]%
     {figure/all/dataset_7/pcf_new}}%
-  \subfloat[{VOI \#11}] {\includegraphics[width=0.25\textwidth]%
+  \subfloat[{VOI \#11}] {\includegraphics[width=0.165\textwidth]%
     {figure/all/dataset_11/pcf_new}}%
 
   \caption{Comparison of the empirical PCFs estimated from the
@@ -2043,67 +1835,36 @@ same clustering effect was found for all other investigated bCT VOIs.
     Section~\ref{chap5-sec3-sub2:infer-step:-fitt}. The envelope test
     rejects the Poisson null-hypothesis for all four VOIs at
     interpoint distance $r = $ \SI{3}{\mm}.}
-
-  % \caption{Example of the analysis of the empirically estimated PCFs
-  % for the four examples of bCT VOIs demonstrated in
-  % Figure~\ref{fig:bct-datasets-recon}. Each figure demonstrates: the
-  % estimates of the PCF of the ellipsoid centers reconstructed from
-  % the bCT VOIs (dashed line); The theoretical PCF of the Poisson
-  % point process (solid line); The envelope of the Poisson point
-  % process PCF created using method described in
-  % Section~\ref{chap5-sec3-sub2:infer-step:-fitt} (gray
-  % surfaces). From the envelope test described in
-  % Section~\ref{chap5-sec3-sub2:infer-step:-fitt}, the Poisson
-  % null-hypothesis are rejected for all four cases at interpoint
-  % distance $r = $ \SI{3}{\mm}.}
   \label{fig:pcf-est}
 \end{figure}
 
-\subsubsection*{Parameters of the 3D Mat\'ern cluster process}
-\label{chap4-sec4-sub2sub1:distr-reconstr-ellip}
+% \subsubsection*{Parameters of the 3D Mat\'ern cluster process}
+% \label{chap4-sec4-sub2sub1:distr-reconstr-ellip}
 
-As discussed in Section~\ref{chap4-sec3-sub2sub1:ellipsoid-centers}, a
-3D Mat\'ern cluster process was fitted to each set of reconstructed
-ellipsoid centers using the MCE
-method. Table~\ref{tab:matern-fit-params} lists the fitted Mat\'ern
-cluster process parameters $\hat{\kappa}$, $\hat{\lambda_0}$ and
-$\hat{R}$ for ellipsoid centers reconstructed from all bCT VOIs
-(excluding VOI \#5, \#12, \#15 and \#16).
-
-Figure~\ref{fig:matern-pcf-fit} compares the empirical PCFs estimated
-from the reconstructed ellipsoid centers for the four bCT VOIs shown
-in Figure~\ref{fig:bct-datasets-recon} and the theoretical PCFs of the
-Mat\'ern cluster processes fitted to the same VOIs. The PCF envelopes
-of the fitted Mat\'ern cluster processes were also generated using the
-method described in Section~\ref{chap5-sec3-sub2:infer-step:-fitt},
-but with the fitted Mat\'ern cluster process as the null hypothesis
-model. It can be seen that for all VOIs, the the empirically estimated
-PCFs fall inside the envelopes at all interpoint distances. Based on
-this, we conclude that the fits are fairly good.
-
-% Figure~\ref{fig:matern-pcf-fit} illustrates the PCFs of the fitted
-% Mat\'ern cluster processes. Envelopes of the PCFs of the fitted
-% Mat\'ern cluster processes were also generated, using the same
-% method as for the Poisson point process described in
-% Section~\ref{chap4-sec4-sub2sub1:distr-reconstr-ellip}. It can be
-% seen that for all VOIs, the the empirically estimated PCFs fall
-% inside the Mat\'{e}rn cluster process envelopes at all considered
-% interpoint distances. Based on this, we conclude that the fits are
-% fairly good.
+As discussed in Section~\ref{sec:infer-step:-fitt-1}, a 3D Mat\'ern
+cluster process was fitted to each set of reconstructed ellipsoid
+centers using the MCE method. Figure~\ref{fig:matern-pcf-fit} compares
+the empirical PCFs estimated from the reconstructed ellipsoid centers
+for the four bCT VOIs shown in Figure~\ref{fig:bct-datasets-recon} and
+the theoretical PCFs of the Mat\'ern cluster processes fitted to the
+same VOIs. The PCF envelopes of the fitted Mat\'ern cluster processes
+were also generated using the method described in
+Section~\ref{chap5-sec3-sub2:infer-step:-fitt}, but with the fitted
+Mat\'ern cluster process as the null hypothesis model. It can be seen
+that for all VOIs, the the empirically estimated PCFs fall inside the
+envelopes at all interpoint distances. Based on this, we conclude that
+the fits are fairly good.
 
 \begin{figure}[!htb]
   \centering
 
   \captionsetup[subfloat]{labelformat=empty,position=top}
 
-  \subfloat[VOI \#1]{\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_1/fit_pcf_matern}}%
-  \subfloat[VOI \#3] {\includegraphics[width=0.25\textwidth]%
+  \subfloat[VOI \#3] {\includegraphics[width=0.165\textwidth]%
     {figure/all/dataset_3/fit_pcf_matern}}%
-
-  \subfloat[VOI \#7]{\includegraphics[width=0.25\textwidth]%
+  \subfloat[VOI \#7]{\includegraphics[width=0.165\textwidth]%
     {figure/all/dataset_7/fit_pcf_matern}}%
-  \subfloat[VOI \#11]{\includegraphics[width=0.25\textwidth]%
+  \subfloat[VOI \#11]{\includegraphics[width=0.165\textwidth]%
     {figure/all/dataset_11/fit_pcf_matern}}%
 
   \caption{Comparison of the empirical PCFs estimated from the
@@ -2120,397 +1881,168 @@ this, we conclude that the fits are fairly good.
   \label{fig:matern-pcf-fit}
 \end{figure}
 
-\begin{table}[!htb]
-  \begin{center}
-    \begin{tabular}{ m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} }
-      \toprule
-
-      \centering{\textbf{VOI}}
-      & \centering{$\hat{\kappa}$}
-      & \centering{$\hat{\lambda_0}$}
-      & \centering{$\hat{R}$}
-        \tabularnewline%\\
-
-      \cmidrule(lr){1-1} \cmidrule(lr){2-2}
-      \cmidrule(lr){3-3} \cmidrule(lr){4-4}
-
-      \centering{\# 1}
-      & \centering{4.237e-04}
-      & \centering{2.812e-02}
-      & \centering{4.221}
-        \tabularnewline%\\
-
-        % \centering{\# 2}
-        % & \centering{4.719e-02}
-        % & \centering{4.331e-02}
-        % & \centering{1.218}
-        % \tabularnewline%\\
-
-      \centering{\# 3}
-      & \centering{3.245e-03}
-      & \centering{5.985e-03}
-      & \centering{5.988}
-        \tabularnewline%\\
-
-        % \centering{\# 4}
-        % & \centering{1.014e-04}
-        % & \centering{1.515e-02}
-        % & \centering{10.408}
-        % \tabularnewline%\\
-
-        % \centering{\# 6}
-        % & \centering{5.652e-04}
-        % & \centering{1.185e-02}
-        % & \centering{6.980}
-        % \tabularnewline%\\
-
-      \centering{\# 7}
-      & \centering{2.876e-04}
-      & \centering{3.092e-02}
-      & \centering{5.827}
-        \tabularnewline%\\
-
-        % \centering{\# 8}
-        % & \centering{1.102e-03}
-        % & \centering{1.787e-02}
-        % & \centering{5.150}
-        % \tabularnewline%\\
-
-        % \centering{\# 9}
-        % & \centering{1.752e-03}
-        % & \centering{1.836e-02}
-        % & \centering{4.467}
-        % \tabularnewline%\\
-
-        % \centering{\# 10}
-        % & \centering{1.374e-02}
-        % & \centering{6.429e-03}
-        % & \centering{3.643}
-        % \tabularnewline%\\
-
-      \centering{\# 11}
-      & \centering{3.405e-03}
-      & \centering{1.923e-02}
-      & \centering{3.853}
-        \tabularnewline%\\
-
-        % \centering{\# 13}
-        % & \centering{8.206e-04}
-        % & \centering{1.380e-02}
-        % & \centering{6.608}
-        % \tabularnewline%\\
-
-        % \centering{\# 14}
-        % & \centering{6.643e-04}
-        % & \centering{5.720e-03}
-        % & \centering{9.993}
-        % \tabularnewline%\\
-
-      \bottomrule
-
-    \end{tabular}
-    \caption{Fitted Mat\'ern cluster process parameters for the four
-      bCT VOIs shown in Figure~\ref{fig:bct-datasets-recon}.}
-    \label{tab:matern-fit-params}
-  \end{center}
-\end{table}
-
-\subsubsection*{The mark distribution}
+\subsubsection{The mark distribution}
 \label{chap4-sec4-sub2sub2:distr-semi-princ}
 
 Figure~\ref{fig:ellip-axes-distr} shows the histograms of the half
-lengths $L_a$, $L_b$ and $L_c$ of the reconstructed ellipsoids for the
-four bCT VOIs shown in Figure~\ref{fig:bct-datasets-recon}. The
-empirical mean $\hat{\mu}$ and standard deviation $\hat{\sigma}$, as
-well as the $p_1$ and $p_2$ values of the Kolmogorov-Smirnov tests
-(described in Section~\ref{chap5-sec3-sub2:infer-step:-fitt}) for each
-half length are shown under the histograms.
-
-According to the $p_1$ values, $L_a$, $L_b$ and $L_c$ remain to be
-Gaussian distributed for all cases at significance level 5\%. However,
-according to the $p_2$ values the distributions of $L_a$, $L_b$ and
-$L_c$ deviate significantly from the proposal distrbutions $f_{L_a}$,
-$f_{L_b}$ and $f_{L_c}$ respectively, for all cases at the same
-significance level.
-
-Figure~\ref{fig:ellip-tilts-distr} shows the histograms of the tilts
-angles $\delta\phi_x$, $\delta\phi_y$ and $\delta\phi_z$ of the
-reconstructed ellipsoids for the four bCT VOIs shown in
-Figure~\ref{fig:bct-datasets-recon}. The empirical minimum and maximum
-for $\delta\phi_x$, the empirical mean $\hat{\mu}$ and standard
-deviation $\hat{\sigma}$ for $\delta\phi_y$ and $\delta\phi_z$, as
-well as the $p_1$ and $p_2$ values of the Kolmogorov-Smirnov tests
-(described in Section~\ref{chap5-sec3-sub2:infer-step:-fitt}) for each
-tilt angle are shown under the histograms.
-
-% The empirical statistics for each tilt angle are shown under each
-% sub-figure. The $p_1$ and $p_2$ values of the Kolmogorov-Smirnov
-% tests described in Section~\ref{chap5-sec3-sub2:infer-step:-fitt}
-% are also shown.
-
-% According to the $p_1$ and $p_2$ values, the hypothesis that
-% $\delta\phi_x$ follows the uniform distribution
-% $\mathcal{U}(-\frac{\pi}{2}, \frac{\pi}{2})$ can not be rejected at
-% significance level 5\% for all cases.
-
-According to the $p_1$ and $p_2$ values for $\delta\phi_x$, the
-distribution of $\delta\phi_x$ does not deviate significantly from the
-uniform distribution $\mathcal{U}(-\frac{\pi}{2}, \frac{\pi}{2})$ for
-all cases at significance level 5\%. According to the $p_1$ values for
-$\delta\phi_y$, $\delta\phi_y$ remains to be Gaussian distributed in
-three of the four cases at significance level 5\%. However, according
-to $p_2$ values for $\delta\phi_y$, the distribution of $\delta\phi_y$
-deviates significantly from the proposal distribution
-$f_{\delta{\phi_x}}$ in three of the four cases at significance level
-5\%. According to the $p_1$ values for $\delta\phi_z$, $\delta\phi_z$
-remains to be Gaussian distributed in two of the four cases at
-significance level 5\%. However, according to the $p_2$ values for
-$\delta\phi_z$, the distribution of $\delta\phi_z$ deviates
-significantly from the proposal distribution $f_{\delta{\phi_x}}$ for
-all cases at significance level 5\%. Similar observations were
-obtained for all other investigated bCT VOIs.
-
-% Regarding the distribution of $\delta\phi_y$, according to the $p_1$
-% values in three of the four cases the Gaussian hypothesis can not be
-% rejected at significance level 5\%. However, according to the $p_2$
-% values in three of the four cases the null-hypothesis that
-% $\delta\phi_y$ follows the proposal distribution
-% $f_{\delta{\phi_x}}$ is rejected at significance level 5\%.
-
-% For $\delta\phi_z$, $p_1$ seems to suggest that in half of the four
-% cases, the Gaussian distribution can not be rejected at significance
-% level 5\%. And finally $p_2$ suggest that the null-hypothesis that
-% $\delta\phi_z$ follows the proposal distribution
-% $f_{\delta{\phi_z}}$ should all be rejected at significance level
-% 5\%.
-
-% Similar observations regarding $\delta\phi_x$ were obtained for the
-% rest of the cases not shown in Figure~\ref{fig:ellip-axes-distr}.
-
-% For $\delta\phi_x$ and $\delta\phi_y$, the two Kolmogorov-Smirnov
-% tests showed different results for different input VOI.  In three
-% out of the four demonstrated cases, the null-hypothesis of the first
-% tests for $\delta\phi_y$ can not be rejected at significance level
-% 5\%, according to the $p_1$ values.
-
-% However, in the rejected cases, there are 2 cases where the
-% hypothesis that $\delta\phi_y$ is Gaussian distributed following
-% $f_{\delta{\phi_y}}$ can not be rejected, according to the $p_2$
-% values. For the rest of the three VOIs,
-
-% This means that at significance level 5\%, in 66.7\% (8 out of 12)
-% of the cases, the hypothesis that $\delta\phi_y$ is Gaussian
-% distributed can not be rejected.
-
-% According to the $p_1$ values, in 66.7\% (8 out of 12) of the cases,
-% the hypothesis that $\delta\phi_x$ follows uniform distribution can
-% not be rejected at significance level 5\%. For these cases, the
-% hypothesis that $\delta\phi_x$ is uniformly distributed following
-% $f_{\delta{\phi_x}}$ also can not be rejected at the same
-% significance level, according to the $p_2$ values.
-
-% In 50\% (6 out of 12) of the cases, the null-hypothesis of the first
-% tests for $\delta\phi_y$ can not be rejected at significance level
-% 5\%, according to the $p_1$ values. However, in the rejected cases,
-% there are 2 cases where the hypothesis that $\delta\phi_y$ is
-% Gaussian distributed following $f_{\delta{\phi_y}}$ can not be
-% rejected, according to the $p_2$ values. This means that at
-% significance level 5\%, in 66.7\% (8 out of 12) of the cases, the
-% hypothesis that $\delta\phi_y$ is Gaussian distributed can not be
-% rejected.
-
-% Finally regarding $\delta\phi_z$, using analysis similar to that for
-% $\delta\phi_y$, we conclude that at significance level 5\%, in
-% 41.67\% (5 out of 12) of the cases, the hypothesis that
-% $\delta\phi_z$ is Gaussian distributed can not be rejected.
+lengths $L_a$, $L_b$, $L_c$ and the tilt angles $\delta\phi_x$,
+$\delta\phi_y$, $\delta\phi_z$ of the reconstructed ellipsoids for the
+three bCT VOIs shown in Figure~\ref{fig:bct-datasets-recon}. From
+visual observations, we notice that the distributions of $L_a$, $L_b$,
+$L_c$, $\delta\phi_y$ and $\delta\phi_z$ seem to be Gaussian and the
+distribution of $\delta\phi_x$ seems to be uniform between
+$-\frac{\pi}{2}$ and $\frac{\pi}{2}$. Similar observations were also
+obtained for reconstructed ellipsoids from other bCT VOIs. Following
+these observations, we then fitted the distributions of $L_a$, $L_b$,
+$L_c$, $\delta\phi_y$ and $\delta\phi_z$ to Gaussian distributions
+using the maximum likelihood estimator. A series of Kolmogorov-Smirnov
+tests were also performed to verify the statistical validity of the
+fit. The tests show that for more 80\% of the cases, the fit was good
+statistically valid under 5\% confidence interval.
 
 \begin{figure}[!htb]
   \centering
 
   \captionsetup[subfloat]{labelformat=empty,position=top}
 
-  \subfloat[VOI \#1]{\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_1/axes_distr_new}}%
   \subfloat[VOI \#3]{\includegraphics[width=0.25\textwidth]%
     {figure/all/dataset_3/axes_distr_new}}%
-
-  \subfloat[VOI \#7]{\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_7/axes_distr_new}}%
-  \subfloat[VOI \#11]{\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_11/axes_distr_new}}%
-
-  \caption{Histograms of the half lengths $L_a$, $L_b$ and $L_c$ of
-    reconstructed ellipsoids for the four bCT VOIs shown in
-    Figure~\ref{fig:bct-datasets-recon}. For each half length,
-    $\hat{\mu}$ and $\hat{\sigma}$ refer respectively to their
-    empirical mean and standard deviation. For each half length, $p_1$
-    and $p_2$ refer to the $p$-values of the two Kolmogorov-Smirnov
-    tests described in
-    Section~\ref{chap5-sec3-sub2:infer-step:-fitt}.}
-  \label{fig:ellip-axes-distr}
-\end{figure}
-
-\begin{figure}[!htb]
-  \centering
-
-  \captionsetup[subfloat]{labelformat=empty,position=top}
-
-  \subfloat[VOI \#1]{\includegraphics[width=0.25\textwidth]%
-    {figure/all/dataset_1/tilts_distr_new}}%
   \subfloat[VOI \#3]{\includegraphics[width=0.25\textwidth]%
     {figure/all/dataset_3/tilts_distr_new}}%
 
   \subfloat[VOI \#7]{\includegraphics[width=0.25\textwidth]%
+    {figure/all/dataset_7/axes_distr_new}}%
+  \subfloat[VOI \#7]{\includegraphics[width=0.25\textwidth]%
     {figure/all/dataset_7/tilts_distr_new}}%
+
+  \subfloat[VOI \#11]{\includegraphics[width=0.25\textwidth]%
+    {figure/all/dataset_11/axes_distr_new}}%
   \subfloat[VOI \#11]{\includegraphics[width=0.25\textwidth]%
     {figure/all/dataset_11/tilts_distr_new}}%
 
-  \caption{Histograms of the tilt angles $\delta\phi_x$,
-    $\delta\phi_y$ and $\delta\phi_z$ of reconstructed ellipsoids from
-    the four bCT VOIs shown in Figure~\ref{fig:bct-datasets-recon}.
-    For $\delta\phi_x$, $\min$ and $\max$ refer respectively to its
-    empirical minimum and maximum. For $\delta\phi_y$ and
-    $\delta\phi_z$, $\hat{\mu}$ and $\hat{\sigma}$ refer respectively
-    to their empirical mean and standard deviation. For each tilt
-    angle, $p_1$ and $p_2$ refer to the $p$-values of the two
-    Kolmogorov-Smirnov tests described in
-    Section~\ref{chap5-sec3-sub2:infer-step:-fitt}.}
-  \label{fig:ellip-tilts-distr}
+  \caption{Histograms of the half lengths $L_a$, $L_b$, $L_c$ and the
+    tilt angles $\delta\phi_x$, $\delta\phi_y$, $\delta\phi_z$ of
+    reconstructed ellipsoids for the three bCT VOIs shown in
+    Figure~\ref{fig:bct-datasets-recon}. Visual observations show that
+    these parameters seem to follow either Gaussian or uniform
+    distributions.}
+  \label{fig:ellip-axes-distr}
 \end{figure}
-
-Based on these analyses, we proposed to model the distribution
-$\mathbf{P}^{\boldsymbol{\theta}}$ of the marks
-$\boldsymbol{\theta} = \left( L_a, L_b, L_c, \delta\phi_x,
-  \delta\phi_y, \delta\phi_z \right)$ as independent densities
-$p_{L_a}$, $p_{L_b}$, $p_{L_c}$, $p_{\delta\phi_x}$,
-$p_{\delta\phi_y}$ and $p_{\delta\phi_z}$ respectively. These
-densities are specified as follows.
-
-The distribution of the half lengths of the ellipsoids, namely
-$p_{L_a}$, $p_{L_b}$ and $p_{L_c}$ were all modeled as Gaussian
-distributions. The mean and standard deviation of $p_{L_a}$, $p_{L_b}$
-and $p_{L_c}$ were determined by the values empirically measured from
-the ellipsoids reconstructed from the clinical bCT VOIs. The mean and
-standard deviation values were specified in
-Figure~\ref{fig:ellip-axes-distr}.
-
-The distribution of the tilt angles $\delta\phi_x$, $p_{\delta\phi_x}$
-was model as the uniform distribution
-$\mathcal{U} \left( -\frac{\pi}{2}, \frac{\pi}{2} \right)$, as
-suggested by its empirical distribution demonstrated in the previous
-section.
-
-The distributions $p_{\delta\phi_y}$ and $p_{\delta\phi_z}$ were
-modeled as Gaussian distributions. Despite the fact that in some of
-the cases, the Gaussian hypothesis was rejected by the
-Kolmogorov-Smirnov tests, as mentioned in the previous section, in
-other majority of the cases the Gaussian hypothesis could not be
-rejected. Visual inspection of the histograms of $p_{\delta\phi_y}$
-and $p_{\delta\phi_z}$ also suggests that the Gaussian distribution
-might still be a fairly reasonable choice. Similar to the half
-lengths, the mean and standard deviation of $p_{\delta\phi_y}$ and
-$p_{\delta\phi_z}$ are determined by the empirical estimates.
 
 We finally obtained twelve new sets of medium scale parameters for the
 3D solid breast texture model from the twelve input segmented bCT
 VOIs. Table~\ref{tab:summary-inferred-params} lists the fitted medium
-scale parameters for the four bCT VOIs shown in
-Figure~\ref{fig:bct-datasets-recon}. Parameters fitted using the other
-eight bCT VOIs can be found in
-Appendix~\ref{app2:addit-results-chapt}.
+scale parameters for the three bCT VOIs shown in
+Figure~\ref{fig:bct-datasets-recon}.
 
 \begin{table}[!htb]
-  \begin{center}
-    \begin{tabular}{ m{1cm} m{2cm} m{2cm} m{2cm} }
-      \toprule
+  {\fontsize{9}{8}\selectfont
+    \begin{center}
+      \begin{tabular}{ m{1.6cm} m{1.8cm} m{1.8cm} m{1.8cm} }
 
-      \centering{\textbf{VOI}}
-      & \centering{\textbf{$\boldsymbol{\Phi}_s$ (Mat\'ern cluster
-        process)}}
-      & \centering{$L_a$, $L_b$, $L_c$ (in $mm$)}
-      & \centering{$\delta_{\phi_x}$,
-        $\delta_{\phi_y}$, $\delta_{\phi_z}$ (in radian)}
-        \tabularnewline%\\
+        \toprule
 
-      \cmidrule(lr){1-1} \cmidrule(lr){2-2}
-      \cmidrule(lr){3-3} \cmidrule(lr){4-4}
+        \centering{\textbf{VOI}}
+        & \centering{\#3}
+        & \centering{\#7}
+        & \centering{\#11}
+          \tabularnewline%\\
 
-      \centering{\#1}
-      & \centering{$\kappa = 4.237e-04$, $\lambda_0 = 2.812e-02$, $R =
-        4.221$}
-      & \centering{$f_{L_a} = \mathcal{N}(5.48, 1.34)$,
-        $p_{L_b} = \mathcal{N}(2.72, 0.55)$,
-        $p_{L_c} = \mathcal{N}(1.90, 0.48)$}
-      & $p_{\delta_{\phi_x}} = \mathcal{U}(-\frac{\pi}{2},
-        \frac{\pi}{2})$,
+        \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+        \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
-        $p_{\delta_{\phi_y}} = \mathcal{N}(-0.05, 0.35)$,
+        \centering{$\kappa$ (\si{\per\mm\cubed})}
+        & \centering{$3.24e-03$}
+        & \centering{$3.41e-03$}
+        & \centering{$2.87e-04$}
+          \tabularnewline%\\
 
-        $p_{\delta_{\phi_z}} = \mathcal{N}(-0.04, 0.53)$
-        \tabularnewline%\\
+        \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+        \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
-      \cmidrule(lr){1-1} \cmidrule(lr){2-2}
-      \cmidrule(lr){3-3} \cmidrule(lr){4-4}
+        \centering{$\lambda_0$ (\si{\per\mm\cubed})}
+        & \centering{$5.98e-03$}
+        & \centering{$1.92e-02$}
+        & \centering{$3.09e-02$}
+          \tabularnewline%\\
 
-      \centering{\#3}
-      & \centering{$\kappa = 3.245e-03$, $\lambda_0 = 5.985e-03$, $R =
-        5.988$}
-      & \centering{$p_{L_a} = \mathcal{N}(6.21, 1.41)$,
-        $p_{L_b} = \mathcal{N}(2.77, 0.58)$,
-        $p_{L_c} = \mathcal{N}(2.10, 0.57)$}
-      & $p_{\delta_{\phi_x}} = \mathcal{U}(-\frac{\pi}{2},
-        \frac{\pi}{2})$,
+        \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+        \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
-        $p_{\delta_{\phi_y}} = \mathcal{N}(-0.09, 0.4)$,
+        \centering{$R$ (\si{\mm})}
+        & \centering{$5.98$}
+        & \centering{$3.85$}
+        & \centering{$5.82$}
+          \tabularnewline%\\
 
-        $p_{\delta_{\phi_z}} = \mathcal{N}(0, 0.26)$
-        \tabularnewline%\\
+        \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+        \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
-      \cmidrule(lr){1-1} \cmidrule(lr){2-2}
-      \cmidrule(lr){3-3} \cmidrule(lr){4-4}
+        \centering{$p_{L_a}$ (\si{\mm})}
+        & \centering{$\mathcal{N}(6.21, 1.41)$}
+        & \centering{$\mathcal{N}(5.88, 1.44)$}
+        & \centering{$\mathcal{N}(6.06, 1.39)$}
+          \tabularnewline%\\
 
-      \centering{\#7}
-      & \centering{$\kappa = 2.876e-04$, $\lambda_0 = 3.092e-02$,
-        $R =
-        5.827$}
-      & \centering{$p_{L_a} = \mathcal{N}(5.88, 1.44)$,
-        $p_{L_b} = \mathcal{N}(2.75, 0.56)$,
-        $p_{L_c} = \mathcal{N}(2.03, 0.52)$}
-      & $p_{\delta_{\phi_x}} = \mathcal{U}(-\frac{\pi}{2},
-        \frac{\pi}{2})$,
+        \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+        \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
-        $p_{\delta_{\phi_y}} = \mathcal{N}(-0.15, 0.38)$,
+        \centering{$p_{L_b}$ (\si{\mm})}
+        & \centering{$\mathcal{N}(2.77, 0.58)$}
+        & \centering{$\mathcal{N}(2.75, 0.56)$}
+        & \centering{$\mathcal{N}(2.79, 0.56)$}
+          \tabularnewline%\\
 
-        $p_{\delta_{\phi_z}} = \mathcal{N}(0.01, 0.5)$
-        \tabularnewline%\\
+        \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+        \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
-      \cmidrule(lr){1-1} \cmidrule(lr){2-2}
-      \cmidrule(lr){3-3} \cmidrule(lr){4-4}
+        \centering{$p_{L_c}$ (\si{\mm})}
+        & \centering{$\mathcal{N}(2.10, 0.57)$}
+        & \centering{$\mathcal{N}(2.03, 0.52)$}
+        & \centering{$\mathcal{N}(2.10, 0.54)$}
+          \tabularnewline%\\
 
-      \centering{\#11}
-      & \centering{$\kappa = 3.405e-03$, $\lambda_0 = 1.923e-02$,
-        $R =
-        3.853$}
-      & \centering{$p_{L_a} = \mathcal{N}(6.06, 1.39)$,
-        $p_{L_b} = \mathcal{N}(2.79, 0.56)$,
-        $p_{L_c} = \mathcal{N}(2.10, 0.54)$}
-      & $p_{\delta_{\phi_x}} = \mathcal{U}(-\frac{\pi}{2},
-        \frac{\pi}{2})$,
+        \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+        \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
-        $p_{\delta_{\phi_y}} = \mathcal{N}(-0.28, 0.47)$,
+        \centering{$p_{\delta_{\phi_x}}$ (\si{\radian})}
+        & \centering{$\mathcal{U}(-\frac{\pi}{2}, \frac{\pi}{2})$}
+        & \centering{$\mathcal{U}(-\frac{\pi}{2}, \frac{\pi}{2})$}
+        & \centering{$\mathcal{U}(-\frac{\pi}{2}, \frac{\pi}{2})$}
+          \tabularnewline%\\
 
-        $p_{\delta_{\phi_z}} = \mathcal{N}(-0.01, 0.43)$
-        \tabularnewline%\\
+        \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+        \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
-      \bottomrule
+        \centering{$p_{\delta_{\phi_y}}$ (\si{\radian})}
+        & \centering{$\mathcal{N}(-0.09, 0.4)$}
+        & \centering{$\mathcal{N}(-0.15, 0.38)$}
+        & \centering{$\mathcal{N}(-0.28, 0.47)$}
+          \tabularnewline%\\
 
-    \end{tabular}
+        \cmidrule(lr){1-1} \cmidrule(lr){2-2}
+        \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
-    \caption{Medium scale parameters for the 3D stochastic breast
-      texture model fitted from the four bCT VOIs shown in
-      Figure~\ref{fig:bct-datasets-recon}.}
-    \label{tab:summary-inferred-params}
-  \end{center}
+        \centering{$p_{\delta_{\phi_z}}$} (\si{\radian})}
+        & \centering{$\mathcal{N}(0, 0.26)$}
+        & \centering{$\mathcal{N}(0.01, 0.5)$}
+        & \centering{$\mathcal{N}(-0.01, 0.43)$}
+          \tabularnewline%\\
+
+        \bottomrule
+
+      \end{tabular}
+
+      \caption{Medium scale parameters for the 3D stochastic breast
+        texture model fitted from the three bCT VOIs shown in
+        Figure~\ref{fig:bct-datasets-recon}. Here
+        $\mathcal{N}(\mu, \sigma)$ denotes the Gaussian distribution
+        with mean $\mu$, standard deviation $\sigma$; and
+        $\mathcal{U}(l,u)$ denotes the uniform distribution with lower
+        bound $l$ and upper bound $u$.}
+      \label{tab:summary-inferred-params}
+    \end{center}
+  }
 \end{table}
 
 
@@ -2571,13 +2103,13 @@ parameters proposed in the previous chapter.
     projections} \parbox{2.75cm}{\fontsize{9}{9}\selectfont \centering
     DBT reconstructed slices} \vspace{1mm}
 
-  \raisebox{3em}{\fontsize{9}{9}\selectfont \rotatebox{90}{VOI \#1}}
-  \includegraphics[width=0.15\textwidth]
-  {figure/all/dataset_1/sim_vol_small}
-  \includegraphics[width=0.15\textwidth]
-  {figure/all/dataset_1/sim_proj}
-  \includegraphics[width=0.15\textwidth]
-  {figure/all/dataset_1/sim_recon}
+  % \raisebox{3em}{\fontsize{9}{9}\selectfont \rotatebox{90}{VOI \#1}}
+  % \includegraphics[width=0.15\textwidth]
+  % {figure/all/dataset_1/sim_vol_small}
+  % \includegraphics[width=0.15\textwidth]
+  % {figure/all/dataset_1/sim_proj}
+  % \includegraphics[width=0.15\textwidth]
+  % {figure/all/dataset_1/sim_recon}
 
   \raisebox{3em}{\fontsize{9}{9}\selectfont \rotatebox{90}{VOI \#3}}
   \includegraphics[width=0.15\textwidth]
@@ -2693,8 +2225,8 @@ parameters.
 
 This research is partially funded by the French national association
 for research and technology (ANRT) under the CIFRE grant n\textdegree
-2013/1052. The authors would like to thank Prof. John Boone for
-kindly providing the clinical bCT data sets.
+2013/1052. The authors would like to thank Prof. John Boone for kindly
+providing the clinical bCT data sets.
 
 
 % Can use something like this to put references on a page by
@@ -2735,48 +2267,6 @@ kindly providing the clinical bCT data sets.
 %   \end{thebibliography}
 
 \bibliography{biblio/biblio} \bibliographystyle{ieeetr}
-
-% biography section
-%
-% If you have an EPS/PDF photo (graphicx package needed) extra braces
-% are needed around the contents of the optional argument to biography
-% to prevent the LaTeX parser from getting confused when it sees the
-% complicated
-% \includegraphics command within an optional argument. (You could
-% create your own custom macro containing the \includegraphics command
-% to make things simpler here.)
-% \begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael
-%   Shell}
-%   or if you just want to reserve a space for a photo:
-
-\begin{IEEEbiography}{Michael Shell}
-  Biography text here.
-\end{IEEEbiography}
-
-% if you will not have a photo at all:
-\begin{IEEEbiographynophoto}{John Doe}
-  Biography text here.
-\end{IEEEbiographynophoto}
-
-% insert where needed to balance the two columns on the last page with
-% biographies
-% \newpage
-
-\begin{IEEEbiographynophoto}{Jane Doe}
-  Biography text here.
-\end{IEEEbiographynophoto}
-
-% You can push biographies down or up by placing a \vfill before or
-% after them. The appropriate use of \vfill depends on what kind of
-% text is on the last page and whether or not the columns are being
-% equalized.
-
-% \vfill
-
-% Can be used to pull up biographies so that the bottom of the last
-% one is flush with the other column.  \enlargethispage{-5in}
-
-
 
 % that's all folks
 \end{document}
