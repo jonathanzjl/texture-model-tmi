@@ -144,24 +144,22 @@
 % Here we have the typical use of a "T" for an initial drop letter and
 % "HIS" in caps to complete the first word.
 
-\IEEEPARstart{S}{ince} clinical imaging studies are expensive and time
-consuming, there has been an increased research investment into less
-costly and more time-efficient simulation studies
-(\cite{markey2012physics}, section 12.5). Reliable simulation studies
-in the field of digital breast tomosynthesis (DBT), and more generally
-in 3D imaging of the breast, require a realistic numerical 3D
-anthropomorphic test object model, a realistic numerical image
-acqui-sition chain and task-based mathematical observer models.
-
-Several numerical 3D anthropomorphic breast object models have been
-proposed \cite{li2009methodology} \cite{mahr2012three}
-\cite{carton2014virtual} \cite{bakic2014realistic}
-\cite{chen2015description} \cite{graff2016new}. Each model presents
-advantages and restrictions in terms of the visual realism of breast
-object images, the consistency between statistical features of test
-object and clinical images, and the potential to mimic the anatomical
-variability seen in real breast images. These aspects may impact the
-model validity for certain performance assessment studies.
+\IEEEPARstart{C}{linical} trials are the ultimate way to assess the
+performance of medical imaging systems. Due to their limitation by
+cost and duration, several groups are investigating the potential to
+replace clinical trials in part with virtual clinical trials (VCT) as
+a more efficient alternative. In a reliable VCT study, a realistic
+numerical 3D anthropomorphic test object model, a realistic numerical
+image acquisition chain and task-based mathematical observer models
+are required. Today, several numerical 3D anthropomorphic breast
+models have been proposed \cite{li2009methodology}
+\cite{mahr2012three} \cite{carton2014virtual}
+\cite{bakic2014realistic} \cite{chen2015description}
+\cite{graff2016new} [NEZ REF: eigen breast]. Each model presents
+advantages and limitations in terms of the visual realism, statistical
+characteristics and anatomical variability in model-simulated images
+compared with clinical images. These aspects may impact the model
+validity for certain performance assessment studies.
 
 Previously, we proposed a 3D solid breast texture model that is
 capable of simulating a large variability of realistic 2D and 3D
@@ -256,12 +254,11 @@ clinical task performance needs to be understood.
 
 We start by mathematically formulating the texture model and the
 ground truth data. For this study, we focus on the inference of the
-medium scale model parameters, which are responsible for the
-distribution and morphology properties of the system of random
-ellipsoids. The reason to consider only the medium scale model is
-mainly due to the relatively low spatial resolution of the clinical
-bCT volumes, where the voxel size is typically between \SI{0.2}{\mm}
-and \SI{0.4}{\mm}. When the number of the small Voronoi cells is
+medium scale model parameters related to the system of random
+ellipsoids. The main reason to consider only the medium scale model is
+the relatively low spatial resolution of the clinical bCT volumes,
+where the voxel size is typically between \SI{0.2}{\mm} and
+\SI{0.4}{\mm}. When the number of the small scale Voronoi cells is
 large, the size of the cells may be in the same order of magnitude as
 the voxel size in the bCT data. Due to this fact, the bCT data may not
 allow for an accurate estimation of the small scale model parameters.
@@ -309,13 +306,7 @@ of interest (VOI) with size \SI{3.5}{\cm} $\times$ \SI{3.5}{\cm}
 $\times$ \SI{3.5}{\cm} of the segmented bCT volumes were
 considered. The VOIs were extracted from the center of the segmented
 bCT volumes, leaving at least \SI{2}{\cm} distance to the breast skin
-and the chest-wall, depending on the actual breast size. A collection
-of 16 sets of segmented clinical bCT VOIs were selected for this
-study. The selected VOIs have BI-RADS densities (5th Edition,
-\cite{d2013acr}) that cover category a, b and c, and represent a
-subset of breasts with considerable variability in medium scale
-fibroglandular and inter-glandular adipose tissue. None of the VOIs
-contained a lesion.
+and the chest-wall. None of the VOIs contained a lesion.
 
 Mathematically, a segmented bCT VOI can be expressed as a binary
 volume $\mathcal{D}$, where for any
@@ -355,33 +346,44 @@ knowledge of the positions of the ellipsoid centers
 \cite{dereudre2014estimation}. Some classical inference methods in
 stochastic geometry have be investigated to mitigate the issue of data
 unobservability. One of such methods is referred to as the
-\textit{minimum contrast estimator} (MCE).
+\textit{minimum contrast estimator} (MCE)
+\cite{chiu2013stochastic}. Let $\mathbf{\Theta}$ denote the set of all
+parameters for $\mathbf{Y}$. The MCE method aims to find an estimate
+of $\mathbf{\Theta}$ that minimizes a contrast function
+$\mathcal{C}(\mathcal{D}, \mathbf{\Theta})$. The constrast function is
+often expressed as the squared difference between some analytical
+statistics $S(\cdot, \cdot; \mathbf{\Theta})$ of $\mathbf{Y}$ and
+$\hat{S}(\cdot, \cdot; \mathcal{D})$, the empirically measured
+counterpart of $S(\cdot, \cdot; \mathbf{\Theta})$ from the ground
+truth $\mathcal{D}$. Popular choices of statistics are the
+two-point function \cite{diggle1981binary} and the contact
+distribution function \cite {heinrich1993asymptotic} etc.
 
-Let $\mathbf{\Theta}$ denote the set of all parameters for
-$\mathbf{Y}$. Let $\mathcal{C}(\mathcal{D}, \mathbf{\Theta})$ denote a
-contrast function depending on the ground truth $\mathcal{D}$ and the
-parameters $\mathbf{\Theta}$. The MCE is defined as
-\cite{chiu2013stochastic}:
-\begin{equation}
-  \label{eq:min-const}
-  \hat{\mathbf{\Theta}} =
-  \text{argmin}_{\mathbf{\Theta}}
-  \mathcal{C}(\mathcal{D}, \mathbf{\Theta}).
-\end{equation}
-Often,
-\begin{equation}
-  \label{eq:min-often}
-  \mathcal{C}(\mathcal{D}, \mathbf{\Theta}) = \iint_{Y \times Y}
-  \left( S(y_1, y_2; \mathbf{\Theta}) - \hat{S}(y_1, y_2;
-    \mathcal{D}) \right)^2 \dd y_1 \dd y_2,
-\end{equation}
-where $S(\cdot, \cdot; \mathbf{\Theta})$ is the analytical formula of
-one, or a weighted sum of several second-order summary statistics of
-$\mathbf{Y}$; and $\hat{S}(\cdot, \cdot; \mathcal{D})$ denotes the
-empirical counterpart of $S(\cdot, \cdot; \mathbf{\Theta})$ measured
-from the ground truth $\mathcal{D}$. Popular choices of summary
-statistics are the two-point function \cite{diggle1981binary} and the
-contact distribution function \cite {heinrich1993asymptotic} etc.
+% Let $\mathcal{C}(\mathcal{D}, \mathbf{\Theta})$ denote a contrast
+% function depending on the ground truth $\mathcal{D}$ and the
+% parameters $\mathbf{\Theta}$. The MCE is defined as
+% \cite{chiu2013stochastic}:
+% \begin{equation}
+%   \label{eq:min-const}
+%   \hat{\mathbf{\Theta}} =
+%   \text{argmin}_{\mathbf{\Theta}}
+%   \mathcal{C}(\mathcal{D}, \mathbf{\Theta}).
+% \end{equation}
+% Often,
+% \begin{equation}
+%   \label{eq:min-often}
+%   \mathcal{C}(\mathcal{D}, \mathbf{\Theta}) = \iint_{Y \times Y}
+%   \left( S(y_1, y_2; \mathbf{\Theta}) - \hat{S}(y_1, y_2;
+%     \mathcal{D}) \right)^2 \dd y_1 \dd y_2,
+% \end{equation}
+% where $S(\cdot, \cdot; \mathbf{\Theta})$ is the analytical formula
+% of one, or a weighted sum of several second-order summary statistics
+% of $\mathbf{Y}$; and $\hat{S}(\cdot, \cdot; \mathcal{D})$ denotes
+% the empirical counterpart of $S(\cdot, \cdot; \mathbf{\Theta})$
+% measured from the ground truth $\mathcal{D}$. Popular choices of
+% summary statistics are the two-point function
+% \cite{diggle1981binary} and the contact distribution function \cite
+% {heinrich1993asymptotic} etc.
 
 The MCE method has limitations that make its application in our case
 difficult. The major limitation is the difficulty in the derivation of
@@ -400,26 +402,21 @@ effectively mitigate the data unobservability problem
 formally present this method and refer to it as the \textit{inference
   from reconstruction} method.
 
-The inference from reconstruction method consists of two steps:
-
-\begin{enumerate}[leftmargin=*,noitemsep]
-\item \textit{The reconstruction step} aims at recovering the
-  unobserved point positions and marks from the observed data through
-  stochastic sampling.
-\item \textit{The inference step} is a parametric inference step where
-  a marked point process models is proposed and fitted to the
-  reconstructed points and marks.
-\end{enumerate}
-
-This two-step mechanism provides two main advantages over classical
-MCE method. First, once the point positions and marks are recovered
-from the reconstruction step, it is easier to perform statistical
-analysis to gain intuitions to determine which model should be used
-for the inference step. Second, the inference step using reconstructed
-point positions and marks becomes more straightforward since all point
-positions are observable. Due to these advantages, we decided to apply
-the inference from reconstruction method to fit a parametric MPP model
-to the ground truth segmented bCT data.
+The inference from reconstruction method consists of two
+steps. \textit{The reconstruction step} aims at recovering the
+unobserved point positions and marks from the observed data through
+stochastic sampling. \textit{The inference step} is a parametric
+inference step where a marked point process models is proposed and
+fitted to the reconstructed points and marks. This two-step mechanism
+provides two main advantages over classical MCE method. First, once
+the point positions and marks are recovered from the reconstruction
+step, it is easier to perform statistical analysis to gain intuitions
+to determine which model should be used for the inference
+step. Second, the inference step using reconstructed point positions
+and marks becomes more straightforward since all point positions are
+observable. Due to these advantages, we decided to apply the inference
+from reconstruction method to fit a parametric MPP model to the ground
+truth segmented bCT data.
 
 In the following section we describe in detail the methodology used
 for the reconstruction step and the inference step in our study.
@@ -530,25 +527,25 @@ $\mathcal{P} (\mathbf{u})$ as follows:
 
 \end{itemize}
 
-The optimization given by \eqref{mpp-opt-energy} finally becomes:
-\begin{equation}
-  \label{eq:mpp-final-opt}
-  \mathbf{u}^{*}
-  = \arg \min_{\mathbf{u}} \mathcal{L}_{2}(\mathbf{u},
-  \mathcal{D}) + \sum_{\mathcal{E} \in \mathbf{u}} \left(
-    d_{\mathcal{E}} (\mathcal{D}) + q(\mathcal{E}, \mathbf{u}
-    \setminus \mathcal{E}) \right)
-\end{equation}
+% The optimization given by \eqref{mpp-opt-energy} finally becomes:
+% \begin{equation}
+%   \label{eq:mpp-final-opt}
+%   \mathbf{u}^{*}
+%   = \arg \min_{\mathbf{u}}
+%   %   \mathcal{L}_{2}(\mathbf{u},
+%   %   \mathcal{D})
+%   \sum_{\mathcal{E} \in \mathbf{u}} \left(
+%     d_{\mathcal{E}} (\mathcal{D}) + q(\mathcal{E}, \mathbf{u}
+%     \setminus \mathcal{E}) \right) - \frac{|x \in \Omega| x \in \mathbf{u} \textnormal{ and }
+%     \mathcal{D}(x) = 0|} {|x \in \Omega| \mathcal{D}(x) = 0|}
+% \end{equation}
 
-The analytical solution of \eqref{eq:mpp-final-opt} is difficult to
+The analytical solution of \eqref{mpp-opt-energy} is difficult to
 obtain in pratice. In MPP literature, the \textit{reversible jump
   Markov chain Monte Carlo} (RJMCMC) sampling is the most commonly
 employed technique to tackle this type of optimization problem
-\cite{geyer1994simulation} \cite{green1995reversible}
-\cite{tu2002image} \cite{descombes2009object} \cite{ge2009marked}
-\cite{lafarge2010geometric} \cite{utasi20113}
-\cite{sirinukunwattana2015stochastic}. A typical RJMCMC procedure
-consists of iteratively simulating a Markov chain of configurations
+\cite{descombes2013stochastic}. A typical RJMCMC procedure consists of
+iteratively simulating a Markov chain of configurations
 $\{ \mathbf{u}_t \}_{t \in \mathbb{N}}$ whose density converges to the
 target density $f_{\mathbf{Y}}(\mathbf{u})$. At each iteration $t$, a
 modification of the current configuration $\mathbf{u}_t$ is proposed
@@ -570,6 +567,11 @@ sub-proposition kernels $Q_n(\cdot, \cdot)$, such that
 $\sum_n p_n \le 1$ \cite{descombes2013stochastic}
 \cite{verdie2014detecting}. Frequently investigated sub-proposition
 kernels include:
+
+% \cite{geyer1994simulation} \cite{green1995reversible}
+% \cite{tu2002image} \cite{descombes2009object} \cite{ge2009marked}
+% \cite{lafarge2010geometric} \cite{utasi20113}
+% \cite{sirinukunwattana2015stochastic}
 
 \begin{itemize}
 
@@ -645,7 +647,7 @@ $\mathcal{D}$ inside $\mathcal{E}$. That is,
   \label{eq:legendre-ellip}
   \mathcal{E} \rightarrow \mathcal{L}(K_{\mathcal{E}}(\mathcal{D}))
   \textnormal{ with } K_{\mathcal{E}}(\mathcal{D}) = \{x \in
-  \Omega | x \in \mathcal{E} \textnormal{ and } \mathcal{D}(x) = 0 \}.
+  \mathcal{E} | \mathcal{D}(x) = 0 \}.
 \end{equation}
 
 The complete description of the proposed MBDS algorithm is given by
@@ -653,12 +655,11 @@ Algorithm~\ref{algo-mbds}. We assumed that the proposal distribution
 $f_{\boldsymbol{\theta}}$ consists of independent densities $f_{L_a}$,
 $f_{L_b}$, $f_{L_c}$, $f_{\delta{\phi_1}}$, $f_{\delta{\phi_2}}$ and
 $f_{\delta{\phi_3}}$ to sample the half lengths $L_a$, $L_b$, $L_c$
-and the tilt angles $\delta{\phi_x}$, $\delta{\phi_y}$,
-$\delta{\phi_z}$. We set these densities to the ones used in our
-previous study \cite{li2016novel} for the BI-RADS breast density b
-type breasts because these previously validated values might provide a
-good starting-point for the MBDS algorithm and might accelerate the
-convergence of the algorithm.
+and the tilt angles $\delta{\phi_x}$, $\delta{\phi_y}$ of the
+ellipsoids, $\delta{\phi_z}$. We set these densities to the ones used
+in our previous study \cite{li2016novel}, since these previously
+validated values might provide a good starting-point for the MBDS
+algorithm and might accelerate the convergence of the algorithm.
 
 \begin{algorithm}
   \caption{Multiple births, deaths and shifts}
@@ -667,7 +668,7 @@ convergence of the algorithm.
   \begin{algorithmic}[1]
 
     \REQUIRE initial configuration $\mathbf{u}_0 = \emptyset$,
-    $T = 100$, $\mathbf{\Phi}$: a homogenous Poisson point process
+    $T = 100$, $\mathbf{\Phi}$: a homogeneous Poisson point process
     with intensity $\lambda = 0.005$, $f_{\boldsymbol{\theta}}$: a
     multivariate proposal distribution to sample
     $ \left( L_a, L_b, L_c, \delta{\phi_1}, \delta{\phi_2},
@@ -707,9 +708,8 @@ convergence of the algorithm.
     \rightarrow T \cdot 0.99$
 
     \vspace{1mm} \STATE \textbf{Convergence test}: record 10
-    consecutive energies
-    $E_t = \{U_{t-9}, U_{t-8}, \cdots, U_{t}\}$ upto current iteration
-    $t$
+    consecutive energies $E_t = \{U_{t-9}, U_{t-8}, \cdots, U_{t}\}$
+    upto current iteration $t$
 
     \IF{$\max \left( E_t \right) - \min \left( E_t \right) \le
       \epsilon$} \STATE \textbf{return} configuration $\mathbf{u}$
@@ -953,24 +953,18 @@ revealed a clustering interaction between reconstructed ellipsoid
 centers for the majority of the cases. To model the clustering
 interaction, we proposed to fit a three-dimensional \textit{Mat\'ern
   cluster process} \cite{baddeley2007spatial} to the reconstructed
-ellipsoid centers. The 3D Mat\'ern cluster process is a two-step
-process described as follows.
+ellipsoid centers.
 
-\begin{enumerate}
-
-\item First, a set of ``parent points''
-  $\{ y_i \}_{i \in \mathcal{I}} \subset \mathbb{R}^3$ are sampled
-  from a homogeneous Poisson point process with intensity parameter
-  $\kappa$. For each ``parent point'' $y_i$ with $i \in \mathcal{I}$,
-  a sphere with radius $R$ centered at $y_i$ is generated.
-
-\item Then, inside each obtained sphere, a set of ``children points''
-  are sampled from another homogeneous Poisson point process with
-  intensity parameter $\lambda_0$. A realization of the Mat\'ern
-  cluster process is obtained as the collection of all ``children
-  points''.
-
-\end{enumerate}
+The 3D Mat\'ern cluster process is a two-step process. First, a set of
+``parent points'' $\{ y_i \}_{i \in \mathcal{I}} \subset \mathbb{R}^3$
+are sampled from a homogeneous Poisson point process with intensity
+parameter $\kappa$. For each ``parent point'' $y_i$ with
+$i \in \mathcal{I}$, a sphere with radius $R$ centered at $y_i$ is
+generated. Then, inside each obtained sphere, a set of ``children
+points'' are sampled from another homogeneous Poisson point process
+with intensity parameter $\lambda_0$. A realization of the Mat\'ern
+cluster process is obtained as the collection of all ``children
+points''.
 
 A Mat\'ern cluster process model $\Phi_\mathcal{M}$ is a stationary
 and isotropic point process completely determined by the three
@@ -1156,35 +1150,34 @@ proposed for each mark.
 \section{Results}
 \label{sec:results}
 
-In this section, we demonstrate the results of the inference from
+We performed parameter inference on a collection of 16 sets of
+segmented clinical bCT VOIs. The selected VOIs have BI-RADS densities
+(5th Edition, \cite{d2013acr}) that cover category a, b and c, and
+represent a subset of breasts with considerable variability in medium
+scale fibroglandular and inter-glandular adipose tissue. In this
+section, we demonstrate the results of the inference from
 reconstruction method focusing on examples of three bCT VOIs, referred
-to as VOI \#1, \#2 and \#3 hereunder. We chose these three VOIs since
-their glandular densities belong to BI-RADS density category a, b and
-c respectively, and hence they represent a fairly large variability of
-medium scale fibroglandular and inter-glandular adipose breast
-tissue. The same analyses were performed for all 16 input datasets and
-similar results were obtained.
+to as VOI \#1, \#2 and \#3, with glandular densities belonging to
+BI-RADS density category a, b and c respectively.
 
 \subsection{Reconstruction step}
 \label{sec:reconstruction-step}
 
-First, to demonstrate the convergence of the MBDS algorithm,
 Figure~\ref{fig:conv-mbds} shows the decrease of the energy with the
-increasing number of iterations for the three bCT VOIs. From this
-figure we can see that the convergence was reached after about 7500
-iterations for all the cases. Similar results were obtained for other
-investigated bCT VOIs.
+increasing number of iterations for the three bCT VOIs. We can see
+that the convergence was reached after about 7500 iterations for all
+the cases. Similar results were obtained for other investigated bCT
+VOIs.
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=0.5\textwidth]
   {figure/convergence_mbds}
   \caption{Illustration of the energy defined in~\eqref{mpp-energy} as
-    a function of the number of iterations in the MBDS algorithm. The
-    illustration considers the four examples of segmented clinical bCT
-    VOIs shown in Figure~\ref{fig:bct-datasets-recon}. The convergence
-    of the MBDS algorithm was reached after about 7500 iterations for
-    all the cases.}
+    a function of the number of iterations in the MBDS algorithm for
+    VOI \#1, VOI \#2 and VOI \#3. The convergence of the MBDS
+    algorithm was reached after about 7500 iterations for all the
+    cases.}
   \label{fig:conv-mbds}
 \end{figure}
 
@@ -1194,12 +1187,10 @@ original VOIs with the reconstructed VOIs. Reconstructed VOIs are
 binary volumes having the same spatial and voxel size as their
 corresponding bCT VOIs. They were created by voxelizing the
 reconstructed ellipsoids from the MBDS algorithm and assigning value 0
-to the ellipsoid interior. The coronal and sagittal slices of the
-original VOIs and the reconstructed VOIs at the same positions are
-shown in Figure~\ref{fig:bct-datasets-recon}. Moreover, projections
-images of the original VOIs and the reconstructed VOIs are also
-demonstrated. The projections were obtained by averaging the VOIs in
-the direction perpendicular to the transverse plane.
+to the ellipsoid interior. Projection images of the original VOIs and
+the reconstructed VOIs are also demonstrated. The projections were
+obtained by averaging the VOIs in the direction perpendicular to the
+transverse plane.
 
 From Figure~\ref{fig:bct-datasets-recon} we can see that the
 reconstructions by ellipsoids are not perfect. Despite this, the
@@ -1306,13 +1297,6 @@ null-hypothesis can not be rejected. For the remainder of our study,
 these VOIs were excluded since they represented a much smaller
 population among all bCT VOIs.
 
-% We first demonstrate the analysis of empirical PCFs estimated from
-% the reconstructed ellipsoid centers for all bCT VOIs. Our analysis
-% shows that, among the 16 selected bCT VOIs, for four of the cases
-% the Poisson null-hypothesis can not be rejected. For the remainder
-% of our study, these cases were excluded since they represented a
-% much smaller population among all bCT VOIs.
-
 The three figures on the left in Figure~\ref{fig:pcf-est} compare the
 empirical PCFs estimated from the reconstructed ellipsoid centers for
 VOI \#1, \#2, \#3 and the theoretical Poisson PCFs. The envelopes of
@@ -1365,19 +1349,17 @@ same clustering effect was found for all other investigated bCT VOIs.
 \subsubsection{Parameters of the 3D Mat\'ern cluster process}
 \label{sec:parameters-3d-matern}
 
-As discussed in Section~\ref{sec:point-proc-reconstr}, a 3D Mat\'ern
-cluster process was fitted to each set of reconstructed ellipsoid
-centers using the MCE method. The three figures on the right in
-Figure~\ref{fig:pcf-est} compare the empirical PCFs estimated from the
-reconstructed ellipsoid centers for VOI \#1, \#2, \#3 and the
-theoretical PCFs of the Mat\'ern cluster processes fitted to the same
-VOIs. The PCF envelopes of the fitted Mat\'ern cluster processes were
-also generated using the method described in \cite{baddeley2014tests},
-but with the fitted Mat\'ern cluster process as the null hypothesis
-model. It can be seen that for the three VOIs, the the empirically
-estimated PCFs fall inside the envelopes at all interpoint
-distances. Based on this, we conclude that the fits are fairly
-good. Similar result was found for all other investigated bCT VOIs.
+The three figures on the right in Figure~\ref{fig:pcf-est} compare the
+empirical PCFs estimated from the reconstructed ellipsoid centers for
+VOI \#1, \#2, \#3 and the theoretical PCFs of the Mat\'ern cluster
+processes fitted to the same VOIs. The PCF envelopes of the fitted
+Mat\'ern cluster processes were also generated using the method
+described in \cite{baddeley2014tests}, but with the fitted Mat\'ern
+cluster process as the null hypothesis model. It can be seen that for
+the three VOIs, the the empirically estimated PCFs fall inside the
+envelopes at all interpoint distances. Based on this, we conclude that
+the fits are fairly good. Similar result was found for all other
+investigated bCT VOIs.
 
 \subsubsection{The mark distribution}
 \label{sec:mark-distribution-1}
@@ -1560,19 +1542,17 @@ corresponding ground truth bCT data. Mammograms and DBT projection
 images were simulated by virtually projecting the texture volumes
 using the previously described breast x-ray imaging simulator
 \cite{milioni2014low}. The x-ray simulator was adjusted to model the
-topology of the GE SenoClaire DBT imaging system. Each VOI was placed
-at the center-left of the detector, such that the left edge of the VOI
-cube was aligned with the detector's left edge. A mono-energetic x-ray
-source at \SI{20}{\keV} was used to simulate nine DBT projection
+topology of the GE SenoClaire DBT imaging system. A mono-energetic
+x-ray source at \SI{20}{\keV} was used to simulate nine DBT projection
 images with an angular range of $( \ang{-12.5}, \ang{12.5} )$. Only
-Poisson x-ray noise was modeled and the electronic noise was not
-modeled. X-ray scattering and blurring on the detector were not
-modeled. The size of the isotropic detector pixels is
-\SI{100}{\um}. Mechanical breast texture deformation to mimic breast
-compression during the DBT image acquisition was not
-modeled. Projection images were processed by the \texttt{ASIR-DBT} 3D
-reconstruction algorithm (GE Healthcare, Buc, France) to obtain DBT
-reconstructed slices with \SI{1}{\mm} slice thickness.
+Poisson x-ray noise was modeled as the noise source. X-ray scattering
+and blurring on the detector were not modeled. The size of the
+isotropic detector pixels is \SI{100}{\um}. Mechanical breast texture
+deformation to mimic breast compression during the DBT image
+acquisition was not modeled. Projection images were processed by the
+\texttt{ASIR-DBT} 3D reconstruction algorithm (GE Healthcare, Buc,
+France) to obtain DBT reconstructed slices with \SI{1}{\mm} slice
+thickness.
 
 Figure~\ref{fig:fit-params-sims} shows examples of \SI{3.5}{\cm}
 $\times$ \SI{3.5}{\cm} slices through the simulated texture volumes,
@@ -1646,8 +1626,8 @@ mammographic projection and DBT reconstructed slices were obtained
 using the same x-ray simulator and 3D reconstruction algorithm as
 described in previous section. We used the method described by Wu
 \textit{et al.} \cite{wu2012spectral} to estimate the $\beta$ values
-from the mammographic projection and DBT slices. In this method, each
-input image was first divided into \SI{2.5}{\cm} $\times$
+from the mammographic projection and central DBT slices. In this
+method, each input image was first divided into \SI{2.5}{\cm} $\times$
 \SI{2.5}{\cm} regions of interest (ROI) with 50\% overlap. Then the
 ROIs were multiplied by a Hann window and their average power spectrum
 was used as the NPS estimate. Finally, a linear regression of the NPS
@@ -1718,49 +1698,60 @@ breasts.]
 
 In this paper, we investigated objective inference of the medium scale
 parameters of a previously introduced 3D solid breast texture model to
-improve the anatomical variability of its simulated breast texture
-volumes. We applied a novel statistical inference methodology referred
-to as the inference from reconstruction to objectively infer the
-medium scale model parameters from \SI{3.5}{\cm} $\times$
-\SI{3.5}{\cm} $\times$ \SI{3.5}{\cm} volumes of interest (VOI) of
-segmented clinical breast computerized tomography (bCT) reconstructed
-datasets.
-
-A multiple births, deaths and shifts (MBDS) algorithm was employed to
-first reconstruct a set of random ellipsoids from each ground truth
-bCT VOI. Visual inspection of the volumes recreated by voxelizing the
-reconstructed ellipsoids shows a fairly good approximation of the
-medium scale breast tissue in the original bCT VOIs. A Mat\'{e}rn
-cluster process was then fitted to the reconstructed ellipsoid centers
-using the minimum contrast method based on the pair correlation
-functions (PCF). This introduces a clustering interaction between
-ellipsoids to the previous prototype model. Statistical diagnostic
-analysis using the PCF suggested a fairly good fit of the
-reconstructed ellipsoid centers to the proposed Mat\'{e}rn cluster
-process. Distributions of the ellipsoid half lengths and orientations
-were finally estimated from their empirical distributions. Twelve sets
-of new medium scale model parameters were obtained. Preliminary
-evaluation of the 2D and 3D breast images simulated from 3D texture
-volumes generated using new parameters shows fairly high visual
-realism. The breast tissue variability in new simulated images is
-larger than the images simulated using previously proposed prototype
-implementation with empirical parameters. The values of the $\beta$
-metric measure from simulated mammographic projections and DBT slices
-are consistent with values reported in literature. Finally, a formal
-two-alternative forced choice XXXX.
+improve the anatomical variability for virtual clinical trials. We
+applied a novel statistical inference methodology referred to as the
+inference from reconstruction to objectively infer the medium scale
+model parameters from \SI{3.5}{\cm} $\times$ \SI{3.5}{\cm} $\times$
+\SI{3.5}{\cm} volumes of interest (VOI) of segmented clinical breast
+computerized tomography (bCT) reconstructed datasets. From the
+majority of the bCT VOIs, a clustering effect between ellipsoids was
+observed and was further modeled using a 3D Mat\'{e}rn cluster
+process. Twelve sets of new medium scale model parameters were
+obtained. A preliminary visual evaluation of the 2D and 3D breast
+images simulated from 3D texture volumes generated using new
+parameters shows fairly high visual realism. The morphological
+variability in new simulated images is larger than the images
+simulated using previously proposed prototype implementation with
+empirical parameters. The values of the $\beta$ metric measure from
+simulated mammographic projections and DBT slices are consistent with
+values reported in literature. Finally, a formal two-alternative
+forced choice experiment involving XXXX readers was performed. The
+experimental results demonstrated that the model with inferred
+parameters can simulate realistic DBT reconstructed images for breasts
+with BI-RADS density categories a, b and c.
 
 The proposed method has several limitations. First, the impact of the
 reconstruction step on the estimated parameters in the inference step
 was not investigated. To address this, one possible approach is to
-study how the inference result deviates from a ground truth model when
-the latter is a known Poisson marked point process. Second, to reduce
-the optimization complexity in the inference step, the distribution of
-ellipsoid half lengths were estimated independently from the ellipsoid
-centers. This may be a simplification compared with the distribution
-of inter-glandular adipose compartments in real breasts. The
-correlation between the the half lengths and the centers of the
-ellipsoids could be further investigated by studying the mark
-correlation function of the reconstructed ellipsoids.
+study the inference stability with respect to an analytically known
+ground truth model such as a Poisson marked point process. Second, to
+reduce the optimization complexity in the inference step, the
+distribution of ellipsoid half lengths were estimated independently
+from the ellipsoid centers. This may be a simplification compared with
+the distribution of inter-glandular adipose compartments in real
+breasts. The correlation between the the half lengths and the centers
+of the ellipsoids could be further investigated by studying the mark
+correlation function of the reconstructed ellipsoids. Finally, we
+obtained twelve separate sets of model parameters from twelve
+different input bCT VOIs. In a future study, it might be interesting
+to model how the model parameters change with respect to the BI-RADS
+density of the input, in order to create a unified model.
+
+% A multiple births, deaths and shifts (MBDS) algorithm was employed
+% to first reconstruct a set of random ellipsoids from each ground
+% truth bCT VOI. Visual inspection of the volumes recreated by
+% voxelizing the reconstructed ellipsoids shows a fairly good
+% approximation of the medium scale breast tissue in the original bCT
+% VOIs. A Mat\'{e}rn cluster process was then fitted to the
+% reconstructed ellipsoid centers using the minimum contrast method
+% based on the pair correlation functions (PCF). This introduces a
+% clustering interaction between ellipsoids to the previous prototype
+% model. Statistical diagnostic analysis using the PCF suggested a
+% fairly good fit of the reconstructed ellipsoid centers to the
+% proposed Mat\'{e}rn cluster process. Distributions of the ellipsoid
+% half lengths and orientations were finally estimated from their
+% empirical distributions. Twelve sets of new medium scale model
+% parameters were obtained.
 
 
 % if have a single appendix:
