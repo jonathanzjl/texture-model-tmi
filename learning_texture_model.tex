@@ -12,8 +12,8 @@
 % manually specify the path to it like:
 % \documentclass[journal]{../sty/IEEEtran}
 
-% Some very useful LaTeX packages include:
-% (uncomment the ones you want to load)
+% Some very useful LaTeX packages include: (uncomment the ones you
+% want to load)
 
 \usepackage{enumitem,fancyhdr,setspace,float,soul,graphicx,
   epstopdf,multirow,sidecap,siunitx,
@@ -35,21 +35,19 @@
 
 \graphicspath{{figure/}}%
 
-\usepackage{cite}
-\usepackage{amsmath}
+\usepackage{cite} \usepackage{amsmath}
 % Note that the amsmath package sets \interdisplaylinepenalty to 10000
-% thus preventing page breaks from occurring within multiline equations. Use:
+% thus preventing page breaks from occurring within multiline
+% equations. Use:
 \interdisplaylinepenalty=2500
-% after loading amsmath to restore such page breaks as IEEEtran.cls normally
-% does.
+% after loading amsmath to restore such page breaks as IEEEtran.cls
+% normally does.
 
 \usepackage{algorithm,algorithmic}
 
 \ifCLASSOPTIONcompsoc
 \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
-\else
-\usepackage[caption=false,font=footnotesize]{subfig}
-\fi
+\else \usepackage[caption=false,font=footnotesize]{subfig} \fi
 
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
@@ -61,8 +59,8 @@
 
 \begin{document}
 
-\title{Learning Parameters of a 3D Solid Breast Texture Model from
-  clinical data} % from Clinical Breast Computerized Tomography Data
+\title{Parameters Inference of a 3D Solid Breast Texture Model from
+  Clinical Data}
 
 \author{Zhijin~Li, Ann-Katherine~Carton, Thomas~Almecija,
   Serge~Muller, Pablo~Milioni~de~Carlvalo and
@@ -168,8 +166,8 @@ medium and small scale fibroglandular and inter-glandular adipose
 tissue observed in clinical breast computerized tomography (bCT)
 reconstructed volumes. The reconstructed bCT volumes are stacks of
 coronal slices reconstructed with a filtered back-projection algorithm
-from projections images acquired using a prototype bCT system
-developed at the University of California Davis Medical Center
+from projection images acquired using a prototype bCT system developed
+at the University of California Davis Medical Center
 \cite{lindfors2008dedicated}. The volumes were pre-processed by an
 automatic 3D segmentation algorithm developed in-house to obtain
 volumes depicting breast fibroglandular and adipose tissue
@@ -220,27 +218,26 @@ construction of the proposed texture model.
 \end{figure}
 
 In our previous study, we proposed a prototype model implementation
-where the texture model parameters were subjectively determined by
-visually comparing the sampled texture volumes with reference bCT
-volumes. A psycho-visual experiment was performed showing that the
-prototype implementation was able to simulate realistic DBT
-reconstructed slices representing a large variety of breast density
-types. However, further observations show that the simulated DBT
-slices have a limited morphological variability within each breast
-density type. This might be due to the subjective model parameters,
-which might not correctly capture the variability of breast tissue in
-clinical bCT volumes. To allow the 3D solid breast texture model to
-simulate a larger variability of breast textures, we propose to learn
-the model parameters from clinical bCT volumes. A larger texture
-variability is of interest in VCT studies, where the impact of various
-breast tissue types on clinical task performance needs to be
-understood.
+with texture model parameters subjectively determined by visually
+comparing the sampled texture volumes with reference bCT volumes. A
+psycho-visual experiment was performed showing that the prototype
+implementation was able to simulate realistic DBT reconstructed slices
+representing a large variety of breast density types. However, further
+observations show that the simulated DBT slices have a limited
+morphological variability within each breast density type. This might
+be due to the subjective model parameters, which might not correctly
+capture the variability of breast tissue in clinical bCT volumes. To
+allow the 3D solid breast texture model to simulate a larger
+variability of breast textures, we propose to infer the model
+parameters from clinical bCT volumes. A larger texture variability is
+of interest in VCT studies, where the impact of various breast tissue
+types on clinical task performance needs to be understood.
 
 \section{Problem formulation}
 \label{sec:problem-formulation}
 
 We start by mathematically formulating the texture model and the
-ground truth data. For this study, we focus on the learning the
+ground truth data. For this study, we focus on inferring the
 medium scale model parameters related to the system of random
 ellipsoids. The small scale parameters are not considered due to the
 relatively low spatial resolution of the clinical bCT volumes, where
@@ -259,7 +256,8 @@ $$
 \mathbf{Y} = \{ \mathbf{\Phi_{s}},\boldsymbol{\theta} \},
 $$
 defined on a product space
-$Y \subset \mathbb{R}^{3} \times \mathbb{R}^6$
+$S \subset \mathbb{R}^{3} \times \mathbb{R}^6$. Here,
+
 \cite{chiu2013stochastic}.
 
 \begin{itemize}
@@ -288,7 +286,7 @@ $Y \subset \mathbb{R}^{3} \times \mathbb{R}^6$
 \subsection{The ground truth}
 \label{sec:ground-truth}
 
-To limit the learning to the medium scale breast tissue, only volumes
+To limit the inference to the medium scale breast tissue, only volumes
 of interest (VOI) with size \SI{3.5}{\cm} $\times$ \SI{3.5}{\cm}
 $\times$ \SI{3.5}{\cm} of the segmented bCT volumes were
 considered. The VOIs were extracted from the center of the segmented
@@ -313,14 +311,14 @@ $\mathcal{D}$.
 
 Notice that, the input segmented clinical bCT VOIs depict adipose
 compartments, where the individual ellipsoids are
-\textit{unobservable}. This unobservability makes the learning problem
+\textit{unobservable}. This unobservability makes the inference problem
 highly ill-posed.
 
-\section{Existing methods}
+\subsection{Existing methods}
 \label{sec:exist-param-infer}
 
-Due to the unobservability issue, direct application of common
-\textit{likelihood}-based parameter learning approaches
+Due to the unobservability issue, application of
+\textit{likelihood}-based parameter inference approaches
 \cite{moller2003statistical} is impossible, since they require the
 knowledge of the positions of the ellipsoid centers
 \cite{dereudre2014estimation}. To mitigate this, one commonly used
@@ -331,37 +329,36 @@ $\mathbf{Y}$. The MCE method aims to find an estimate of
 $\mathbf{\Theta}$ that minimizes a contrast function
 $\mathcal{C}(\mathcal{D}, \mathbf{\Theta})$. The constrast function is
 often expressed as the squared difference between some analytical
-statistics $S(\cdot, \cdot; \mathbf{\Theta})$ of $\mathbf{Y}$ and
-$\hat{S}(\cdot, \cdot; \mathcal{D})$, the empirically measured
-counterpart of $S(\cdot, \cdot; \mathbf{\Theta})$ from the ground
-truth $\mathcal{D}$. Popular choices of statistics are the two-point
+statistics of $\mathbf{Y}$ and the empirical counterparts of the
+analytical statistics measured from the ground truth
+$\mathcal{D}$. Popular choices of statistics include the two-point
 function \cite{diggle1981binary} and the contact distribution function
 \cite {heinrich1993asymptotic} etc. The major challenge of MCE is the
 derivation of analytical summary statistics for complex underlying
 model $\mathbf{Y}$. Considering the complexity of our input data,
 application of MCE in our case might be non-trivial.
 
-\section{Learning from reconstruction}
+\section{Inference from reconstruction}
 \label{sec:meth-infer-from}
 
-Recently, Thiedmann \textit{et al.} proposed a novel learning method
+Recently, Thiedmann \textit{et al.} proposed a novel inference method
 for parametric MPP models that effectively mitigates the data
 unobservability issue \cite{thiedmann2011stochastic}. Inspired by
 their work, we hereby formally present this method and refer to it as
-\textit{learning from reconstruction}. The method uses a two-step
-approach. \textit{The reconstruction step} aims at recovering the
-unobserved point positions and marks from the observed data through
-stochastic sampling. \textit{The inference step} is a parametric
-inference step where a marked point process model is fitted to the
-reconstructed points and marks. This two-step mechanism provides two
-main advantages over classical MCE method. First, once the point
-positions and marks are recovered from the reconstruction step, it is
-easier to perform statistical analysis to gain intuitions to determine
-which model should be used for the inference step. Second, the
-inference step using reconstructed point positions and marks becomes
-more straightforward since all point positions are observable. Due to
-these advantages, we decided to apply learning from
-reconstruction method to fit a parametric MPP model to the ground
+\textit{inference from reconstruction}. The method uses a two-step
+approach. \textit{The first reconstruction step} aims at recovering
+the unobserved point positions and marks from the observed data
+through stochastic sampling. \textit{The second inference step} is a
+parametric inference step where a marked point process model is fitted
+to the reconstructed points and marks. This two-step mechanism
+provides two main advantages over classical MCE method. First, once
+the point positions and marks are recovered from the reconstruction
+step, it is easier to perform statistical analysis to gain intuitions
+to determine which model should be used for the inference
+step. Second, the inference step using reconstructed point positions
+and marks becomes more straightforward since all point positions are
+observable. Due to these advantages, we decided to apply the inference
+from reconstruction method to fit a parametric MPP model to the ground
 truth segmented bCT data.
 
 In the following section we describe in detail the methodology used
@@ -372,22 +369,25 @@ for the reconstruction step and the inference step in our study.
 
 Consider the case where the density function $f_{\mathbf{Y}}$ of the
 underlying MPP model $\mathbf{Y}$ has a Gibbsian form
-\cite{moller2007modern}. Let $\mathbf{u} \in Y$ be a set of
-ellipsoids, refered to as a configuration, then we have:
+\cite{moller2007modern}. Let
+$\mathbf{u} = \{ \mathcal{E}_i\}_{i \in \mathbb{Z}} \subset S$ be a
+finite set of ellipsoids, refered to as a configuration. Then we have:
+
 \begin{equation}
   \label{eq:gibbs-density}
-  f_{\mathbf{Y}}(\mathbf{u}) = \frac{1}{Z} \exp \left( - \frac{1}{T}
-    U(\mathbf{u}) \right).
+  f_{\mathbf{Y}}(\mathbf{u}) = \frac{1}{Z_T} \exp \left( - \frac{1}{T}
+    E(\mathbf{u}) \right).
 \end{equation}
-Here the term $U(\cdot)$ is called the \textit{energy}. The parameter
+Here the term $E(\cdot)$ is called the \textit{energy}. The parameter
 $T \in \mathbb{R}^{+}$ is often referred to as the temperature as in
 physics. The term
-$Z = \int \exp \left( -U(\mathbf{u}) \right) \dd \mathbf{u}$ is a
-normalization constant. The energy term is often decomposed into two
-parts \cite{lafarge2010geometric} \cite{descombes2009object}:
+$Z_T = \int \exp \left( - \frac{E(\mathbf{u})}{T} \right) \dd
+\mathbf{u}$ is a normalization constant. The energy term is often
+decomposed into two parts \cite{lafarge2010geometric}
+\cite{descombes2009object}:
 \begin{equation}
   \label{mpp-energy}
-  U(\mathbf{u}) = \mathcal{L}(\mathbf{u}, \mathcal{D})
+  E(\mathbf{u}) = \mathcal{L}(\mathbf{u}, \mathcal{D})
   + \mathcal{P} (\mathbf{u}),
 \end{equation}
 where $\mathcal{L}(\mathbf{u}, \mathcal{D})$ is a \textit {data term}
@@ -406,46 +406,36 @@ problem:
 \end{equation}
 
 We formulated $\mathcal{L}(\mathbf{u}, \mathcal{D})$ and
-$\mathcal{P} (\mathbf{u})$ as follows:
+$\mathcal{P} (\mathbf{u})$ as follows.
 
 \begin{itemize}
-\item The \textit{data term} $\mathcal{L}(\mathbf{u}, \mathcal{D})$
-  consists of two terms $\mathcal{L}_1$ and $\mathcal{L}_2$. The first
-  term $\mathcal{L}_1$ measures the approximation error ratio of the
-  current configuration $\mathbf{u}$ given input $\mathcal{D}$. For a
-  given ellipsoid $\mathcal{E} \in \mathbf{u}$, its approximation
-  error ratio $d_{\mathcal{E}}(\mathcal{D})$ can be expressed as:
+\item
+  Let $\mathcal{D}_{\mathbf{u}}$ be a discrete binary volume obtained
+  by voxelizing a configuration $\mathbf{u}$ on the 3D discrete grid
+  $\Omega$ defined in Section~\ref{sec:ground-truth}. Given a voxel
+  $x \in \Omega$,
+  \begin{equation}
+    \label{eq:configuration-voxel}
+    \mathcal{\mathcal{D}_{\mathbf{u}}}(x) =
+    \begin{cases}
+      1 & x\textnormal{'s center is inside an ellipsoid in }\mathbf{u}, \\
+      0 & \textnormal{ otherwise}. \\
+    \end{cases}
+  \end{equation}
+  Then $\mathcal{L}(\mathbf{u}, \mathcal{D})$ is formulated as
   \begin{equation}
     \label{eq:data-term1-single}
-    d_{\mathcal{E}}(\mathcal{D}) = \frac{ | \{ x \in \Omega | x \in
-      \mathcal{E} \textnormal{ and } \mathcal{D}(x) = 1\} | } { |\{ x
-      \in \Omega | x \in \mathcal{E} \}| }.
+    % \mathcal{L}(\mathbf{u}, \mathcal{D}) = 1 - \frac{ 2 |
+    % \neg \mathcal{D}_{\mathbf{u}} \wedge \neg \mathcal{D} |} {
+    % |\neg \mathcal{D}_{\mathbf{u}} \vee \neg \mathcal{D}|},
+    \mathcal{L}(\mathbf{u}, \mathcal{D}) = 1 - \frac{ |
+      \{ x \in \Omega | \mathcal{D}_{\mathbf{u}}(x) = 0 \textnormal{
+        and } \mathcal{D}(x) = 0 \} |} {
+      |\{ x \in \Omega | \mathcal{D}_{\mathbf{u}}(x) = 0 \textnormal{
+        or } \mathcal{D}(x) = 0 \}|},
   \end{equation}
-  Then $\mathcal{L}_1$ is defined by summing the errors of all
-  ellipsoids. That is,
-  \begin{equation}
-    \label{eq:data-term1}
-    \mathcal{L}_{1}(\mathbf{u}, \mathcal{D}) = \sum_{\mathcal{E} \in
-      \mathbf{u}} d_{\mathcal{E}} (\mathcal{D}).
-  \end{equation}
-
-  The second term $\mathcal{L}_2$ measures the proportion of the input
-  $\mathcal{D}$ that is not covered by the current configuration
-  $\mathbf{u}$. That is,
-  \begin{equation}
-    \label{eq:data-term2}
-    \mathcal{L}_{2}(\mathbf{u}, \mathcal{D}) = 1 -
-    \frac{|x \in \Omega| x \in \mathbf{u} \textnormal{ and }
-      \mathcal{D}(x) = 0|} {|x \in \Omega| \mathcal{D}(x) = 0|}.
-  \end{equation}
-
-  The sum of $\mathcal{L}_1$ and $\mathcal{L}_2$ defines the final
-  data term $\mathcal{L}$. That is,
-  \begin{equation}
-    \label{eq:data-term-final}
-    \mathcal{L}(\mathbf{u}, \mathcal{D}) = \mathcal{L}_{1}(\mathbf{u},
-    \mathcal{D}) + \mathcal{L}_{2}(\mathbf{u}, \mathcal{D}).
-  \end{equation}
+  % where $|\cdot|$, $\wedge$ and $\vee$ denote the set cardinality,
+  % logical conjunction, disjunction and negation respectively.
 
 \item Regarding the \textit{prior term} $\mathcal{P} (\mathbf{u})$, we
   prefer to obtain a model estimate without imposing too much a-priori
@@ -545,8 +535,8 @@ as the \textit{shift} step.
 To describe the shift step used in our adapted multiple births, deaths
 and shifts (MBDS) algorithm, we adopt the notion of \textit{Legendre
   ellipsoid} of a convex body in classical mechanics
-\cite{lutwak2000new}. Given a volume $K \subset \mathbb{Z}^3$, the
-Legendre ellipsoid $\mathcal{L}(K)$ is the unique ellipsoid defined as
+\cite{lutwak2000new}. Given a convex body $K \subset \mathbb{Z}^3$,
+the Legendre ellipsoid $\mathcal{L}(K)$ is defined as
 \cite{ludwig2003ellipsoids}:
 \begin{equation}
   \label{eq:legendre-ellip-orig}
@@ -560,15 +550,15 @@ where
 with $\mu = \frac{1}{|K|} \sum_{x \in K} x$. Notice that
 $\mathcal{L}(K) = K$ if $K$ is itself an ellipsoid.
 
-In our proposed MBDS algorithm, the shift of an ellipsoid
-$\mathcal{E}$ consists in replacing it by the Legendre ellipsoid
-computed from the part of the adipose tissue of the observed data
-$\mathcal{D}$ inside $\mathcal{E}$. That is,
+Let $\mathcal{D}_{\mathcal{E}}$ be the binary volume representing
+voxelized ellipsoid $\mathcal{E}$. The shift of $\mathcal{E}$ consists
+in replacing it by the Legendre ellipsoid
+$\mathcal{L}(K_{\mathcal{E}}(\mathcal{D}))$ of
+$K_{\mathcal{E}}(\mathcal{D})$, with
 \begin{equation}
   \label{eq:legendre-ellip}
-  \mathcal{E} \rightarrow \mathcal{L}(K_{\mathcal{E}}(\mathcal{D}))
-  \textnormal{ with } K_{\mathcal{E}}(\mathcal{D}) = \{x \in
-  \mathcal{E} | \mathcal{D}(x) = 0 \}.
+  K_{\mathcal{E}}(\mathcal{D}) = \{x \in \Omega |
+  \mathcal{D}(x) = 0 \textnormal{ and } \mathcal{D}_{\mathcal{E}}(x) = 0 \}.
 \end{equation}
 
 The complete description of the proposed MBDS algorithm is given by
@@ -608,8 +598,8 @@ algorithm and might accelerate the convergence of the algorithm.
 
     \FOR{$\mathcal{E} \in \mathbf{u}$} \STATE
     $p_d = \frac{r\lambda}{1 + r\lambda}$ with
-    $r = \exp \left( \frac{ U(\mathbf{u}) - U(\mathbf{u} \setminus
-        \mathcal{E}) }{T} \right)$ and $U(\cdot)$ given in
+    $r = \exp \left( \frac{ E(\mathbf{u}) - E(\mathbf{u} \setminus
+        \mathcal{E}) }{T} \right)$ and $E(\cdot)$ given in
     \eqref{mpp-energy}
 
     \STATE Sample $v \sim \textnormal{uniform}(0, 1)$
@@ -628,11 +618,11 @@ algorithm and might accelerate the convergence of the algorithm.
     $\lambda \rightarrow \lambda \cdot 0.99 \textnormal{ and } T
     \rightarrow T \cdot 0.99$
 
-    \vspace{1mm} \STATE \textbf{Convergence test}: record 10
-    consecutive energies $E_t = \{U_{t-9}, U_{t-8}, \cdots, U_{t}\}$
-    upto current iteration $t$
+    \vspace{1mm} \STATE \textbf{Convergence test}: collect 10
+    consecutive energies $c_t = \{E_{t-9}, E_{t-8}, \cdots, E_{t}\}$
+    up to current iteration $t$
 
-    \IF{$\max \left( E_t \right) - \min \left( E_t \right) \le
+    \IF{$\max \left( c_t \right) - \min \left( c_t \right) \le
       \epsilon$} \STATE \textbf{return} configuration $\mathbf{u}$
     \ELSE \STATE \textbf{continue}
     \ENDIF
@@ -984,7 +974,7 @@ proposed for each mark.
 \section{Results}
 \label{sec:results}
 
-We performed parameter learning on a collection of 16 sets of
+We performed parameter inference on a collection of 16 sets of
 segmented clinical bCT VOIs. The selected VOIs have BI-RADS densities
 (5th Edition, \cite{d2013acr}) that cover category a, b and c, and
 represent a considerable variability in medium scale fibroglandular
@@ -1242,9 +1232,9 @@ statistically under 5\% confidence interval.
 \end{figure}
 
 As a summary, Table~\ref{tab:summary-inferred-params} lists the fitted
-medium scale parameters for VOI \#1, \#2 and \#3. By applying learning
-from reconstruction to all the 12 input bCT VOIs, 12 new sets of
-medium scale parameters were finally obtained.
+medium scale parameters for VOI \#1, \#2 and \#3. By applying the
+inference from reconstruction method to all the 12 input bCT VOIs, 12
+new sets of medium scale parameters were finally obtained.
 
 \begin{table}[!htb]
   {\fontsize{9}{8}\selectfont
@@ -1358,7 +1348,7 @@ medium scale parameters were finally obtained.
 \end{table}
 
 
-\section{Validation of learnt medium scale texture model parameters}
+\section{Validation of inferred medium scale texture model parameters}
 \label{sec:valid-inferr-medi}
 
 \subsection{Visual inspection}
@@ -1529,28 +1519,27 @@ breasts.]
 \section{Conclusion and discussion}
 \label{sec:concl-disc}
 
-In this paper, we investigated learning the medium scale parameters of
-a previously introduced 3D solid breast texture model from clinical
-breast computerized tomography (bCT) reconstructed volumes of interest
-(VOI), to improve the anatomical variability for virtual clinical
-trials. We applied a novel two-step learning method referred to as the
-learning from reconstruction.
+In this paper, we investigated the inference of the medium scale
+parameters of a previously introduced 3D solid breast texture model
+from clinical breast computerized tomography (bCT) reconstructed
+volumes of interest (VOI), to improve the anatomical variability for
+virtual clinical trials. We applied a novel two-step inference method
+referred to as the inference from reconstruction.
 
 From the majority of the bCT VOIs, a clustering effect between
 ellipsoids was observed and was further modeled using a 3D Mat\'{e}rn
 cluster process. Twelve sets of new medium scale model parameters were
-obtained. Visual evaluation of the 2D and 3D breast
-images simulated from 3D texture volumes generated using new
-parameters shows fairly high visual realism. The morphological
-variability in new simulated images is larger than the images
-simulated using previously proposed prototype implementation with
-empirical parameters. The values of the $\beta$ metric measure from
-simulated mammographic projections and DBT slices are consistent with
-values reported in literature. Finally, a formal two-alternative
-forced choice experiment involving XXXX readers was performed. The
-experimental results demonstrated that the model with learnt
-parameters can simulate realistic DBT reconstructed images for breasts
-with BI-RADS density categories a, b and c.
+obtained. Visual evaluation of the 2D and 3D breast images simulated
+from 3D texture volumes generated using new parameters shows fairly
+high visual realism. The morphological variability in new simulated
+images is larger than the images simulated using previously proposed
+prototype implementation with empirical parameters. The values of the
+$\beta$ metric measure from simulated mammographic projections and DBT
+slices are consistent with values reported in literature. Finally, a
+formal two-alternative forced choice experiment involving XXXX readers
+was performed. The experimental results demonstrated that the model
+with inferred parameters can simulate realistic DBT reconstructed images
+for breasts with BI-RADS density categories a, b and c.
 
 The proposed method has several limitations. First, the impact of the
 reconstruction step on the estimated parameters in the inference step
