@@ -251,20 +251,17 @@ for an accurate estimation of the small scale model parameters.
 \label{sec:medium-scale-texture}
 
 The medium scale texture model is formulated as a \textit{marked point
-  process} (MPP)
+  process} (MPP) \cite{chiu2013stochastic}
 $$
-\mathbf{Y} = \{ \mathbf{\Phi_{s}},\boldsymbol{\theta} \},
+\mathbf{Y} = \{ \mathbf{\Phi_{s}},\boldsymbol{\theta} \}.
 $$
-defined on a product space
-$S \subset \mathbb{R}^{3} \times \mathbb{R}^6$. Here,
-
-\cite{chiu2013stochastic}.
+Here,
 
 \begin{itemize}
 
 \item $\mathbf{\Phi_s}$ is a simple point process with distribution
-  $\mathbf{P}^{\mathbf{s}}$. Its realization represents the center
-  points of the ellipsoids.
+  $\mathbf{P}^{\mathbf{s}}$ in $\mathbb{R}^{3}$. Its realization
+  represents the center points of the ellipsoids.
 
 \item $\boldsymbol{\theta}$ is a random vector with distribution
   $\mathbf{P}^{\boldsymbol{\theta}}$. Its realization represents the
@@ -370,9 +367,9 @@ for the reconstruction step and the inference step in our study.
 Consider the case where the density function $f_{\mathbf{Y}}$ of the
 underlying MPP model $\mathbf{Y}$ has a Gibbsian form
 \cite{moller2007modern}. Let
-$\mathbf{u} = \{ \mathcal{E}_i\}_{i \in \mathbb{Z}} \subset S$ be a
-finite set of ellipsoids, refered to as a configuration. Then we have:
-
+$\mathbf{u} = \{ \mathcal{E}_i\}_{i \in \mathbb{Z}}$ be a finite set,
+where $\forall i$, $\mathcal{E}_i$ is a 3D ellipsoid. We refer to
+$\mathbf{u}$ as a configuration. Then we have:
 \begin{equation}
   \label{eq:gibbs-density}
   f_{\mathbf{Y}}(\mathbf{u}) = \frac{1}{Z_T} \exp \left( - \frac{1}{T}
@@ -409,11 +406,10 @@ We formulated $\mathcal{L}(\mathbf{u}, \mathcal{D})$ and
 $\mathcal{P} (\mathbf{u})$ as follows.
 
 \begin{itemize}
-\item
-  Let $\mathcal{D}_{\mathbf{u}}$ be a discrete binary volume obtained
-  by voxelizing a configuration $\mathbf{u}$ on the 3D discrete grid
-  $\Omega$ defined in Section~\ref{sec:ground-truth}. Given a voxel
-  $x \in \Omega$,
+\item Let $\mathcal{D}_{\mathbf{u}}$ be a discrete binary volume
+  obtained by voxelizing all ellispoids in $\mathbf{u}$ on the 3D
+  discrete grid $\Omega$ defined in
+  Section~\ref{sec:ground-truth}. Given a voxel $x \in \Omega$,
   \begin{equation}
     \label{eq:configuration-voxel}
     \mathcal{\mathcal{D}_{\mathbf{u}}}(x) =
@@ -447,19 +443,21 @@ $\mathcal{P} (\mathbf{u})$ as follows.
     \mathcal{P} (\mathbf{u}) = \sum_{\mathcal{E} \in \mathbf{u}}
     q(\mathcal{E}, \mathbf{u} \setminus \mathcal{E}),
   \end{equation}
-  where
+  with
   \begin{equation}
     \label{eq:prior-term-detail}
     q(\mathcal{E}, \mathbf{u} \setminus \mathcal{E}) =
     \begin{cases}
-      0 & \textnormal{if }\frac{ | \{ x \in \Omega | x \in \mathcal{E}
-        \textnormal{ and } x \in \mathbf{u} \setminus \mathcal{E} \}
-        |} { | \{ x \in \Omega | x \in \mathcal{E} \} |}
+      0 & \frac{\nu(\mathcal{E} \cap \mathbf{u} \setminus
+        \mathcal{E})} {\nu(\mathcal{E})}
+      % \textnormal{if }\frac{ | \{ x \in \Omega | x \in \mathcal{E}
+      % \textnormal{ and } x \in \mathbf{u} \setminus \mathcal{E} \}
+      % |} { | \{ x \in \Omega | x \in \mathcal{E} \} |}
       \le 0.95, \\
-      +\infty & \textnormal{otherwise}.
+      +\infty & \textnormal{otherwise},
     \end{cases}
   \end{equation}
-
+  where $\nu(\cdot)$ denotes the volume measure.
 \end{itemize}
 
 The analytical solution of \eqref{mpp-opt-energy} is difficult to
@@ -535,9 +533,8 @@ as the \textit{shift} step.
 To describe the shift step used in our adapted multiple births, deaths
 and shifts (MBDS) algorithm, we adopt the notion of \textit{Legendre
   ellipsoid} of a convex body in classical mechanics
-\cite{lutwak2000new}. Given a convex body $K \subset \mathbb{Z}^3$,
-the Legendre ellipsoid $\mathcal{L}(K)$ is defined as
-\cite{ludwig2003ellipsoids}:
+\cite{lutwak2000new}. Given a convex body $K$, the Legendre ellipsoid
+$\mathcal{L}(K)$ is defined as \cite{ludwig2003ellipsoids}:
 \begin{equation}
   \label{eq:legendre-ellip-orig}
   \mathcal{L}(K) = \{ x \in K | x^T \Sigma^{-1} x \leq 1 \},
@@ -705,13 +702,13 @@ intensity parameter, expressed as
   \label{eq:inten-estimtor}
   \hat{\lambda} = \frac{|\Phi_s|}{\nu(W)}.
 \end{equation}
-The function $\mathbf{k}(\cdot)$ is a smoothing kernel. We use
-$\nu(\cdot)$ to denote the volume measure and $W$ is the observation
-window; \textit{i.e.} a \SI{3.5}{\cm} $\times$ \SI{3.5}{\cm} $\times$
-\SI{3.5}{\cm} cube in our case. Finally, $W_x$ denotes the translation
-of $W$ by $x$. The division by $\nu(W_x \cap W_y)$ instead of by
-$\nu(W)$ acts as an edge correction for points falling outside of the
-observation window $W$ \cite{ohser1983estimators}.
+The function $\mathbf{k}(\cdot)$ is a smoothing kernel and $W$ is the
+observation window; \textit{i.e.} a \SI{3.5}{\cm} $\times$
+\SI{3.5}{\cm} $\times$ \SI{3.5}{\cm} cube in our case. Finally, $W_x$
+denotes the translation of $W$ by $x$. The division by
+$\nu(W_x \cap W_y)$ instead of by $\nu(W)$ acts as an edge correction
+for points falling outside of the observation window $W$
+\cite{ohser1983estimators}.
 
 The estimation was performed using the \texttt{pcf3est} function
 implemented in the \texttt{R} software package \texttt{spatstat}
