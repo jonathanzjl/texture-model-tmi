@@ -62,8 +62,8 @@
 \title{Parameters Inference of a 3D Solid Breast Texture Model from
   Clinical Data}
 
-\author{Zhijin~Li, Ann-Katherine~Carton, Thomas~Almecija,
-  Serge~Muller, Pablo~Milioni~de~Carlvalo and
+\author{Zhijin~Li, Ann-Katherine~Carton, Serge~Muller,
+  Thomas~Almecija, Pablo~Milioni~de~Carlvalo and
   Agnès~Desolneux% <-this % stops a space
   \thanks{Zhijin Li is with General Electric Healthcare France, Buc,
     78530, France. E-mail:
@@ -71,7 +71,7 @@
   \thanks{Agnès Desolneux is with centre de math\'{e}matiques et leurs
     applications of Ecole Normale Sup\'{e}rieure de Paris-Sacaly,
     Cachan, 94235 France.}% <-this % stops a space
-  \thanks{Ann-Katherine Carton, Thomas~Almecija, Serge Muller and
+  \thanks{Ann-Katherine~Carton, Serge~Muller, Thomas~Almecija and
     Pablo~Milioni~de~Carlvalo are with General Electric Healthcare
     France, Buc, 78530, France.}% <-this % stops a space
   \thanks{Manuscript received December, XXXX; revised January XX,
@@ -188,8 +188,7 @@ volumes in voxelized binary format, with typical side length between
 construction of the proposed texture model.
 
 \begin{figure}[!htbp]
-  \centering
-  \includegraphics[width=0.145\textwidth]{gray-cor-small}%
+  \centering \includegraphics[width=0.145\textwidth]{gray-cor-small}%
   \includegraphics[height=0.145\textwidth]{gray-sag-small}%
   \hspace{2mm}%
   \includegraphics[width=0.145\textwidth]{seg-cor-small}%
@@ -203,8 +202,7 @@ construction of the proposed texture model.
 \end{figure}
 
 \begin{figure}[!htbp]
-  \centering
-  \includegraphics[width=0.4\textwidth]{model}
+  \centering \includegraphics[width=0.4\textwidth]{model}
   \caption{Construction of our proposed 3D solid breast texture
     model. The medium intra-glandular adipose compartments are modeled
     by a system of random overlapping ellipsoids. Small scale
@@ -237,22 +235,22 @@ types on clinical task performance needs to be understood.
 \label{sec:problem-formulation}
 
 We start by mathematically formulating the texture model and the
-ground truth data. For this study, we focus on inferring the
-medium scale model parameters related to the system of random
-ellipsoids. The small scale parameters are not considered due to the
-relatively low spatial resolution of the clinical bCT volumes, where
-the voxel size is typically between \SI{0.2}{\mm} and
-\SI{0.4}{\mm}. When the number of the small scale Voronoi cells is
-large, the size of the cells may be in the same order of magnitude as
-the voxel size in the bCT data. Therefore, the bCT data may not allow
-for an accurate estimation of the small scale model parameters.
+ground truth data. For this study, we focus on inferring the medium
+scale model parameters related to the system of random ellipsoids. The
+small scale parameters are not considered due to the relatively low
+spatial resolution of the clinical bCT volumes, where the voxel size
+is typically between \SI{0.2}{\mm} and \SI{0.4}{\mm}. When the number
+of the small scale Voronoi cells is large, the size of the cells may
+be in the same order of magnitude as the voxel size in the bCT
+data. Therefore, the bCT data may not allow for an accurate estimation
+of the small scale model parameters.
 
 \subsection{The medium scale texture model}
 \label{sec:medium-scale-texture}
 
 The medium scale texture model is formulated as a \textit{marked point
-  process} (MPP) \cite{chiu2013stochastic} $\mathbf{Y} = \{
-\mathbf{\Phi_{s}},\boldsymbol{\theta} \}$. Here,
+  process} (MPP) \cite{chiu2013stochastic}
+$\mathbf{Y} = \{ \mathbf{\Phi_{s}},\boldsymbol{\theta} \}$. Here,
 
 \begin{itemize}
 
@@ -304,8 +302,8 @@ Here $\Omega$ represents the 3D discrete spatial domain of
 $\mathcal{D}$.
 
 Notice that, the input segmented clinical bCT VOIs depict adipose
-compartments, where the individual ellipsoids are
-\textit{unobservable}. This unobservability makes the inference problem
+compartments, where the individual ellipsoids are not directly
+\textit{observable}. This unobservability makes the inference problem
 highly ill-posed.
 
 \subsection{Existing methods}
@@ -321,7 +319,7 @@ approach in stochastic geometry is referred to as the \textit{minimum
 $\mathbf{\Theta}$ denote the set of all parameters for
 $\mathbf{Y}$. The MCE method aims to find an estimate of
 $\mathbf{\Theta}$ that minimizes a contrast function
-$\mathcal{C}(\mathcal{D}, \mathbf{\Theta})$. The constrast function is
+$\mathcal{C}(\mathcal{D}, \mathbf{\Theta})$. The contrast function is
 often expressed as the squared difference between some analytical
 statistics of $\mathbf{Y}$ and the empirical counterparts of the
 analytical statistics measured from the ground truth
@@ -618,8 +616,7 @@ algorithm and might accelerate the convergence of the algorithm.
 
     \IF{$\max \left( c_t \right) - \min \left( c_t \right) \le
       \epsilon$} \STATE \textbf{return} configuration $\mathbf{u}$
-    \ELSE \STATE \textbf{continue}
-    \ENDIF
+    \ELSE \STATE \textbf{continue} \ENDIF
 
     \UNTIL{\textbf{return}}
   \end{algorithmic}
@@ -987,8 +984,7 @@ the cases. Similar results were obtained for other investigated bCT
 VOIs.
 
 \begin{figure}[!htb]
-  \centering
-  \includegraphics[width=0.5\textwidth]
+  \centering \includegraphics[width=0.5\textwidth]
   {figure/convergence_mbds}
   \caption{Illustration of the energy defined in~\eqref{mpp-energy} as
     a function of the number of iterations in the MBDS algorithm for
@@ -1021,14 +1017,12 @@ inference step.
 
 \begin{figure}[!htb]
 
-  \centering
-  \captionsetup[subfloat]{labelformat=empty}
+  \centering \captionsetup[subfloat]{labelformat=empty}
 
   {\fontsize{9}{9}\selectfont VOI \#1} \vspace{1mm}
 
   \raisebox{0.5em}{\fontsize{9}{9}\selectfont \rotatebox{90}{Ground
-      truth}}
-  \includegraphics[width=0.14\textwidth]
+      truth}} \includegraphics[width=0.14\textwidth]
   {figure/all/dataset_3/roi_coronal}
   \includegraphics[width=0.14\textwidth]
   {figure/all/dataset_3/roi_saggital}
@@ -1047,8 +1041,7 @@ inference step.
   {\fontsize{9}{9}\selectfont VOI \#2} \vspace{1mm}
 
   \raisebox{0.5em}{\fontsize{9}{9}\selectfont \rotatebox{90}{Ground
-      truth}}
-  \includegraphics[width=0.14\textwidth]
+      truth}} \includegraphics[width=0.14\textwidth]
   {figure/all/dataset_7/roi_coronal}
   \includegraphics[width=0.14\textwidth]
   {figure/all/dataset_7/roi_saggital}
@@ -1067,8 +1060,7 @@ inference step.
   {\fontsize{9}{9}\selectfont VOI \#3} \vspace{1mm}
 
   \raisebox{0.7em}{\fontsize{9}{9}\selectfont \rotatebox{90}{Ground
-      truth}}
-  \includegraphics[width=0.14\textwidth]
+      truth}} \includegraphics[width=0.14\textwidth]
   {figure/all/dataset_11/roi_coronal}
   \includegraphics[width=0.14\textwidth]
   {figure/all/dataset_11/roi_saggital}
@@ -1389,9 +1381,9 @@ proposed in the previous chapter.
 
   \hspace{1mm} \parbox{2.8cm}{\fontsize{9}{9}\selectfont \centering
     Texture volumes slices} \parbox{2.8cm}{\fontsize{9}{9}\selectfont
-    \centering Mammographic
-    projections} \parbox{2.75cm}{\fontsize{9}{9}\selectfont \centering
-    DBT reconstructed slices} \vspace{1mm}
+    \centering Mammographic projections}
+  \parbox{2.75cm}{\fontsize{9}{9}\selectfont \centering DBT
+    reconstructed slices} \vspace{1mm}
 
   \raisebox{3em}{\fontsize{9}{9}\selectfont \rotatebox{90}{VOI \#1}}
   \includegraphics[width=0.15\textwidth]
@@ -1532,8 +1524,8 @@ $\beta$ metric measure from simulated mammographic projections and DBT
 slices are consistent with values reported in literature. Finally, a
 formal two-alternative forced choice experiment involving XXXX readers
 was performed. The experimental results demonstrated that the model
-with inferred parameters can simulate realistic DBT reconstructed images
-for breasts with BI-RADS density categories a, b and c.
+with inferred parameters can simulate realistic DBT reconstructed
+images for breasts with BI-RADS density categories a, b and c.
 
 The proposed method has several limitations. First, the impact of the
 reconstruction step on the estimated parameters in the inference step
