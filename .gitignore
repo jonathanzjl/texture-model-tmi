@@ -1,16 +1,3 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Matlab scripts
-*.m
-
-# Precompiled Headers
-*.gch
-*.pch
-
 # Tex tmp or compiled files
 *.log
 *.aux
@@ -26,6 +13,7 @@
 *.bcf
 *.xml
 *.gz
+*.synctex.gz
 *~
 
 # AUCTex stuff
