@@ -63,17 +63,16 @@
   Clinical Data}
 
 \author{Zhijin~Li, Ann-Katherine~Carton, Serge~Muller,
-  Thomas~Almecija, Pablo~Milioni~de~Carlvalo and
+  Thomas~Almecija, Pablo~Milioni~de~Carvalho and
   Agnès~Desolneux% <-this % stops a space
-  \thanks{Zhijin Li is with General Electric Healthcare France, Buc,
-    78530, France. E-mail:
-    jonathan.li@ge.com.}% <-this % stops a space
+  \thanks{Zhijin Li is with GE Healthcare France, Buc, 78530,
+    France. E-mail: jonathan.li@ge.com.}% <-this % stops a space
   \thanks{Agnès Desolneux is with centre de math\'{e}matiques et leurs
-    applications of Ecole Normale Sup\'{e}rieure de Paris-Sacaly,
+    applications of Ecole Normale Sup\'{e}rieure de Paris-Saclay,
     Cachan, 94235 France.}% <-this % stops a space
   \thanks{Ann-Katherine~Carton, Serge~Muller, Thomas~Almecija and
-    Pablo~Milioni~de~Carlvalo are with General Electric Healthcare
-    France, Buc, 78530, France.}% <-this % stops a space
+    Pablo~Milioni~de~Carvalho are with GE Healthcare France, Buc,
+    78530, France.}% <-this % stops a space
   \thanks{Manuscript received December, XXXX; revised January XX,
     XXXX.}}%
 %
@@ -144,23 +143,25 @@
 performance of medical imaging systems. Due to their limitation by
 cost and duration, several groups are investigating the potential to
 replace clinical trials in part with virtual clinical trials (VCT) as
-a more efficient alternative. In a reliable VCT study, a realistic
-numerical 3D anthropomorphic test object, a realistic numerical image
-acquisition chain and task-based observers are required. Today,
-several numerical 3D anthropomorphic breast models have been proposed
-\cite{li2009methodology} \cite{mahr2012three} \cite{carton2014virtual}
-\cite{bakic2014realistic} \cite{chen2015description}
-\cite{graff2016new} \cite{elangovan2017design}
-\cite{sturgeon2017synthetic}. Each model presents advantages and
-limitations in terms of the visual realism, statistical
-characteristics and anatomical variability in model-simulated images
-compared with clinical images. These aspects may impact the model
-validity for certain performance assessment studies.
+a more efficient alternative (\cite{maidment2014virtual},
+\cite{kiarashi2014towards}). In a VCT set-up, models of patients,
+imaging systems and radiologist performing an assessment can be
+combined in different ways and can also be combined with real clinical
+trial tools. Today, several numerical 3D anthropomorphic breast models
+have been proposed (\cite{li2009methodology}, \cite{mahr2012three},
+\cite{carton2014virtual}, \cite{bakic2014realistic},
+\cite{chen2015description}, \cite{graff2016new},
+\cite{elangovan2017design}, \cite{sturgeon2017synthetic}). Each model
+presents advantages and limitations in terms of the visual realism,
+the ability to be mathematically defined, statistical characteristics
+and anatomical variability in model-simulated images compared with
+clinical images. These aspects may impact the model validity for
+certain performance assessment studies.
 
 Previously, we proposed a mathematical 3D solid breast texture model
-that is capable of simulating a large variability of realistic 2D and
-3D breast images in terms of small and medium scale fibroglandular and
-inter-glandular adipose tissue in breast \cite{li2016novel}. The
+capable of simulating a large variety of realistic 2D and 3D breast
+images in terms of small and medium scale fibroglandular and
+inter-glandular adipose tissue in breasts \cite{li2016novel}. The
 proposed model is inspired by the morphology and distribution of
 medium and small scale fibroglandular and inter-glandular adipose
 tissue observed in clinical breast computerized tomography (bCT)
@@ -168,24 +169,21 @@ reconstructed volumes. The reconstructed bCT volumes are stacks of
 coronal slices reconstructed with a filtered back-projection algorithm
 from projection images acquired using a prototype bCT system developed
 at the University of California Davis Medical Center
-\cite{lindfors2008dedicated}. The volumes were pre-processed by an
-automatic 3D segmentation algorithm developed in-house to obtain
-volumes depicting breast fibroglandular and adipose tissue
+\cite{lindfors2008dedicated}. Breast tissue in bCT volumes was
+classified into its three primary constituents, skin, adipose and
+fibroglandular tissue by removing low-frequency image artifacts with
+an in-house developed automatic segmentation algorithm
 \cite{thomas2015segmentation}. Figure~\ref{fig:bct-ims} shows an
 example of bCT reconstructed volume and its 3D segmentation. Our
-proposed texture model aims to mimic the breast tissue characteristics
-in segmented bCT volumes using mathematically defined stochastic
-geoemtric elements.  For medium scale breast fibroglandular and
-intra-glandular adipose tissue, we used a system of stochastically
-distributed overlapping ellipsoids to depict the adipose compartments,
-and the complement of the ellipsoid system to depict the
-fibroglandular tissue. Small scale intra-glandular adipose compartment
-irregularities were introduced by replacing the smooth ellipsoid
-boundaries by Voronoi cells with average volume less than
-\SI{1}{\mm\cubed}. The texture model outputs medium size rectangular
-volumes in voxelized binary format, with typical side length between
-\SI{3.5}{\cm} and \SI{5}{\cm}. Figure~\ref{fig:model} illustrates the
-construction of the proposed texture model.
+breast texture model is mathematically formulated using elements of
+stochastic geoemtry. To define the medium scale fibroglandular and
+intra-glandular adipose tissue, a system of stochastically distributed
+overlapping ellipsoids and its complement were created. Small scale
+intra-glandular adipose compartment irregularities were introduced by
+replacing the smooth ellipsoid boundaries by Voronoi cells with
+average volume less than \SI{1}{\mm\cubed}. The texture model outputs
+rectangular volumes in voxelized binary format. Figure~\ref{fig:model}
+illustrates the construction of the proposed texture model.
 
 \begin{figure}[!htbp]
   \centering \includegraphics[width=0.145\textwidth]{gray-cor-small}%
@@ -202,34 +200,34 @@ construction of the proposed texture model.
 \end{figure}
 
 \begin{figure}[!htbp]
-  \centering \includegraphics[width=0.4\textwidth]{model}
+  \centering \includegraphics[width=0.49\textwidth]{model-pipeline}
   \caption{Construction of our proposed 3D solid breast texture
     model. The medium intra-glandular adipose compartments are modeled
-    by a system of random overlapping ellipsoids. Small scale
+    by a system of randomly overlapping ellipsoids. Small scale
     intra-glandular adipose compartment irregularities were introduced
-    by replacing the smooth ellipsoid boundaries by Voronoi cells. The
-    texture model produces voxelized medium size rectangular binary
-    volumes depicting fibroglandular tissue (white regions in the
-    image on the right) and intra-glandular adipose tissue (black
-    regions in the image on the right).}
+    by replacing the smooth ellipsoid boundaries by Voronoi cells.}
   \label{fig:model}
 \end{figure}
 
-In our previous study, we proposed a prototype model implementation
-with texture model parameters subjectively determined by visually
+Texture model parameters were manually determined by visually
 comparing the sampled texture volumes with reference bCT volumes. A
-psycho-visual experiment was performed showing that the prototype
-implementation was able to simulate realistic DBT reconstructed slices
-representing a large variety of breast density types. However, further
+psychovisual experiment was performed showing that the prototype
+implementation was able to simulate fairly realistic DBT reconstructed
+slices representing three breast density types. However, further
 observations show that the simulated DBT slices have a limited
-morphological variability within each breast density type. This might
-be due to the subjective model parameters, which might not correctly
-capture the variability of breast tissue in clinical bCT volumes. To
-allow the 3D solid breast texture model to simulate a larger
-variability of breast textures, we propose to infer the model
-parameters from clinical bCT volumes. A larger texture variability is
-of interest in VCT studies, where the impact of various breast tissue
-types on clinical task performance needs to be understood.
+morphological variability within each breast density type. A larger
+texture variability is of interest in VCT studies, where the impact of
+various breast tissue types on clinical task performance needs to be
+understood. To allow for the generation of a larger variety of
+morphological breast texture types, we propose in this paper a
+statistical parameter inference method to replace manual model
+parameter selection.
+
+% This might be due to the subjective model parameters, which might
+% not correctly capture the variability of breast tissue in clinical
+% bCT volumes. To allow the 3D solid breast texture model to simulate
+% a larger variability of breast textures, we propose to infer the
+% model parameters from clinical bCT volumes.
 
 \section{Problem formulation}
 \label{sec:problem-formulation}
@@ -248,31 +246,32 @@ of the small scale model parameters.
 \subsection{The medium scale texture model}
 \label{sec:medium-scale-texture}
 
-The medium scale texture model is formulated as a \textit{marked point
-  process} (MPP) \cite{chiu2013stochastic}
+The medium scale texture model is formulated as a \textit{Marked Point
+  Process} (MPP) \cite{chiu2013stochastic}
 $\mathbf{Y} = \{ \mathbf{\Phi_{s}},\boldsymbol{\theta} \}$. Here,
 
 \begin{itemize}
 
-\item $\mathbf{\Phi_s}$ is a simple point process with distribution
-  $\mathbf{P}^{\mathbf{s}}$ in $\mathbb{R}^{3}$. Its realization
-  represents the center points of the ellipsoids.
+\item $\mathbf{\Phi_s} = \{x_i, i \in \mathbb{Z} \}$ is a simple point
+  process with distribution $\mathbf{P}^{\mathbf{s}}$ in
+  $\mathbb{R}^{3}$. It represents the center points of the ellipsoids.
 
-\item $\boldsymbol{\theta}$ is a random vector with distribution
-  $\mathbf{P}^{\boldsymbol{\theta}}$. Its realization represents the
-  parameter vector of an ellipsoid. That is,
-  $\boldsymbol{\theta} = \left( L_a, L_b, L_c, \delta_{\phi_a},
-    \delta_{\phi_b}, \delta_{\phi_c} \right)$, where $L_a, L_b, L_c$
-  are the half lengths of the principle axes of the ellipsoids and
+\item $\boldsymbol{\theta} = \{ \theta_i, i \in \mathbb{Z} \}$ is a
+  random vector with distribution
+  $\mathbf{P}^{\boldsymbol{\theta}}$. It represents the parameter
+  vector of the ellipsoids
+  $\left( L_a, L_b, L_c, \delta_{\phi_a}, \delta_{\phi_b},
+    \delta_{\phi_c} \right)$, where $L_a, L_b, L_c$ are the half
+  lengths of the principle axes of the ellipsoids and
   $\delta_{\phi_{x}},\delta_{\phi_{y}},\delta_{\phi_{z}}$ are random
   tilt angles. For each ellipsoid, the random tilt angles are added to
   three extrinsic rotation angles along $x$, $y$ and $z$ axes,
   determined by the center of the ellipsoid and the pre-defined nipple
-  position. In marked point process theory, $\boldsymbol{\theta}$ is
-  often referred to as the \textit{mark} of the point process
-  $\mathbf{\Phi_s}$, and $\mathbf{P}^{\boldsymbol{\theta}}$ is often
-  referred to as the \textit{mark distribution}
-  \cite{chiu2013stochastic}.
+  position to priviledge ellipsoid orientations towards the nipple. In
+  marked point process theory, $\boldsymbol{\theta}$ is often referred
+  to as the \textit{mark} of the point process $\mathbf{\Phi_s}$, and
+  $\mathbf{P}^{\boldsymbol{\theta}}$ is often referred to as the
+  \textit{mark distribution} \cite{chiu2013stochastic}.
 \end{itemize}
 
 \subsection{The ground truth}
@@ -301,32 +300,30 @@ $x \in \Omega \subset \mathbb{Z}^3$,
 Here $\Omega$ represents the 3D discrete spatial domain of
 $\mathcal{D}$.
 
-Notice that, the input segmented clinical bCT VOIs depict adipose
-compartments, where the individual ellipsoids are not directly
-\textit{observable}. This unobservability makes the inference problem
-highly ill-posed.
-
 \subsection{Existing methods}
 \label{sec:exist-param-infer}
 
-Due to the unobservability issue, application of
+From the input segmented clinical bCT VOIs, the individual ellipsoids
+constructing the adipose compartments are not directly
+\textit{observable}. As a consequence, application of
 \textit{likelihood}-based parameter inference approaches
-\cite{moller2003statistical} is impossible, since they require the
+\cite{moller2003statistical} is infeasible, as they require the
 knowledge of the positions of the ellipsoid centers
-\cite{dereudre2014estimation}. To mitigate this, one commonly used
-approach in stochastic geometry is referred to as the \textit{minimum
-  contrast estimator} (MCE) \cite{chiu2013stochastic}. Let
-$\mathbf{\Theta}$ denote the set of all parameters for
-$\mathbf{Y}$. The MCE method aims to find an estimate of
-$\mathbf{\Theta}$ that minimizes a contrast function
+\cite{dereudre2014estimation}. To mitigate this problem, one commonly
+used approach in stochastic geometry is referred to as the
+\textit{minimum contrast estimator} (MCE)
+\cite{chiu2013stochastic}. Let $\mathbf{\Theta}$ denote the set of all
+parameters needed to describe the distribution of $\mathbf{Y}$. The
+MCE method aims to find an estimate of $\mathbf{\Theta}$ that
+minimizes a contrast function
 $\mathcal{C}(\mathcal{D}, \mathbf{\Theta})$. The contrast function is
 often expressed as the squared difference between some analytical
 statistics of $\mathbf{Y}$ and the empirical counterparts of the
 analytical statistics measured from the ground truth
 $\mathcal{D}$. Popular choices of statistics include the two-point
 function \cite{diggle1981binary} and the contact distribution function
-\cite {heinrich1993asymptotic} etc. The major challenge of MCE is the
-derivation of analytical summary statistics for complex underlying
+\cite {heinrich1993asymptotic}. The major challenge of MCE is the
+derivation of analytical summary statistics for a complex underlying
 model $\mathbf{Y}$. Considering the complexity of our input data,
 application of MCE in our case might be non-trivial.
 
@@ -353,30 +350,30 @@ observable. Due to these advantages, we decided to apply the inference
 from reconstruction method to fit a parametric MPP model to the ground
 truth segmented bCT data.
 
-In the following section we describe in detail the methodology used
-for the reconstruction step and the inference step in our study.
+In the following section we describe in detail the methodology used in
+our study for the reconstruction step and the inference step.
 
 \subsection{The reconstruction step}
 \label{sec:reconstr-step:-appr}
 
-Consider the case where the density function $f_{\mathbf{Y}}$ of the
-underlying MPP model $\mathbf{Y}$ has a Gibbsian form
-\cite{moller2007modern}. Let
-$\mathbf{u} = \{ \mathcal{E}_i\}_{i \in \mathbb{Z}}$ be a finite set,
-where $\forall i$, $\mathcal{E}_i$ is a 3D ellipsoid. We refer to
-$\mathbf{u}$ as a configuration. Then we have:
+Consider the case where the probability density function
+$f_{\mathbf{Y}}$ of the underlying MPP model $\mathbf{Y}$ has a
+Gibbsian form \cite{moller2007modern}. Let
+$\mathbf{u} = \{ \mathcal{E}_i\}_{i}$ knowing the observed volume
+$\mathcal{D}$ be a finite set, where $\forall i$, $\mathcal{E}_i$ is a
+3D ellipsoid. We refer to $\mathbf{u}$ as a configuration. Then we
+have:
 \begin{equation}
   \label{eq:gibbs-density}
   f_{\mathbf{Y}}(\mathbf{u}) = \frac{1}{Z_T} \exp \left( - \frac{1}{T}
     E(\mathbf{u}) \right).
 \end{equation}
-Here the term $E(\cdot)$ is called the \textit{energy}. The parameter
-$T \in \mathbb{R}^{+}$ is often referred to as the temperature as in
-physics. The term
-$Z_T = \int \exp \left( - \frac{E(\mathbf{u})}{T} \right) \dd
-\mathbf{u}$ is a normalization constant. The energy term is often
-decomposed into two parts \cite{lafarge2010geometric}
-\cite{descombes2009object}:
+Here the function $E(\cdot)$ is called the \textit{energy}. The
+parameter $T \in \mathbb{R}^{+}$ is often referred to as the
+temperature as in physics. The term
+$Z_T = \int \exp \left( - E(\mathbf{u})/T \right) \dd \mathbf{u}$ is
+the normalization constant. The energy term is often decomposed into
+two parts (\cite{lafarge2010geometric}, \cite{descombes2009object}):
 \begin{equation}
   \label{mpp-energy}
   E(\mathbf{u}) = \mathcal{L}(\mathbf{u}, \mathcal{D})
@@ -384,8 +381,8 @@ decomposed into two parts \cite{lafarge2010geometric}
 \end{equation}
 where $\mathcal{L}(\mathbf{u}, \mathcal{D})$ is a \textit {data term}
 representing how well a configuration $\mathbf{u}$ matches the ground
-truth dataset $\mathcal{D}$; and $\mathcal{P} (\cdot)$ is a \textit
-{prior term} containing the a-priori information of the underlying MPP
+truth dataset $\mathcal{D}$, and $\mathcal{P} (\cdot)$ is a \textit
+{prior term} containing the apriori information of the underlying MPP
 model $\mathbf{Y}$. Finding the best set of ellipsoids
 $\mathbf{u}^{*}$ is equivalent to solving the following optimization
 problem:
@@ -397,7 +394,7 @@ problem:
     \mathcal{D}) + \mathcal{P} (\mathbf{u}) \right).
 \end{equation}
 
-We formulated $\mathcal{L}(\mathbf{u}, \mathcal{D})$ and
+We define $\mathcal{L}(\mathbf{u}, \mathcal{D})$ and
 $\mathcal{P} (\mathbf{u})$ as follows.
 
 \begin{itemize}
@@ -409,8 +406,8 @@ $\mathcal{P} (\mathbf{u})$ as follows.
     \label{eq:configuration-voxel}
     \mathcal{\mathcal{D}_{\mathbf{u}}}(x) =
     \begin{cases}
-      1 & x\textnormal{'s center is inside an ellipsoid in }\mathbf{u}, \\
-      0 & \textnormal{ otherwise}. \\
+      0 & x\textnormal{'s center is outside of ellipsoids in }\mathbf{u}, \\
+      1 & \textnormal{ otherwise}. \\
     \end{cases}
   \end{equation}
   Then $\mathcal{L}(\mathbf{u}, \mathcal{D})$ is formulated as
@@ -425,8 +422,7 @@ $\mathcal{P} (\mathbf{u})$ as follows.
       |\{ x \in \Omega | \mathcal{D}_{\mathbf{u}}(x) = 0 \textnormal{
         or } \mathcal{D}(x) = 0 \}|},
   \end{equation}
-  % where $|\cdot|$, $\wedge$ and $\vee$ denote the set cardinality,
-  % logical conjunction, disjunction and negation respectively.
+  where $|\cdot|$ denotes the cardinality of a discrete set.
 
 \item Regarding the \textit{prior term} $\mathcal{P} (\mathbf{u})$, we
   prefer to obtain a model estimate without imposing too much a-priori
@@ -456,31 +452,32 @@ $\mathcal{P} (\mathbf{u})$ as follows.
 \end{itemize}
 
 The analytical solution of \eqref{mpp-opt-energy} is difficult to
-obtain in pratice. In MPP literature, the \textit{reversible jump
-  Markov chain Monte Carlo} (RJMCMC) sampling is a commonly employed
+obtain in pratice. In the MPP literature, the \textit{Reversible Jump
+  Monte Carlo Markov chain} (RJMCMC) sampling is a commonly employed
 technique to tackle this type of optimization problem
 \cite{descombes2013stochastic}. A typical RJMCMC procedure consists of
 iteratively simulating a Markov chain of configurations
-$\{ \mathbf{u}_t \}_{t \in \mathbb{N}}$ whose density converges to the
-target density $f_{\mathbf{Y}}(\mathbf{u})$. At each iteration $t$, a
-modification of the current configuration $\mathbf{u}_t$ is proposed
-to create the next configuration $\mathbf{u}_{t+1}$. The term ``jump''
-refers to the fact that the cardinality, \textit{i.e.} the number of
-marked points of the current configuration might change during the
-modification. A modification in RJMCMC is performed according to a
-density function $Q(\mathbf{u}_t, \mathbf{u}_{t+1})$, referred to as a
-proposition kernel. The modifications are local, in the sense that for
-each iteration only one or two marked points in the current
-configuration are modified. Typically, $Q(\mathbf{u}, \cdot)$ is a
-combination of several sub-proposition kernels:
+$\{ \mathbf{u}_t \}_{t \in \mathbb{N}}$ whose probability density
+converges to the target density $f_{\mathbf{Y}}(\mathbf{u})$. At each
+iteration $t$, a modification of the current configuration
+$\mathbf{u}_t$ is proposed to create the next configuration
+$\mathbf{u}_{t+1}$. The term ``jump'' refers to the fact that the
+cardinality, \textit{i.e.} the number of marked points of the current
+configuration might change during the modification. A modification in
+RJMCMC is performed according to a density function
+$Q(\mathbf{u}_t, \mathbf{u}_{t+1})$, referred to as a proposition
+kernel. The modifications are local, in the sense that for each
+iteration only one or two marked points in the current configuration
+are modified. Typically, $Q(\mathbf{u}, \cdot)$ is a combination of
+several sub-proposition kernels:
 \begin{equation}
   \label{eq:sub-kernels}
   Q(\mathbf{u}, \cdot) = \sum_n p_n Q_n (\mathbf{u}, \cdot),
 \end{equation}
 where $p_n$ is the probability of the occurrence of the
-sub-proposition kernels $Q_n(\cdot, \cdot)$, such that
-$\sum_n p_n \le 1$ \cite{descombes2013stochastic}
-\cite{verdie2014detecting}. Frequently investigated sub-proposition
+sub-proposition kernels $Q_n$, such that $\sum_n p_n \le 1$
+(\cite{descombes2013stochastic},
+\cite{verdie2014detecting}). Frequently investigated sub-proposition
 kernels include:
 
 \begin{itemize}
@@ -488,59 +485,64 @@ kernels include:
 \item The \textit{Birth proposal}, in which a marked point is added to
   current configuration $\mathbf{u}_t$, according to a birth kernel
   denoted as $Q_{b}(\mathbf{u}, \cdot)$. That is,
-  $\mathbf{u}_{t+1} = \mathbf{u}_t \cup \{u\}$, where $u$ is drawn
-  according to $Q_{b}(\mathbf{u}, \cdot)$.
+  $\mathbf{u}_{t+1} = \mathbf{u}_t \cup \{\mathcal{E}\}$, where
+  $\mathcal{E}$ is drawn according to $Q_{b}(\mathbf{u}, \cdot)$.
 
 \item The \textit{Death proposal}. This is the reverse process of the
   birth proposal, in which a marked point is chosen and deleted from
   current configuration $\mathbf{u}$ according to a death kernel
   $Q_{d}(\mathbf{u}, \cdot)$. That is,
-  $\mathbf{u}_{t+1} = \mathbf{u}_t \setminus \{u\}$, with
-  $u \in \mathbf{u}_t$ chosen according to $Q_{d}(\mathbf{u}, \cdot)$.
+  $\mathbf{u}_{t+1} = \mathbf{u}_t \setminus \{\mathcal{E}\}$, with
+  $\mathcal{E} \in \mathbf{u}_t$ chosen according to
+  $Q_{d}(\mathbf{u}, \cdot)$.
 
   The combination of birth and death proposals ensures that the Markov
   chain is able to switch between configurations with different
   cardinality.
 
 \item \textit{Perturbation proposal}. This proposal consists of
-  changing the parametrization of a marked point $u$ in the current
-  configuration $\mathbf{u}$ according to a perturbation kernel
-  $Q_{p}(\mathbf{u}, \cdot)$.
+  changing the parametrization of a marked point $\mathcal{E}$ in the
+  current configuration $\mathbf{u}$ according to a perturbation
+  kernel $Q_{p}(\mathbf{u}, \cdot)$.
 
 \end{itemize}
 
-In practice, the RJMCMC procedure might suffer from prohibitive rate
+In practice, the RJMCMC procedure might suffer from a prohibitive rate
 of convergence, since each iteration brings only one or two marked
 points into play \cite{descombes2013stochastic}. To mitigate this
-issue, a \textit{multiple births and deaths} algorithm has recently
-been proposed by Descombes \textit{et al.} \cite{descombes2009object},
-allowing for the births of multiple marked points at each iteration,
-offering a more effective sampling procedure. In our study, we adapted
-the multiple births and deaths algorithm design proposed in
+issue, a \textit{multiple birth and death} algorithm has been proposed
+by Descombes \textit{et al.} \cite{descombes2009object}, allowing for
+the births of multiple marked points at each iteration, offering a
+more effective sampling procedure. In our study, we adapted the
+multiple birth and death algorithm design proposed in
 \cite{descombes2009object}. For each iteration, the original multiple
-births and deaths algorithm consisted of a birth step of multiple
-marked points and a death step that examines all marked points in
-current configuration. Additionally, to achieve a more effective
-exploration of each configuration, we proposed to add an extra
-perturbation step to the multiple births and deaths algorithm, named
-as the \textit{shift} step.
+birth and death algorithm consisted of a birth step of multiple marked
+points and a death step that examines all marked points in current
+configuration. Additionally, to achieve a more effective exploration
+of each configuration, we propose to add an extra perturbation step to
+the multiple birth and death algorithm, named as the \textit{shift}
+step.
 
-To describe the shift step used in our adapted multiple births, deaths
-and shifts (MBDS) algorithm, we adopt the notion of \textit{Legendre
+To describe the shift step used in our adapted multiple birth, death
+and shift (MBDS) algorithm, we adopt the notion of \textit{Legendre
   ellipsoid} of a convex body in classical mechanics
-\cite{lutwak2000new}. Given a convex body $K$, the Legendre ellipsoid
-$\mathcal{L}(K)$ is defined as \cite{ludwig2003ellipsoids}:
+\cite{lutwak2000new}. Given a convex body $K \in \mathbb{R}^3$, the
+Legendre ellipsoid $L_{e}(K)$ is defined as
+\cite{ludwig2003ellipsoids}:
 \begin{equation}
   \label{eq:legendre-ellip-orig}
-  \mathcal{L}(K) = \{ x \in K | x^T \Sigma^{-1} x \leq 1 \},
+  L_{e}(K) = \{ x \in K | (x-\mu)^T \Sigma^{-1} (x-\mu) \leq
+  1 \},
 \end{equation}
 where
-\begin{equation}
-  \label{eq:legendre-ellip-cov}
-  \Sigma = \frac{\sum_{x \in K} (x - \mu)(x - \mu)^T} {|K|},
-\end{equation}
-with $\mu = \frac{1}{|K|} \sum_{x \in K} x$. Notice that
-$\mathcal{L}(K) = K$ if $K$ is itself an ellipsoid.
+$$
+\mu = \frac{\int_{x \in K} x dx}{\nu{K}}
+$$
+and
+$$
+\Sigma = \frac{\int_{x \in K} (x - \mu)(x - \mu)^T dx} {\nu(K)}.
+$$
+Notice that $L_{e}(K) = K$ if $K$ is itself an ellipsoid.
 
 Let $\mathcal{D}_{\mathcal{E}}$ be the binary volume representing
 voxelized ellipsoid $\mathcal{E}$. The shift of $\mathcal{E}$ consists
@@ -565,7 +567,7 @@ validated values might provide a good starting-point for the MBDS
 algorithm and might accelerate the convergence of the algorithm.
 
 \begin{algorithm}
-  \caption{Multiple births, deaths and shifts}
+  \caption{Multiple birth, death and shift}
   % \algsetup{indent=2em}
   \label{algo-mbds}
   \begin{algorithmic}[1]
@@ -581,12 +583,12 @@ algorithm and might accelerate the convergence of the algorithm.
 
     \vspace{1mm} \REPEAT
 
-    \vspace{1mm} \STATE \textbf{Multiple births}: sample configuration
+    \vspace{1mm} \STATE \textbf{Multiple birth}: sample configuration
     $u_b$ with ellipsoid centers $\sim \mathbf{\Phi}$, ellipsoid
     parameters $\sim f_{\boldsymbol{\theta}}$ \label{itr} \STATE
     $\mathbf{u} \rightarrow \mathbf{u} \cup u_b$
 
-    \vspace{1mm} \STATE \textbf{Deaths and shifts}:
+    \vspace{1mm} \STATE \textbf{Death and shift}:
 
     \FOR{$\mathcal{E} \in \mathbf{u}$} \STATE
     $p_d = \frac{r\lambda}{1 + r\lambda}$ with
@@ -737,11 +739,11 @@ ellipsoid centers.
 
 The 3D Mat\'ern cluster process is a two-step process. First, a set of
 ``parent points'' $\{ y_i \}_{i \in \mathcal{I}} \subset \mathbb{R}^3$
-are sampled from a homogeneous Poisson point process with intensity
+is sampled from a homogeneous Poisson point process with intensity
 parameter $\kappa$. For each ``parent point'' $y_i$ with
 $i \in \mathcal{I}$, a sphere with radius $R$ centered at $y_i$ is
 generated. Then, inside each obtained sphere, a set of ``children
-points'' are sampled from another homogeneous Poisson point process
+points'' is sampled from another homogeneous Poisson point process
 with intensity parameter $\lambda_0$. A realization of the Mat\'ern
 cluster process is obtained as the collection of all ``children
 points''.
@@ -1006,7 +1008,7 @@ obtained by averaging the VOIs in the direction perpendicular to the
 transverse plane.
 
 From Figure~\ref{fig:bct-datasets-recon} we can see that the
-reconstructions by ellipsoids are not perfect. Despite this, the
+reconstructions by ellipsoids are not visually perfect. However, the
 distribution and morphology of the medium scale fibroglandular and
 inter-glandular adipose tissue in reconstructed VOIs agree fairly well
 with the original segmented clinical bCT VOIs. Also, the medium scale
@@ -1223,7 +1225,7 @@ inference from reconstruction method to all the 12 input bCT VOIs, 12
 new sets of medium scale parameters were finally obtained.
 
 \begin{table}[!htb]
-  {\fontsize{9}{8}\selectfont
+  {\fontsize{8}{7}\selectfont
     \begin{center}
 
       \caption{Medium scale parameters for the 3D stochastic breast
@@ -1237,7 +1239,7 @@ new sets of medium scale parameters were finally obtained.
 
         \toprule
 
-        \centering{\textbf{Parameters}}
+        \centering{\textbf{Parameter}}
         & \centering{VOI \#1}
         & \centering{VOI \#2}
         & \centering{VOI \#3}
@@ -1247,18 +1249,18 @@ new sets of medium scale parameters were finally obtained.
         \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
         \centering{$\kappa$ (\si{\per\mm\cubed})}
-        & \centering{$3.24e-03$}
-        & \centering{$3.41e-03$}
-        & \centering{$2.87e-04$}
+        & \centering{\SI{3.24e-03}{}}
+        & \centering{\SI{3.41e-03}{}}
+        & \centering{\SI{2.87e-04}{}}
           \tabularnewline%\\
 
         \cmidrule(lr){1-1} \cmidrule(lr){2-2}
         \cmidrule(lr){3-3} \cmidrule(lr){4-4}
 
         \centering{$\lambda_0$ (\si{\per\mm\cubed})}
-        & \centering{$5.98e-03$}
-        & \centering{$1.92e-02$}
-        & \centering{$3.09e-02$}
+        & \centering{\SI{5.98e-03}{}}
+        & \centering{\SI{1.92e-02}{}}
+        & \centering{\SI{3.09e-02}{}}
           \tabularnewline%\\
 
         \cmidrule(lr){1-1} \cmidrule(lr){2-2}
@@ -1359,9 +1361,9 @@ and blurring on the detector were not modeled. The size of the
 isotropic detector pixels is \SI{100}{\um}. Mechanical breast texture
 deformation to mimic breast compression during the DBT image
 acquisition was not modeled. Projection images were processed by the
-\texttt{ASIR-DBT} 3D reconstruction algorithm (GE Healthcare, Buc,
-France) to obtain DBT reconstructed slices with \SI{1}{\mm} slice
-thickness.
+\texttt{ASIR-DBT} 3D reconstruction algorithm implemented in the GE
+SenoClaire system (GE Healthcare, Buc, France) to obtain DBT
+reconstructed slices with \SI{1}{\mm} slice thickness.
 
 Figure~\ref{fig:fit-params-sims} shows examples of \SI{3.5}{\cm}
 $\times$ \SI{3.5}{\cm} slices through the simulated texture volumes,
@@ -1370,11 +1372,11 @@ simulated from these volumes. Visual inspection of the simulated
 images indicates fairly high visual realism. Also, compared with
 images simulated using the prototype implementation
 \cite{li2016novel}, the new model parameters are capable of simulating
-mammographic projections and and DBT reconstructed slices with a
-larger morphological variability. These observations indicate an
-improvement of the model's realism and morphological variability
-compared with the prototype implementation with empirical parameters
-proposed in the previous chapter.
+mammographic projections and DBT reconstructed slices with a larger
+morphological variability. These observations indicate an improvement
+of the model's realism and morphological variability compared with the
+prototype implementation with empirical parameters proposed in the
+previous chapter.
 
 \begin{figure}[!htb]
   \centering
@@ -1433,7 +1435,7 @@ the same set-up as described in the previous section. From each
 simulated texture volume, \SI{3.5}{\cm} $\times$ \SI{3.5}{\cm}
 mammographic projection and DBT reconstructed slices were obtained
 using the same x-ray simulator and 3D reconstruction algorithm as
-described in previous section. We used the method described by Wu
+described in the previous section. We used the method described by Wu
 \textit{et al.} \cite{wu2012spectral} to estimate the $\beta$ values
 from the mammographic projection and central DBT slices. In this
 method, each input image was first divided into \SI{2.5}{\cm} $\times$
@@ -1449,7 +1451,7 @@ deviation of XXX; the $\beta$ values of the simulated DBT central
 slices have an average of XXX and a standard deviation of XXX. These
 values are consistent with those reported in literature [REFERENCE].
 
-\subsection{Psycho-visual validation}
+\subsection{Psychovisual validation}
 \label{sec:psych-valid-valid}
 
 A two-alternative forced choice (2AFC) experiment was performed to
@@ -1470,15 +1472,16 @@ resolution. Each image pair was displayed during 5 seconds, followed
 by the display of a uniform gray–level image for another 5 seconds;
 the readers were thus imposed to make a decision within 10
 seconds. Four readers participated in the experiment, all GE
-Healthcare engineers. Reader 1, 2 and 3 have no prior knowledge of our
-texture model while reader 4 knows the algorithm of the texture model
-construction. A short training session with 10 image pairs of known
-ground truth was performed before the real experiment with no time
-constraint. The reading distance was set to be one meter. The
-percentage of correct answers, $P_c$, was calculated as an indication
-for the realism of the simulated images from the texture model. Under
-the null hypothesis that images simulated from the model and clinical
-bCT images data cannot be distinguished, $P_c = 0.5$.
+Healthcare engineers experienced in x-ray breast images. Readers 1, 2
+and 3 had no prior knowledge of our texture model while reader 4 knew
+the algorithm of the texture model construction. A short training
+session with 10 image pairs of known ground truth was performed before
+the real experiment with no time constraint. The reading distance was
+set to be one meter. The percentage of correct answers, $P_c$, was
+calculated as an indication for the realism of the simulated images
+from the texture model. Under the null hypothesis that images
+simulated from the model and clinical bCT images data cannot be
+distinguished, $P_c = 0.5$.
 
 TO BE MODIFIED [The left chart of Figure 5 shows the Pc value of the
 four readers of the 2AFC experi-ments. Readers 1 and 2 had overall Pc
