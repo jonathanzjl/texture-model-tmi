@@ -32,6 +32,7 @@
 
 \newtheorem{define}{Definition}[section]%
 \newtheorem{prop}{Proposition}[section]%
+\newtheorem{lemm}{Lemma}[section]%
 
 \graphicspath{{figure/}}%
 
@@ -559,9 +560,9 @@ multiplicative constant. The shift of $\mathcal{E}$ consists in
 replacing it by the ellipsoid $\mathcal{E}_{\mathcal{D}}$. The
 definition of $\mathcal{E}_{\mathcal{D}}$ is analogous to the that of
 the \textit{Legendre ellipsoid} associated with a convex body in
-classical mechanics \cite{lutwak2000new}. For a convex body
-$K \in \mathbb{R}^3$, its Legendre ellipsoid is $K$ itself if $K$ is
-an ellipsoid \cite{ludwig2003ellipsoids}.
+classical mechanics \cite{lutwak2000new}. Notice that, for a convex
+body $K \in \mathbb{R}^3$, its Legendre ellipsoid is $K$ itself if $K$
+is an ellipsoid \cite{ludwig2003ellipsoids}.
 
 % Notice that $L_{e}(K) = K$ if $K$ is itself an ellipsoid.
 
@@ -603,13 +604,13 @@ an ellipsoid \cite{ludwig2003ellipsoids}.
 % \end{equation}
 
 The complete description of the proposed MBDS algorithm is given by
-Algorithm~\ref{algo-mbds}. We assumed that the proposal distribution
+Algorithm~\ref{algo-mbds}. We assume that the proposal distribution
 $f_{\boldsymbol{\theta}}$ consists of independent densities $f_{L_a}$,
-$f_{L_b}$, $f_{L_c}$, $f_{\delta{\phi_1}}$, $f_{\delta{\phi_2}}$ and
-$f_{\delta{\phi_3}}$ to sample the half lengths $L_a$, $L_b$, $L_c$
-and the tilt angles $\delta{\phi_x}$, $\delta{\phi_y}$ of the
-ellipsoids, $\delta{\phi_z}$. We set these densities to the ones used
-in our previous study \cite{li2016novel}, since these previously
+$f_{L_b}$, $f_{L_c}$, $f_{\delta{\phi_x}}$, $f_{\delta{\phi_y}}$ and
+$f_{\delta{\phi_z}}$ to sample the half lengths $L_a$, $L_b$, $L_c$
+and the tilt angles $\delta{\phi_x}$, $\delta{\phi_y}$,
+$\delta{\phi_z}$ of the ellipsoids. We set these densities to the ones
+used in our previous study \cite{li2016novel}, since these previously
 validated values might provide a good starting-point for the MBDS
 algorithm and might accelerate the convergence of the algorithm.
 
@@ -623,17 +624,17 @@ algorithm and might accelerate the convergence of the algorithm.
     $T = 100$, $\mathbf{\Phi}$: a homogeneous Poisson point process
     with intensity $\lambda = 0.005$, $f_{\boldsymbol{\theta}}$: a
     multivariate proposal distribution to sample
-    $ \left( L_a, L_b, L_c, \delta{\phi_1}, \delta{\phi_2},
-      \delta{\phi_3} \right)$ and $\epsilon = 0.001$
+    $ \left( L_a, L_b, L_c, \delta{\phi_x}, \delta{\phi_y},
+      \delta{\phi_z} \right)$ and $\epsilon = 0.001$
 
     \ENSURE configuration $\mathbf{u}$
 
     \vspace{1mm} \REPEAT
 
     \vspace{1mm} \STATE \textbf{Multiple birth}: sample configuration
-    $u_b$ with ellipsoid centers $\sim \mathbf{\Phi}$, ellipsoid
-    parameters $\sim f_{\boldsymbol{\theta}}$ \label{itr} \STATE
-    $\mathbf{u} \rightarrow \mathbf{u} \cup u_b$
+    $\mathbf{u}_b$ with ellipsoid centers $\sim \mathbf{\Phi}$,
+    ellipsoid parameters $\sim f_{\boldsymbol{\theta}}$ \label{itr}
+    \STATE $\mathbf{u} \rightarrow \mathbf{u} \cup \mathbf{u}_b$
 
     \vspace{1mm} \STATE \textbf{Death and shift}:
 
@@ -647,10 +648,9 @@ algorithm and might accelerate the convergence of the algorithm.
 
     \IF{$v < p_d$} \STATE
     $\mathbf{u} \rightarrow \mathbf{u} \setminus \mathcal{E}$ \ELSE
-    \STATE
-    $\mathcal{E} \rightarrow
-    \mathcal{L(K_{\mathcal{E}(\mathcal{D})})}$ with
-    $\mathcal{L}(\cdot)$ given in \eqref{eq:ellip-approx}.  \ENDIF
+    \STATE $\mathcal{E} \rightarrow \mathcal{E}_{\mathcal{D}}$ with
+    $\mathcal{E}_{\mathcal{D}}$ given in \eqref{eq:ellip-approx}.
+    \ENDIF
 
     \ENDFOR
 
@@ -698,19 +698,25 @@ help reveal comprehensive structural information of a point process
 \begin{define}
 
   The pair correlation function \textit{$g(\cdot, \cdot)$} of a simple
-  point process $\mathbf{\Phi}$ with intensity function
-  $\lambda(\cdot)$ is defined as:
+  point process $\mathbf{\Phi}$ is defined as:
   \begin{equation}
     \label{eq:pcf-official-def}
     g(x,y)=\frac{\rho^{(2)}(x,y)}{\lambda(x) \lambda(y)}.
   \end{equation}
-  Here $\rho^{(2)}(\cdot, \cdot)$ is the second order moment density
-  of $\mathbf{\Phi}$, satisfying
+  Here $\lambda(\cdot)$ is the intensity function of $\mathbf{\Phi}$,
+  satisfying
+  \begin{equation}
+    \label{eq:intensity-func}
+    |\mathbf{\Phi} (B)| = \int_{B} \lambda(x) dx < \infty,
+  \end{equation}
+  where $B$ is an arbitrary bounded Borel set. And
+  $\rho^{(2)}(\cdot, \cdot)$ is the second order moment density of
+  $\mathbf{\Phi}$, satisfying
   \begin{equation}
     \label{eq:second-order-moment}
-    \int_{B_{1} \times B_{2}} \rho^{(2)}(x,y) \, \dd x \dd y
-    = \sum^{x \neq y}_{x,y \in \mathbf{\Phi}} \E \left( \mathds{1} (
-      \{x,y \} \in B_{1} \times B_{2} ) \right),
+    \int_{B_{1} \times B_{2}} \rho^{(2)}(x,y) \, dx dy
+    = \sum_{x, y \in \mathbf{\Phi}, x \neq y} \mathbb{P} \left( (x,y)
+      \in B_{1} \times B_{2} \right),
   \end{equation}
   for arbitrary bounded Borel sets $B_1$ and $B_2$.
 \end{define}
@@ -722,35 +728,35 @@ $g(x,y)>1$, an \textit{attraction} between points at locations $x$ and
 $y$ exists. If $g(x,y)<1$, a \textit{repulsion} between points at
 locations $x$ and $y$ exists.
 
-In our study, we assumed that the centers of the reconstructed
+In our study, we assume that the centers of the reconstructed
 ellipsoids come from a stationary and isotropic point process. This
 indicates that the PCF depends only on the relative distance between
 two spatial positions. That is, $g(x, y) = g(r)$, where
 $r = \norm{x-y}$ is referred to as the \textit{interpoint
   distance}. Under this assumption, we applied the PCF estimator
-described in \cite[p232]{illian2008statistical} to estimate the
-empirical PCF of reconstructed ellipsoid centers from each segmented
-bCT VOI. Analytically, the PCF estimator is expressed as:
+described in \cite[p.232]{illian2008statistical} to estimate the
+empirical PCF of the reconstructed ellipsoid centers from each
+segmented bCT VOI. Analytically, the PCF estimator is expressed as:
 \begin{equation}
   \label{eq:pcf-estimator}
-  \hat{g}(r; \Phi_s) = \sum^{x \neq y}_{x, y \in \Phi_s \cap W}
+  \hat{g}(r; \Phi_s) = \sum_{x, y \in \Phi_s \cap W, x \neq y}
   \frac{\mathbf{k}(\norm{x-y} - r)}
-  {4 \pi r^2 \nu(W_x \cap W_y) \hat{\lambda}^2},
+  {4 \pi r^2 \hat{\lambda}^2 \nu(W_x \cap W_y)},
 \end{equation}
 where $\Phi_s$ is the collection of all ellipsoid centers
-reconstructed from a dataset and $\hat{\lambda}$ is an estimate of its
+reconstructed from a VOI and $\hat{\lambda}$ is an estimate of its
 intensity parameter, expressed as
 \begin{equation}
   \label{eq:inten-estimtor}
-  \hat{\lambda} = \frac{|\Phi_s|}{\nu(W)}.
+  \hat{\lambda} = \frac{|\Phi_s|}{\nu(W)},
 \end{equation}
-The function $\mathbf{k}(\cdot)$ is a smoothing kernel and $W$ is the
-observation window; \textit{i.e.} a \SI{3.5}{\cm} $\times$
-\SI{3.5}{\cm} $\times$ \SI{3.5}{\cm} cube in our case. Finally, $W_x$
-denotes the translation of $W$ by $x$. The division by
-$\nu(W_x \cap W_y)$ instead of by $\nu(W)$ acts as an edge correction
-for points falling outside of the observation window $W$
-\cite{ohser1983estimators}.
+where $W$ is the observation window, \textit{i.e.} a \SI{3.5}{\cm}
+$\times$ \SI{3.5}{\cm} $\times$ \SI{3.5}{\cm} cube in our case. Here
+$W_x$ denotes the translation of $W$ by $x$. The division by
+$\nu(W_x \cap W_y)$ instead of by $\nu(W)$ in~\eqref{eq:pcf-estimator}
+acts as an edge correction for points falling outside of the
+observation window $W$ \cite{ohser1983estimators}. The function
+$\mathbf{k}(\cdot)$ is a smoothing kernel.
 
 The estimation was performed using the \texttt{pcf3est} function
 implemented in the \texttt{R} software package \texttt{spatstat}
@@ -798,12 +804,11 @@ A Mat\'ern cluster process model $\Phi_\mathcal{M}$ is a stationary
 and isotropic point process completely determined by the three
 parameters: $\kappa$, $\lambda_0$, and $R$. Theoretical formula for
 the PCF of a 3D Mat\'ern cluster process is analytically accessible
-and is given by the following proposition
-\cite[p376]{illian2008statistical}.
+and is given by \cite[p.376]{illian2008statistical}.
 
-\begin{prop}
+\begin{lemm}
   Let $\Phi_{\mathcal{M}}$ be a Mat\'ern cluster process with
-  parameters $\kappa, \lambda, R$, then its intensity parameter
+  parameters $\kappa, \lambda_0, R$, then its intensity parameter
   $\lambda$ is:
   \begin{equation}
     \label{eq:matern-inten}
@@ -820,13 +825,14 @@ and is given by the following proposition
       1 & \textnormal{if } r > 2R. \\
     \end{cases}
   \end{equation}
-\end{prop}
+\end{lemm}
 
-To fit a Mat\'ern cluster process with parameters $\kappa, \lambda, R$
-to a set of reconstructed ellipsoid centers $\Phi_s$, we applied the
-MCE method described in Section~\ref{sec:exist-param-infer}. For a
-given $\Phi_s$, the contrast function $\mathcal{C}$ was computed based
-on the analytical and empirical PCF. That is,
+To fit a Mat\'ern cluster process with parameters
+$\kappa, \lambda_0, R$ to a set of reconstructed ellipsoid centers
+$\Phi_s$, the MCE method described in
+Section~\ref{sec:exist-param-infer} was applied. The contrast function
+$\mathcal{C}$ was computed based on the analytical and empirical
+PCF. That is,
 \begin{equation}
   \label{eq:matern-contrast}
   \mathcal{C}(r; \kappa, \lambda_0, R, \Phi_s) =
@@ -837,38 +843,40 @@ where $\hat{g}(r, \Phi_s)$ is given in \eqref{eq:pcf-estimator} and
 $g(r; \kappa, \lambda_0, R)$ is given in \eqref{eq:matern-pcf}. Here
 $\mathcal{R}$ denotes the set of interpoint distances considered by
 the MCE estimator. Additionally, \eqref{eq:matern-inten} was used as
-an equality constraint. Let
-$\mathbf{\Theta} = \left( \kappa, \lambda_0, R \right)$, for a given
-set of reconstructed ellipsoids $\Phi_s$, the MCE estimator
-$\widehat{\mathbf{\Theta}}$ is formally expressed as:
+an equality constraint. % Let
+% $\mathbf{\Theta} = \left( \kappa, \lambda_0, R \right)$, for a given
+% set of reconstructed ellipsoid centers $\Phi_s$,
+Formally, let $\hat{\kappa}, \hat{\lambda}_0, \hat{R}$ denote the
+estimated $\kappa, \lambda_0, R$ using the MCE estimator.  We have,
 \begin{equation}
   \label{eq:mce-est-complete}
   \begin{aligned}
-    \widehat{\mathbf{\Theta}} & = \arg \min_{\mathbf{\Theta}} \sum_{r
-      \in \mathcal{R}} \left( g(r; \kappa, \lambda_0, R)
+    \hat{\kappa}, \hat{\lambda}_0, \hat{R} & = \arg \min_{\kappa,
+      \lambda_0, R} \sum_{r \in \mathcal{R}} \left( g(r; \kappa,
+      \lambda_0, R)
       - \hat{g}(r; \Phi_s) \right)^2, \\
-    & \textnormal{subjected to: } \hat{\lambda} = \frac{4}{3}\pi
-    R^3\kappa \lambda_0.
+    & \textnormal{subject to } \hat{\lambda} = \frac{4}{3}\pi
+    \hat{R}^3\hat{\kappa} \hat{\lambda}_0,
   \end{aligned}
 \end{equation}
+where $\hat{\lambda}$ is given by~\eqref{eq:inten-estimtor}.
 
 The optimization \eqref{eq:mce-est-complete} was numerically solved
 using the function \texttt{fmincon} implemented in the \texttt{Matlab}
-software (version \texttt{2016b}, The MathWorks Inc., Natick,
-Massachusetts, United States). The default setting of \texttt{fmincon}
-was used. In this setting, the \textit{interior point} optimization
-method is applied, with the Hessian of the contrast function
-$\mathcal{C}(\cdot)$ approximated using the \textit{Broyden\textendash
-  Fletcher\textendash Goldfarb\textendash Shanno} algorithm. We set
-$\mathcal{R}$ to be a set of values increasing from \SI{0.2}{\mm} to
-\SI{30}{\mm} with a step size of \SI{0.2}{\mm}. All optimizations were
-run with an initial condition $\kappa = 0.1$, $\lambda_0 = 0.1$ and
-$R = 1$. The convergence was considered reached when the contrast
-function was non-decreasing in all feasible directions, within the a
-tolerance value of \num{1e-6}. Since we were able to obtain fairly
-good fit for all input datasets
-(Section~\ref{sec:point-proc-reconstr}), the impact of different
-configurations of the optimization function was considered
+software (version \texttt{2016b}). The default setting of
+\texttt{fmincon} was used. In this setting, the \textit{interior
+  point} optimization method is applied, with the Hessian of the
+contrast function $\mathcal{C}(\cdot)$ approximated using the
+\textit{Broyden\textendash Fletcher\textendash Goldfarb\textendash
+  Shanno} algorithm. We set $\mathcal{R}$ to be a set of values
+increasing from \SI{0.2}{\mm} to \SI{30}{\mm} with a step size of
+\SI{0.2}{\mm}. All optimizations were run with an initial condition
+$\kappa = 0.1$, $\lambda_0 = 0.1$ and $R = 1$. The convergence was
+considered reached when the contrast function was non-decreasing in
+all feasible directions, within the a tolerance value of
+$10^{-6}$. Since we were able to obtain fairly good fit for all input
+datasets (Section~\ref{sec:point-proc-reconstr}), the impact of
+different configurations of the optimization function was considered
 out-of-scope in our study and was not investigated.
 
 \subsubsection{The mark distribution}
@@ -878,9 +886,9 @@ Empirical statistics of each individual mark were examined separately
 from the ellipsoid centers. Histograms of the half lengths $L_a$,
 $L_b$, $L_c$ and the tilts angles $\delta\phi_x$, $\delta\phi_y$,
 $\delta\phi_z$ of the reconstructed ellipsoids were obtained to
-visualize the empirical distributions of $L_a$, $L_b$ and $L_c$. Based
-on the empirical statistical analysis, independent distributions were
-proposed for each mark.
+visualize their empirical distributions. Based on the empirical
+statistical analysis, independent distributions were proposed for each
+mark.
 
 % An example of a floating figure using the graphicx package.  Note
 % that \label must occur AFTER (or within) \caption.  For
@@ -1025,11 +1033,11 @@ belonging to BI-RADS density category a, b and c respectively.
 \subsection{The reconstruction step}
 \label{sec:reconstruction-step}
 
-Figure~\ref{fig:conv-mbds} shows the decrease of the energy with the
-increasing number of iterations for the three bCT VOIs. We can see
-that the convergence was reached after about 7500 iterations for all
-the cases. Similar results were obtained for other investigated bCT
-VOIs.
+Figure~\ref{fig:conv-mbds} shows the decrease of the energy given
+in~\eqref{mpp-energy} as the number of iterations increases for the
+three bCT VOIs. We can see that the convergence was reached after
+about 7500 iterations for all the cases. Similar results were obtained
+for other investigated bCT VOIs.
 
 \begin{figure}[!htb]
   \centering \includegraphics[width=0.5\textwidth]
@@ -1043,15 +1051,14 @@ VOIs.
 \end{figure}
 
 The result of the reconstruction step for VOI \#1, \#2 and \#3 is
-demonstrated in Figure~\ref{fig:bct-datasets-recon} by comparing the
-original VOIs with the reconstructed VOIs. Reconstructed VOIs are
-binary volumes having the same spatial and voxel size as their
-corresponding bCT VOIs. They were created by voxelizing the
-reconstructed ellipsoids from the MBDS algorithm and assigning value 0
-to the ellipsoid interior. Projection images of the original VOIs and
-the reconstructed VOIs are also demonstrated. The projections were
-obtained by averaging the VOIs in the direction perpendicular to the
-transverse plane.
+shown in Figure~\ref{fig:bct-datasets-recon} by comparing the original
+VOIs with the reconstructed VOIs. Reconstructed VOIs are binary
+volumes having the same spatial and voxel size as their corresponding
+bCT VOIs. They were created by voxelizing the reconstructed ellipsoids
+from the MBDS algorithm and assigning value 0 to the ellipsoid
+interior. Projection images of the original VOIs and the reconstructed
+VOIs are also shown. The projections were obtained by averaging the
+VOIs in the direction perpendicular to the transverse plane.
 
 From Figure~\ref{fig:bct-datasets-recon} we can see that the
 reconstructions by ellipsoids are not visually perfect. However, the
@@ -1060,8 +1067,8 @@ inter-glandular adipose tissue in reconstructed VOIs agree fairly well
 with the original segmented clinical bCT VOIs. Also, the medium scale
 texture variations in the projections of the original VOIs are
 preserved in the projections of the reconstructed VOIs. The result of
-the reconstruction step provides sufficiently good input for follow-up
-inference step.
+the reconstruction step provides sufficiently good input for the
+follow-up inference step.
 
 \begin{figure}[!htb]
 
@@ -1139,7 +1146,7 @@ inference step.
     perpendicular to the transverse plane. The distribution and
     morphology of the medium scale fibroglandular and inter-glandular
     adipose tissue in reconstructed VOIs agree fairly well with the
-    original segmented clinical bCT VOIs}
+    original segmented clinical bCT VOIs.}
   \label{fig:bct-datasets-recon}
 
 \end{figure}
@@ -1149,7 +1156,7 @@ inference step.
 
 By analyzing the estimated PCFs of the reconstructed ellipsoid centers
 from the 16 input bCT VOIs using the envelope test method described in
-\cite{baddeley2014tests}, we found that for four VOIs, the Poisson
+\cite{baddeley2014tests}, we found that for 4 VOIs, the Poisson
 null-hypothesis can not be rejected. For the remainder of our study,
 these VOIs were excluded since they represented a much smaller
 population among all bCT VOIs.
@@ -1191,12 +1198,12 @@ same clustering effect was found for all other investigated bCT VOIs.
     \#1, \#2, \#3 and the theoretical Poisson PCFs (solid lines). Gray
     surfaces are the envelopes of the Poisson PCFs generated using the
     method described in \cite{baddeley2014tests}. The envelope test
-    rejects the Poisson null-hypothesis for all four VOIs at
-    interpoint distance $r = $ \SI{3}{\mm}. Figures on the right
-    compares the same empirical PCFs and the theoretical PCFs (solid
-    lines) of the Mat\'ern cluster processes fitted to the same
-    VOIs. Gray surfaces are the envelopes of the PCFs of the fitted
-    Mat\'ern cluster processes generated using the method described in
+    rejects the Poisson null-hypothesis for all 3 VOIs at interpoint
+    distance $r = $ \SI{3}{\mm}. Figures on the right compares the
+    same empirical PCFs and the theoretical PCFs (solid lines) of the
+    Mat\'ern cluster processes fitted to the same VOIs. Gray surfaces
+    are the envelopes of the PCFs of the fitted Mat\'ern cluster
+    processes generated using the method described in
     \cite{baddeley2014tests}. The empirical PCFs fall inside the
     envelopes at all interpoint distances, indicating good fits.}
   \label{fig:pcf-est}
@@ -1213,7 +1220,7 @@ processes fitted to the same VOIs. The PCF envelopes of the fitted
 Mat\'ern cluster processes were also generated using the method
 described in \cite{baddeley2014tests}, but with the fitted Mat\'ern
 cluster process as the null hypothesis model. It can be seen that for
-the three VOIs, the the empirically estimated PCFs fall inside the
+the three VOIs, the empirically estimated PCFs fall inside the
 envelopes at all interpoint distances. Based on this, we conclude that
 the fits are fairly good. Similar result was found for all other
 investigated bCT VOIs.
@@ -1458,7 +1465,7 @@ previous chapter.
   {figure/all/dataset_11/sim_recon}
 
   \caption{The first column shows slices through volumes simulated
-    from the 3D breast texture model with the four sets of parameters
+    from the 3D breast texture model with the 3 sets of parameters
     listed in Table~\ref{tab:summary-inferred-params}. The second
     column shows mammographic projections simulated from the simulated
     texture volumes. The third column shows DBT reconstructed slices
@@ -1529,8 +1536,8 @@ from the texture model. Under the null hypothesis that images
 simulated from the model and clinical bCT images data cannot be
 distinguished, $P_c = 0.5$.
 
-TO BE MODIFIED [The left chart of Figure 5 shows the Pc value of the
-four readers of the 2AFC experi-ments. Readers 1 and 2 had overall Pc
+TO BE MODIFIED [The left chart of Figure 5 shows the Pc value of the 4
+readers of the 2AFC experi-ments. Readers 1 and 2 had overall Pc
 values of 0.65 and 0.66, while reader 3 had a Pc value of 0.73
 indicating that he could more easily distinguish texture images from
 clinical bCT images. Reader 4 had the highest Pc value of 0.82. He
@@ -1585,8 +1592,8 @@ reduce the optimization complexity in the inference step, the
 distribution of ellipsoid half lengths were estimated independently
 from the ellipsoid centers. This may be a simplification compared with
 the distribution of inter-glandular adipose compartments in real
-breasts. The correlation between the the half lengths and the centers
-of the ellipsoids could be further investigated by studying the mark
+breasts. The correlation between the half lengths and the centers of
+the ellipsoids could be further investigated by studying the mark
 correlation function of the reconstructed ellipsoids. Finally, we
 obtained twelve separate sets of model parameters from twelve
 different input bCT VOIs. In a future study, it might be interesting
