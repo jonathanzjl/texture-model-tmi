@@ -406,7 +406,7 @@ $\mathcal{P} (\mathbf{u})$ as follows.
     \label{eq:configuration-voxel}
     \mathcal{\mathcal{D}_{\mathbf{u}}}(x) =
     \begin{cases}
-      0 & x\textnormal{'s center is outside of ellipsoids in }\mathbf{u}, \\
+      0 & x\textnormal{ is inside an ellipsoids in }\mathbf{u}, \\
       1 & \textnormal{ otherwise}. \\
     \end{cases}
   \end{equation}
@@ -486,7 +486,7 @@ kernels include:
   current configuration $\mathbf{u}_t$, according to a birth kernel
   denoted as $Q_{b}(\mathbf{u}, \cdot)$. That is,
   $\mathbf{u}_{t+1} = \mathbf{u}_t \cup \{\mathcal{E}\}$, where
-  $\mathcal{E}$ is drawn according to $Q_{b}(\mathbf{u}, \cdot)$.
+  $\mathcal{E}$ is drawn according to $Q_{b}(\mathbf{u}_t, \cdot)$.
 
 \item The \textit{Death proposal}. This is the reverse process of the
   birth proposal, in which a marked point is chosen and deleted from
@@ -494,7 +494,7 @@ kernels include:
   $Q_{d}(\mathbf{u}, \cdot)$. That is,
   $\mathbf{u}_{t+1} = \mathbf{u}_t \setminus \{\mathcal{E}\}$, with
   $\mathcal{E} \in \mathbf{u}_t$ chosen according to
-  $Q_{d}(\mathbf{u}, \cdot)$.
+  $Q_{d}(\mathbf{u}_t, \cdot)$.
 
   The combination of birth and death proposals ensures that the Markov
   chain is able to switch between configurations with different
@@ -523,37 +523,84 @@ of each configuration, we propose to add an extra perturbation step to
 the multiple birth and death algorithm, named as the \textit{shift}
 step.
 
-To describe the shift step used in our adapted multiple birth, death
-and shift (MBDS) algorithm, we adopt the notion of \textit{Legendre
-  ellipsoid} of a convex body in classical mechanics
-\cite{lutwak2000new}. Given a convex body $K \in \mathbb{R}^3$, the
-Legendre ellipsoid $L_{e}(K)$ is defined as
-\cite{ludwig2003ellipsoids}:
+The shift step in our adapted multiple birth, death and shift (MBDS)
+algorithm is described as follows. Consider an ellipsoid $\mathcal{E}$
+in a configuration $\mathbf{u}$. Let $\mathcal{D}_{\mathcal{E}}$ be
+the binary volume obtained by voxelizing $\mathcal{E}$ on the discrete
+grid $\Omega$ under the same rule as described
+in~\eqref{eq:configuration-voxel}. Given the ground truth volume
+$\mathcal{D}$ define in~\eqref{eq:bct-discrete-form}, we define
+$K_{\mathcal{E}}(\mathcal{D})$ as
 \begin{equation}
-  \label{eq:legendre-ellip-orig}
-  L_{e}(K) = \{ x \in K | (x-\mu)^T \Sigma^{-1} (x-\mu) \leq
-  1 \},
+  \label{eq:overlap-voxels}
+  K_{\mathcal{E}}(\mathcal{D}) = \{x \in \Omega |
+  \mathcal{D}(x) = 0 \textnormal{ and }
+  \mathcal{D}_{\mathcal{E}}(x) = 0 \}.
+\end{equation}
+Then from $K_{\mathcal{E}}(\mathcal{D})$, we define a new ellipsoid
+$\mathcal{E}_{\mathcal{D}}$ as
+\begin{equation}
+  \label{eq:ellip-approx}
+  \mathcal{E}_{\mathcal{D}} = \{ y \in \mathbb{R}^{3} |
+  (y-\mu)^T \Sigma^{-1} (y-\mu) \leq 1 \},
 \end{equation}
 where
 $$
-\mu = \frac{\int_{x \in K} x dx}{\nu{K}}
+\mu = \frac{\sum_{x \in K_{\mathcal{E}}(\mathcal{D})} x }{
+  |K_{\mathcal{E}}(\mathcal{D})| }
 $$
-and
+is the center of mass of $K_{\mathcal{E}}(\mathcal{D})$, and
 $$
-\Sigma = \frac{\int_{x \in K} (x - \mu)(x - \mu)^T dx} {\nu(K)}.
+\Sigma = \frac{\sum_{x \in K_{\mathcal{E}}(\mathcal{D})} 5(x - \mu)(x
+  - \mu)^T } { |K_{\mathcal{E}}(\mathcal{D})| }
 $$
-Notice that $L_{e}(K) = K$ if $K$ is itself an ellipsoid.
+is the covariance matrix of $K_{\mathcal{E}}(\mathcal{D})$ up to a
+multiplicative constant. The shift of $\mathcal{E}$ consists in
+replacing it by the ellipsoid $\mathcal{E}_{\mathcal{D}}$. The
+definition of $\mathcal{E}_{\mathcal{D}}$ is analogous to the that of
+the \textit{Legendre ellipsoid} associated with a convex body in
+classical mechanics \cite{lutwak2000new}. For a convex body
+$K \in \mathbb{R}^3$, its Legendre ellipsoid is $K$ itself if $K$ is
+an ellipsoid \cite{ludwig2003ellipsoids}.
 
-Let $\mathcal{D}_{\mathcal{E}}$ be the binary volume representing
-voxelized ellipsoid $\mathcal{E}$. The shift of $\mathcal{E}$ consists
-in replacing it by the Legendre ellipsoid
-$\mathcal{L}(K_{\mathcal{E}}(\mathcal{D}))$ of
-$K_{\mathcal{E}}(\mathcal{D})$, with
-\begin{equation}
-  \label{eq:legendre-ellip}
-  K_{\mathcal{E}}(\mathcal{D}) = \{x \in \Omega |
-  \mathcal{D}(x) = 0 \textnormal{ and } \mathcal{D}_{\mathcal{E}}(x) = 0 \}.
-\end{equation}
+% Notice that $L_{e}(K) = K$ if $K$ is itself an ellipsoid.
+
+% The shift of $\mathcal{E}$ consists in replacing it by the Legendre
+% ellipsoid $\mathcal{L}(K_{\mathcal{E}}(\mathcal{D}))$ of
+% $K_{\mathcal{E}}(\mathcal{D})$, with
+
+
+% To describe the shift step used in our adapted multiple birth, death
+% and shift (MBDS) algorithm, we adopt the notion of \textit{Legendre
+% ellipsoid} of a convex body in classical mechanics
+% \cite{lutwak2000new}. Given a convex body $K \in \mathbb{R}^3$, the
+% Legendre ellipsoid $L_{e}(K)$ is defined as
+% \cite{ludwig2003ellipsoids}:
+% \begin{equation}
+%   \label{eq:ellip-approx}
+%   L_{e}(K) = \{ x \in K | (x-\mu)^T \Sigma^{-1} (x-\mu) \leq
+%   1 \},
+% \end{equation}
+% where
+% $$
+% \mu = \frac{\int_{x \in K} x dx}{\nu (K) }
+% $$
+% and
+% $$
+% \Sigma = \frac{\int_{x \in K} (x - \mu)(x - \mu)^T dx} {\nu(K)}.
+% $$
+% Notice that $L_{e}(K) = K$ if $K$ is itself an ellipsoid.
+
+% Let $\mathcal{D}_{\mathcal{E}}$ be the binary volume representing
+% voxelized ellipsoid $\mathcal{E}$. The shift of $\mathcal{E}$
+% consists in replacing it by the Legendre ellipsoid
+% $\mathcal{L}(K_{\mathcal{E}}(\mathcal{D}))$ of
+% $K_{\mathcal{E}}(\mathcal{D})$, with
+% \begin{equation}
+%   \label{eq:legendre-ellip}
+%   K_{\mathcal{E}}(\mathcal{D}) = \{x \in \Omega |
+%   \mathcal{D}(x) = 0 \textnormal{ and } \mathcal{D}_{\mathcal{E}}(x) = 0 \}.
+% \end{equation}
 
 The complete description of the proposed MBDS algorithm is given by
 Algorithm~\ref{algo-mbds}. We assumed that the proposal distribution
@@ -603,8 +650,7 @@ algorithm and might accelerate the convergence of the algorithm.
     \STATE
     $\mathcal{E} \rightarrow
     \mathcal{L(K_{\mathcal{E}(\mathcal{D})})}$ with
-    $\mathcal{L}(\cdot)$ given in \eqref{eq:legendre-ellip-orig}.
-    \ENDIF
+    $\mathcal{L}(\cdot)$ given in \eqref{eq:ellip-approx}.  \ENDIF
 
     \ENDFOR
 
